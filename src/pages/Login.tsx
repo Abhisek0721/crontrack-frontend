@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom"
-
+import Creato from "../assets/Creato-logo.jpg"
+import Background from "../assets/Login-Background.png"
 export function Login() {
     return (
-        <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-            <div className="flex items-center justify-center py-12">
+        <div className="w-full  lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] overflow-hidden">
+            <div className="flex-col  items-center justify-center pt-12">
+                <div className="flex justify-center items-center"> <img src={Creato} className=" w-[150px] rounded-[50%]" alt="" /></div>
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
                         <h1 className="text-3xl font-bold">Login</h1>
@@ -48,7 +50,7 @@ export function Login() {
                     </form>
                     <div className="mt-4 text-center text-sm">
                         Don&apos;t have an account?{" "}
-                        <Link to="#" className="underline">
+                        <Link to="/signup" className="underline">
                             Sign up
                         </Link>
                     </div>
@@ -56,7 +58,7 @@ export function Login() {
             </div>
             <div className="hidden bg-muted lg:block w-[100%] h-[100vh]">
                 <img
-                    src="/placeholder.svg"
+                    src={Background}
                     alt="Image"
                     width="1920"
                     height="1080"
