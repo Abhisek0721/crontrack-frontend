@@ -3,7 +3,7 @@ import Plus from "../assets/plus.svg";
 import Minus from "../assets/minus.svg";
 import { useState } from "react";
 
-const Socialaccounts: React.FC = () => {
+const SocialAccounts: React.FC = () => {
   const [checkStates, setCheckStates] = useState<boolean[]>(
     socialAccounts.map(() => false) 
   );
@@ -39,4 +39,4 @@ const Socialaccounts: React.FC = () => {
   );
 };
 
-export default Socialaccounts;
+export default SocialAccounts;

@@ -1,6 +1,6 @@
 import  { useState, useCallback, useMemo } from 'react';
 import Workspace from './WorkSpace';
-import Socialaccounts from './SocialAccounts';
+import SocialAccounts from './SocialAccounts';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 
@@ -34,7 +34,7 @@ const MultiStepForm = () => {
 
   const steps = useMemo(() => [
     <Workspace key="1" />,
-    <Socialaccounts key="2" />,
+    <SocialAccounts key="2" />,
   ], []);
 
   const handleNext = useCallback(() => {
