@@ -4,8 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import Creato from "../assets/Creato-logo.jpg";
 import Background from "../assets/Login-Background.png";
+import toast from "react-hot-toast"; 
 
 export function Login() {
+  const handlelogin = () => {
+    toast.success("Login Successful");
+  };
   return (
     <div className="w-full flex justify-between items-center overflow-hidden">
       <div className="fixed top-1 left-4">
@@ -51,7 +55,7 @@ export function Login() {
                 Forgot your password?
               </Link>
             </div>
-            <Button type="submit" className="w-full bg-[#0e263e]">
+            <Button type="submit" className="w-full bg-secondary" onClick={handlelogin}>
               Login
             </Button>
             <Button variant="outline" className="w-full">
@@ -68,7 +72,7 @@ export function Login() {
         </div>
       </div>
 
-      <div className="hidden lg:block overflow-hidden w-[65%] h-[100vh] bg-[#001F3F]">
+      <div className="hidden lg:block overflow-hidden w-[65%] h-[100vh] bg-primary">
         <img
           src={Background}
           alt="Background Image"
