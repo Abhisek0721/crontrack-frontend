@@ -1,4 +1,4 @@
-import socialAccounts from "../DummyData/SocialAccounts";
+import socialAccounts from "../DummyData/socialAccountData";
 import Plus from "../assets/plus.svg";
 import Minus from "../assets/minus.svg";
 import { useState } from "react";

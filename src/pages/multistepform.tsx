@@ -1,6 +1,6 @@
 import  { useState, useCallback, useMemo } from 'react';
 import Workspace from './WorkSpace';
-import Socialaccounts from './Socialaccounts';
+import Socialaccounts from './SocialAccounts';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 
