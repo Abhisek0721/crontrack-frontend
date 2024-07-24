@@ -3,6 +3,7 @@ import Workspace from './WorkSpace';
 import SocialAccounts from './SocialAccounts';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -31,6 +32,7 @@ const ProgressIndicator: React.FC<ProgressProps> = ({ currentStep }) => {
 // Main MultiStepForm Component
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const navigate = useNavigate();
 
   const steps = useMemo(() => [
     <Workspace key="1" />,
@@ -47,6 +49,7 @@ const MultiStepForm = () => {
   }, []);
 
   const handleContinue = useCallback(() => {
+    navigate("/dashboard")
     toast.success('Account added successfully');
   }, []);
 
