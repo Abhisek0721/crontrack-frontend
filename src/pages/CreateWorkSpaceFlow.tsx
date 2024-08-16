@@ -1,6 +1,6 @@
 import  { useState, useCallback, useMemo } from 'react';
 import Workspace from './WorkSpace';
-import SocialAccounts from './SocialAccounts';
+import SocialAccounts from './AddSocialMediaAccounts';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 
@@ -29,7 +29,7 @@ const ProgressIndicator: React.FC<ProgressProps> = ({ currentStep }) => {
 };
 
 // Main MultiStepForm Component
-const MultiStepForm = () => {
+const CreateWorkSpaceFlow = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = useMemo(() => [
@@ -99,4 +99,4 @@ const MultiStepForm = () => {
   );
 };
 
-export default MultiStepForm;
+export default CreateWorkSpaceFlow;
