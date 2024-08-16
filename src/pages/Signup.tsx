@@ -55,6 +55,7 @@ export function Signup() {
   const [isOpen, setisOpen] = useState<Boolean>(false);
   const [timer, settimer] = useState(0);
   const [isdisabled, setisdisabled] = useState(false);
+  const [isverified, setisverified] = useState(false);
 
   const [
     loginfn,
@@ -68,13 +69,10 @@ export function Signup() {
   //function to send verification mail
   const sentverificationMail = async (email: ResendverifyUser) => {
     const response = await verifyfn(email);
-    if (isVerifyError) {
-      console.log(verifyError);
-      return toast.error("An error Occured", { duration: 5000 });
-    }
-    if (isverifyloading) toast.success("wait...", { duration: 5000 });
-    if (response)
-      return toast.success("Verify your Email Address", { duration: 5000 });
+    if (response?.error)
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+    // toast.success(`${response?.data?.message}`)
+    console.log(response);
   };
 
   //function for timer
@@ -122,41 +120,57 @@ export function Signup() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response = await loginfn(values);
-      if (isSignupError) {
-        console.log(signupError);
-        toast.error("An Error Occured", { duration: 5000 });
+      console.log(response);
+      if (response?.error) {
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+        setisverified(!isverified);
       }
+
       if (response?.data) {
         //remove item from localStorage
         localStorage.removeItem("user");
 
         //set new item in localstorage
         localStorage.setItem("user", JSON.stringify(response));
-      }
-      const user: NewUSerResponse = getUserInfo();
-      if (!user?.verified) {
-        const email: ResendverifyUser = { email: values.email };
-        sentverificationMail(email);
+        toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
       }
       // navigate("/multistepform"
-    } catch (error: any) {
-      if (error?.response) {
-        toast.error(error?.response, {
-          duration: 3000,
-        });
-      }
-    }
+    } catch (error: any) {}
     console.log("entered values", values);
   }
 
+  const handleVerificationMail = async () => {
+    const user = getUserInfo();
+    const email = user?.data?.data?.email;
+    console.log("userinfo ", email);
+    const response = await verifyfn(email);
+    if (response?.error)
+      toast.error(
+        `${response?.error?.data?.message}` || "An unexpected Error Occure",
+        { duration: 5000 }
+      );
+    if (response?.data){
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
+      handleTimer();
+    }
+    console.log("response", response);
+  };
   //handler for PopupForm
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
     const email: ResendverifyUser = { email: Popvalues.email };
-    sentverificationMail(email);
-    setisOpen(!isOpen);
-    handleTimer();
+    const response = await verifyfn(email);
+    if (response?.error)
+      toast.error(
+        `${response?.error?.data?.message}` || "An unexpected Error Occure",
+        { duration: 5000 }
+      );
+    if (response?.data){
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
+      handleTimer();
+      setisOpen(!isOpen);
+    }
   }
 
   return (
@@ -249,7 +263,7 @@ export function Signup() {
                     {showResendVerification ? (
                       <Link
                         to="#"
-                        onClick={() => setisOpen(!isOpen)}
+                        onClick={() => handleVerificationMail()}
                         className={isdisabled ? `hidden` : `block`}
                       >
                         Resend verification Email
@@ -264,6 +278,7 @@ export function Signup() {
                   className={`w-full bg-secondary ${
                     showResendVerification ? "hidden" : ""
                   }`}
+                  disabled={isverified}
                 >
                   Signup
                 </Button>
@@ -272,6 +287,7 @@ export function Signup() {
                   className={`w-full  ${
                     showResendVerification ? "hidden" : ""
                   }`}
+                  disabled={isverified}
                 >
                   Sign up with Google
                 </Button>
@@ -331,6 +347,24 @@ export function Signup() {
               login
             </Link>
           </div>
+          {isverified ? (
+            <div
+              className={`mt-1 text-center text-sm ${
+                isdisabled ? `hidden` : `block`
+              }`}
+            >
+              Didn't verified?{" "}
+              <Link
+                to="#"
+                className="underline"
+                onClick={() => setisOpen(!isOpen)}
+              >
+                click to verify
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[60%] h-[100vh] bg-primary">
