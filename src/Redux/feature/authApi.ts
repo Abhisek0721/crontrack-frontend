@@ -5,7 +5,12 @@ import type {
   LoginuserResponse,
   NewUser,
   ResendverifyUser,
-  verifyUserResponse 
+  verifyUserResponse,
+  verificationToken,
+  sendForgotPassword,
+  sendForgotPasswordResponse,
+  changeForgotPassword,
+  changeForgotPasswordResponse
 } from "../util/InterfaceTypes";
 
 //build.mutation<Response_Type, Arg_Type> Response_Type matlab api hit krne ke baad jo data milega uska type and Arg_type ka matlab body me jo data jayga uska type
@@ -31,7 +36,7 @@ export const authAPi = apiSlice.injectEndpoints({
       }),
     }),
 
-    userVerify: build.mutation<verifyUserResponse,ResendverifyUser>({
+    userVerify: build.mutation<verifyUserResponse,verificationToken>({
       query: (body) => ({
         url: "/api/v1/auth/verify-user",
         method: "PATCH",
@@ -46,6 +51,25 @@ export const authAPi = apiSlice.injectEndpoints({
         body
       }),
     }),
+
+    userSendforgotPassword: build.mutation<sendForgotPasswordResponse,sendForgotPassword>({
+      query: (body) => ({
+        url: "/api/v1/auth/send-forgot-password-email",
+        method: "POST",
+        body
+      })
+    }),
+
+    userChangePassword: build.mutation<changeForgotPasswordResponse,changeForgotPassword>({
+      query: (body) => ({
+        url: "/api/v1/auth/change-forgot-password",
+        method: "PATCH",
+        body
+      })
+    })
+
+
+
   }),
 });
 
@@ -54,4 +78,6 @@ export const {
   useUserResendVerificationMailMutation,
   useUserSignInMutation,
   useUserVerifyMutation,
+  useUserSendforgotPasswordMutation,
+  useUserChangePasswordMutation,
 } = authAPi;

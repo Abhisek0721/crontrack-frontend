@@ -24,8 +24,15 @@ export interface ResendverifyUser {
     email: String
 }
 
+export interface verificationToken {
+    "verification_token": String;
+}
+
 export interface verifyUserResponse {
-    verified: Boolean
+    data: {
+        verified: Boolean
+    }
+    message: String
 }
 
 export interface LoginUser {
@@ -37,3 +44,22 @@ export interface LoginuserResponse {
     token: string
   }
   
+
+export interface sendForgotPassword{
+    email: String
+}
+
+export interface sendForgotPasswordResponse{
+    data: null,
+    message: String,
+}
+
+export interface changeForgotPassword {
+    verification_token: String,
+    new_password: String
+}
+
+export interface changeForgotPasswordResponse{
+    data: null,
+    message: String
+}

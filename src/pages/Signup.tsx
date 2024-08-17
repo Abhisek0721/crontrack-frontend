@@ -66,15 +66,6 @@ export function Signup() {
     { isLoading: isverifyloading, isError: isVerifyError, error: verifyError },
   ] = useUserResendVerificationMailMutation();
 
-  //function to send verification mail
-  const sentverificationMail = async (email: ResendverifyUser) => {
-    const response = await verifyfn(email);
-    if (response?.error)
-      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-    // toast.success(`${response?.data?.message}`)
-    console.log(response);
-  };
-
   //function for timer
   useEffect(() => {
     let interval = null;
@@ -131,7 +122,7 @@ export function Signup() {
         localStorage.removeItem("user");
 
         //set new item in localstorage
-        localStorage.setItem("user", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(response?.data));
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
@@ -143,7 +134,7 @@ export function Signup() {
 
   const handleVerificationMail = async () => {
     const user = getUserInfo();
-    const email = user?.data?.data?.email;
+    const email = { email: `${user?.data?.data?.email}` };
     console.log("userinfo ", email);
     const response = await verifyfn(email);
     if (response?.error)
@@ -151,7 +142,7 @@ export function Signup() {
         `${response?.error?.data?.message}` || "An unexpected Error Occure",
         { duration: 5000 }
       );
-    if (response?.data){
+    if (response?.data) {
       toast.success(`${response?.data?.message}`, { duration: 5000 });
       handleTimer();
     }
@@ -166,7 +157,7 @@ export function Signup() {
         `${response?.error?.data?.message}` || "An unexpected Error Occure",
         { duration: 5000 }
       );
-    if (response?.data){
+    if (response?.data) {
       toast.success(`${response?.data?.message}`, { duration: 5000 });
       handleTimer();
       setisOpen(!isOpen);
