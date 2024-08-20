@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import Creato from "../assets/Creato-logo.jpg";
 import Background from "../assets/Login-Background.png";
@@ -24,6 +23,8 @@ import { useUserSendforgotPasswordMutation } from "../Redux/feature/authApi";
 import { Spinner } from "../spinner";
 import cross from "../assets/cross.svg";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch,useAppSelecter } from "../Redux/Hooks/store";
+import { setUserInfo } from "../Redux/feature/authSlice";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -49,6 +50,7 @@ export function Login() {
   const [isdisabled, setisdisabled] = useState(false);
   const [timer, settimer] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -96,14 +98,21 @@ export function Login() {
       }
       if (response?.data) {
         toast.success(`${response?.data?.message}`, { duration: 5000 });
-        localStorage.setItem("user", JSON.stringify(response?.data?.data));
+        dispatch(setUserInfo(response?.data?.data));
+
+        // Do not use the hooks(which start with use) under the condition or loop. for more information read this blog https://react.dev/warnings/invalid-hook-call-warning
+        // useAppSelecter((state) => console.log(state.auth.user));
+
         setTimeout(() => {
           response?.data?.data?.user_workspace
             ? navigate("/dashboard")
             : navigate("/createworkspaceflow");
         }, 1000);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`${error}`,{duration: 5000});
+      console.log(error);
+    }
 
     console.log(values);
   }
@@ -195,7 +204,6 @@ export function Login() {
                 <Button
                   type="submit"
                   className="w-full bg-secondary"
-                  onClick={handlelogin}
                   disabled={isdisabled ? true : false}
                 >
                   Login

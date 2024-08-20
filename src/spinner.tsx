@@ -1,5 +1,5 @@
 // import React from 'react';
-import './Spinner.css'; // Keyframes CSS ke liye external CSS file import karni hogi
+import './Spinner.css'; 
 
 export const Spinner: React.FC = () => {
   return (

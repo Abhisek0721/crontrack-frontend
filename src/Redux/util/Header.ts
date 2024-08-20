@@ -1,7 +1,8 @@
-import {getAccessToken} from "./getUserDetailFromBrowser"
+import { useAppSelecter } from "../Hooks/store";
 
 
 export const Header = () =>{
-    const header = `Authorization : Bearer ${getAccessToken()} `
+    const token = useAppSelecter((state) => state.auth.user?.access_token);
+    const header = `Authorization : Bearer ${(token)} `
     return header;
 }

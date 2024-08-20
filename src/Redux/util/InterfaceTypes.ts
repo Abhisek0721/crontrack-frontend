@@ -7,6 +7,7 @@ export interface NewUser {
 }
 
 export interface NewUSerResponse {
+    access_token: String,
     id: String,
     email: String,
     full_name: String,
@@ -40,8 +41,8 @@ export interface LoginUser {
     password: String
   }
 export interface LoginuserResponse {
-    user: LoginUser,
-    token: string
+    access_token: String,
+    user: NewUSerResponse;
   }
   
 
