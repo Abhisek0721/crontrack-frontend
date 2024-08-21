@@ -8,16 +8,19 @@ export interface NewUser {
 
 export interface NewUSerResponse {
     access_token: String,
-    id: String,
-    email: String,
-    full_name: String,
-    verified: Boolean,
-    google_id: null | String,
-    message: String
-    profile_picture: null | String,
-    bio: null | String,
-    created_at: Date
-    updated_at: Date
+    user: {
+     id: String,
+     email: String,
+     full_name: String,
+     verified: Boolean,
+     google_id: null | String,
+     message: String
+     profile_picture: null | String,
+     bio: null | String,
+     created_at: Date
+     updated_at: Date 
+     }
+    user_workspace: Boolean | null
   
 }
 
@@ -42,7 +45,20 @@ export interface LoginUser {
   }
 export interface LoginuserResponse {
     access_token: String,
-    user: NewUSerResponse;
+    user: {
+       id: String,
+    email: String,
+    full_name: String,
+    verified: Boolean,
+    google_id: null | String,
+    message: String
+    profile_picture: null | String,
+    bio: null | String,
+    created_at: Date
+    updated_at: Date 
+    }
+    
+    user_workspace: Boolean | null
   }
   
 

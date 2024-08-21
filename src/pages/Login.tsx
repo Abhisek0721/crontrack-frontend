@@ -23,7 +23,7 @@ import { useUserSendforgotPasswordMutation } from "../Redux/feature/authApi";
 import { Spinner } from "../spinner";
 import cross from "../assets/cross.svg";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch,useAppSelecter } from "../Redux/Hooks/store";
+import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserInfo } from "../Redux/feature/authSlice";
 
 const formSchema = z.object({

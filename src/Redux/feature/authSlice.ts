@@ -6,7 +6,7 @@ import { NewUSerResponse,LoginuserResponse } from "../util/InterfaceTypes";
 }
 const storedUser = localStorage.getItem('user');
 const initialState: User = { 
-user: storedUser ? JSON.parse(storedUser) : null
+user: storedUser ? JSON.parse(storedUser) : null,
 };
 
 
@@ -22,7 +22,6 @@ export const authSlice = createSlice({
             localStorage.setItem("user", JSON.stringify(state.user));
 
         },
-
         removeUserInfo: (state) => {
             state.user = null;
             localStorage.removeItem('user');

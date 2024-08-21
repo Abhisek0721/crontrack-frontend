@@ -26,6 +26,8 @@ import { useNavigate } from "react-router-dom";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
 import { useAppDispatch, useAppSelecter } from "../Redux/Hooks/store";
 import { setUserInfo, removeUserInfo } from "../Redux/feature/authSlice";
+import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
+
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -127,12 +129,12 @@ export function Signup() {
       }
       // navigate("/multistepform"
     } catch (error: any) {
-      toast.error(`${error}`, {duration: 5000})
+      toast.error(`${error}`, { duration: 5000 });
     }
   }
 
+  const user = useAppSelecter((state) => state.auth.user);
   const handleVerificationMail = async () => {
-    const user = useAppSelecter((state) => state.auth.user);
     const email = { email: `${user?.email}` };
     console.log("userinfo ", email);
     const response = await verifyfn(email);
@@ -144,17 +146,24 @@ export function Signup() {
     }
     console.log("response", response);
   };
+
   //handler for PopupForm
+  const UserVerified = isUSerVerified();
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
-    const email: ResendverifyUser = { email: Popvalues.email };
-    const response = await verifyfn(email);
-    if (response?.error)
-      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-    if (response?.data) {
-      toast.success(`${response?.data?.message}`, { duration: 5000 });
-      handleTimer();
-      setisOpen(!isOpen);
+    if (!UserVerified) {
+      const email: ResendverifyUser = { email: Popvalues.email };
+      const response = await verifyfn(email);
+      if (response?.error)
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+      if (response?.data) {
+        toast.success(`${response?.data?.message}`, { duration: 5000 });
+        handleTimer();
+        setisOpen(!isOpen);
+      }
+      return;
     }
+
+    return toast.error("User already Verified", { duration: 5000 });
   }
 
   return (
@@ -281,49 +290,48 @@ export function Signup() {
 
           {isOpen && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 relative mx-4">
-              <div className="py-6">
-                <div className="text-xl font-semibold mb-4 absolute top-2 text-start ">
-                  Resend Verification Email
+              <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 relative mx-4">
+                <div className="py-6">
+                  <div className="text-xl font-semibold mb-4 absolute top-2 text-start ">
+                    Resend Verification Email
+                  </div>
+                  <img
+                    src={cross}
+                    alt=""
+                    className="absolute right-3 top-2 cursor-pointer"
+                    onClick={() => setisOpen(!isOpen)}
+                  />
                 </div>
-                <img
-                  src={cross}
-                  alt=""
-                  className="absolute right-3 top-2 cursor-pointer"
-                  onClick={() => setisOpen(!isOpen)}
-                />
+                <Form {...popupform}>
+                  <form onSubmit={popupform.handleSubmit(onPopUpSubmit)}>
+                    <div className="mb-4">
+                      <FormField
+                        control={popupform.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="shadcn@gmail.com"
+                                {...field}
+                                autoComplete="true"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Button type="submit" className="w-full">
+                        Resend email
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
               </div>
-              <Form {...popupform}>
-                <form onSubmit={popupform.handleSubmit(onPopUpSubmit)}>
-                  <div className="mb-4">
-                    <FormField
-                      control={popupform.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="shadcn@gmail.com"
-                              {...field}
-                              autoComplete="true"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Button type="submit" className="w-full">
-                      Resend email
-                    </Button>
-                  </div>
-                </form>
-              </Form>
             </div>
-          </div>
-          
           )}
 
           <div className="mt-4 text-center text-sm">

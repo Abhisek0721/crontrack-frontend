@@ -4,9 +4,12 @@ import { Spinner } from "../spinner";
 import { useEffect, useState } from "react";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png"
+import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
+
 
 export const VerifyUserByEmailLink = () => {
   const params = useParams();
+ 
   const [verifyUser, { isLoading }] = useUserVerifyMutation();
   const [isverified, setisverified] = useState<Boolean>();
   const [message, setmessage] = useState<String>("");
@@ -20,11 +23,13 @@ export const VerifyUserByEmailLink = () => {
       const response = await verifyUser(token);
       if (response?.error) {
         setisverified(false);
+        setIsUserVerified(false);
         setmessage(response?.error?.data?.message);
       }
       if (response?.data) {
         setisverified(true);
-        setmessage(response?.data?.message);
+        setIsUserVerified(true);
+        setmessage(response?.data?.message); 
       }
     };
     verifyUserHandler();
