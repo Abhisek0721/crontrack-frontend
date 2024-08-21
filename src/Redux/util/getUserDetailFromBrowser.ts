@@ -1,11 +1,15 @@
+export const getToken = () => {
+  const user = localStorage.getItem("user");
+  const header = `Authorization : Bearer ${user?.access_token} `;
+  return header;
+};
 
-export const getUserInfo = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
-    return user;
-}
+export const isUSerVerified = () => {
+  const storedValue = localStorage.getItem("isVerified");
+  const isVerified = storedValue !== null ? JSON.parse(storedValue) : false;
+  return isVerified;
+};
 
-export const getAccessToken = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
-    const token = user.token;
-    return token;
-}
+export const setIsUserVerified = (payload: Boolean) => {
+  localStorage.setItem("isVerified", JSON.stringify(payload));
+};

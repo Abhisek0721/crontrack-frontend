@@ -23,11 +23,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useNavigate } from "react-router-dom";
-import { getUserInfo } from "../Redux/util/getUserDetailFromBrowser";
-import type {
-  NewUSerResponse,
-  ResendverifyUser,
-} from "../Redux/util/InterfaceTypes";
+import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
+import { useAppDispatch, useAppSelecter } from "../Redux/Hooks/store";
+import { setUserInfo, removeUserInfo } from "../Redux/feature/authSlice";
+import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
+
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -49,6 +49,7 @@ const popupformSchema = z.object({
 
 export function Signup() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [show, setshow] = useState<Boolean>(false);
   const [showResendVerification, setshowResendVerification] =
     useState<Boolean>(false);
@@ -119,54 +120,55 @@ export function Signup() {
 
       if (response?.data) {
         //remove item from localStorage
-        localStorage.removeItem("user");
-
+        dispatch(removeUserInfo());
         //set new item in localstorage
-        localStorage.setItem("user", JSON.stringify(response?.data));
+        dispatch(setUserInfo(response?.data?.data));
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
       }
       // navigate("/multistepform"
-    } catch (error: any) {}
-    console.log("entered values", values);
+    } catch (error: any) {
+      toast.error(`${error}`, { duration: 5000 });
+    }
   }
 
+  const user = useAppSelecter((state) => state.auth.user);
   const handleVerificationMail = async () => {
-    const user = getUserInfo();
-    const email = { email: `${user?.data?.data?.email}` };
+    const email = { email: `${user?.email}` };
     console.log("userinfo ", email);
     const response = await verifyfn(email);
     if (response?.error)
-      toast.error(
-        `${response?.error?.data?.message}` || "An unexpected Error Occure",
-        { duration: 5000 }
-      );
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     if (response?.data) {
       toast.success(`${response?.data?.message}`, { duration: 5000 });
       handleTimer();
     }
     console.log("response", response);
   };
+
   //handler for PopupForm
+  const UserVerified = isUSerVerified();
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
-    const email: ResendverifyUser = { email: Popvalues.email };
-    const response = await verifyfn(email);
-    if (response?.error)
-      toast.error(
-        `${response?.error?.data?.message}` || "An unexpected Error Occure",
-        { duration: 5000 }
-      );
-    if (response?.data) {
-      toast.success(`${response?.data?.message}`, { duration: 5000 });
-      handleTimer();
-      setisOpen(!isOpen);
+    if (!UserVerified) {
+      const email: ResendverifyUser = { email: Popvalues.email };
+      const response = await verifyfn(email);
+      if (response?.error)
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+      if (response?.data) {
+        toast.success(`${response?.data?.message}`, { duration: 5000 });
+        handleTimer();
+        setisOpen(!isOpen);
+      }
+      return;
     }
+
+    return toast.error("User already Verified", { duration: 5000 });
   }
 
   return (
     <>
-      {isloginloading || (isverifyloading && <Spinner />)}
+      {(isloginloading || isverifyloading) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
         <div className="fixed top-1 left-4">
           {" "}
@@ -288,9 +290,9 @@ export function Signup() {
 
           {isOpen && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 relative mx-4">
                 <div className="py-6">
-                  <div className="text-xl font-semibold mb-4 absolute top-2 text-start">
+                  <div className="text-xl font-semibold mb-4 absolute top-2 text-start ">
                     Resend Verification Email
                   </div>
                   <img

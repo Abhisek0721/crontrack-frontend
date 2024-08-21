@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "../spinner";
 import closeEye from "../assets/closed-eye.svg";
 import openEye from "../assets/open-eye.svg";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   verification_token: z.string(),
@@ -31,6 +32,7 @@ export const ChangeUserPassword = () => {
   const [isshowPassword, setisshowPassword] = useState<Boolean>(false);
   const params = useParams();
   const token = params.token;
+  const navigate = useNavigate();
   console.log(token);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,25 +45,27 @@ export const ChangeUserPassword = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const payload = {
-        "verification_token": `${token}`,
-        "new_password": `${values.new_password}`
-    }
+      verification_token: `${token}`,
+      new_password: `${values.new_password}`,
+    };
 
     const response = await changePasswordfn(payload);
-    if(response?.error){
-        toast.error(`${response?.error?.data?.message}`, {duration: 5000})
+    if (response?.error) {
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }
-    if(response?.data){
-        toast.success(`${response?.data?.message}`, {duration: 5000});
+    if (response?.data) {
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
     }
-
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);
   }
 
   return (
     <>
-    {isLoading && <Spinner />}
-      <div className="inset-0 flex justify-center items-center h-[100vh]">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
+      {isLoading && <Spinner />}
+      <div className="inset-0 flex justify-center items-center min-h-[100vh] px-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 relative">
           <div className="py-6">
             <div className="text-xl font-semibold mb-4 absolute top-2 text-start">
               Change Password
@@ -89,7 +93,7 @@ export const ChangeUserPassword = () => {
                         src={isshowPassword ? openEye : closeEye}
                         alt=""
                         className="absolute top-8 right-3 cursor-pointer"
-                        onClick={ () => setisshowPassword(!isshowPassword)}                        
+                        onClick={() => setisshowPassword(!isshowPassword)}
                       />
 
                       <FormMessage />

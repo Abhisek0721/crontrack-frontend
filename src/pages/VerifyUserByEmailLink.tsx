@@ -1,11 +1,15 @@
 import { useUserVerifyMutation } from "../Redux/feature/authApi";
 import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 import { Spinner } from "../spinner";
 import { useEffect, useState } from "react";
-import verificationSuccess from "../assets/verificationSuccess.svg";
+import correct from "../assets/correct.png";
+import failed from "../assets/delete.png"
+import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
+
+
 export const VerifyUserByEmailLink = () => {
   const params = useParams();
+ 
   const [verifyUser, { isLoading }] = useUserVerifyMutation();
   const [isverified, setisverified] = useState<Boolean>();
   const [message, setmessage] = useState<String>("");
@@ -17,14 +21,15 @@ export const VerifyUserByEmailLink = () => {
   useEffect(() => {
     const verifyUserHandler = async () => {
       const response = await verifyUser(token);
-      console.log(response);
       if (response?.error) {
         setisverified(false);
+        setIsUserVerified(false);
         setmessage(response?.error?.data?.message);
       }
       if (response?.data) {
         setisverified(true);
-        setmessage(response?.data?.message);
+        setIsUserVerified(true);
+        setmessage(response?.data?.message); 
       }
     };
     verifyUserHandler();
@@ -32,13 +37,13 @@ export const VerifyUserByEmailLink = () => {
 
   return (
     <>
-      {isLoading && <Spinner />}
-      <div className="fixed inset-0 flex justify-center items-center flex-col bg-black bg-opacity-50 z-20">
+      {isLoading ? <Spinner /> : (  <div className="fixed inset-0 flex justify-center items-center flex-col bg-black bg-opacity-50 z-20">
         <img
+        className="w-[120px] animate-pulse"
           src={
             isverified
-              ? verificationSuccess
-              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgY6bZ4w9Lhugtn1bOnhq8P7cvovowVDW-rg&s"
+              ? correct
+              : failed
           }
           alt=""
         />
@@ -48,7 +53,8 @@ export const VerifyUserByEmailLink = () => {
             isverified ? "text-green-800" : "text-red-800"
           }`}
         >{`${message}`}</div>
-      </div>
+      </div>)}
+    
     </>
   );
 };
