@@ -34,6 +34,13 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+
+    /* Color Variable Start here */
+    --primary: #001F3F;
+    --secondary: #0e263e;
+  }
+  ::selection{
+    @apply bg-gray-100
   }
 
   .dark {
@@ -79,4 +86,27 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* this code for spinner */
+
+@keyframes pulse-0112 {
+  0%, 100% {
+      transform: scale(0);
+      opacity: 0.5;
+  }
+  50% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+
+/* Creating Class for using those variable */
+
+.bg-primary{
+ @apply bg-[var(--primary)]
+}
+.bg-secondary{
+  @apply bg-[var(--secondary)]
 }
