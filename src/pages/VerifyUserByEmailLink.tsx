@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png"
 import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
+import { useNavigate } from "react-router-dom";
 
 
 export const VerifyUserByEmailLink = () => {
   const params = useParams();
+  const navigate = useNavigate();
  
   const [verifyUser, { isLoading }] = useUserVerifyMutation();
   const [isverified, setisverified] = useState<Boolean>();
@@ -30,6 +32,9 @@ export const VerifyUserByEmailLink = () => {
         setisverified(true);
         setIsUserVerified(true);
         setmessage(response?.data?.message); 
+        setTimeout(() => {
+          navigate('/login'); 
+        }, 1000);
       }
     };
     verifyUserHandler();
