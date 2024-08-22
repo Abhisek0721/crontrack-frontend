@@ -2,20 +2,31 @@ import socialAccounts from "../DummyData/socialAccountData";
 import Plus from "../assets/plus.svg";
 import Minus from "../assets/minus.svg";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddSocialMediaAccounts: React.FC = () => {
+  const navigate = useNavigate();
   const [checkStates, setCheckStates] = useState<boolean[]>(
-    socialAccounts.map(() => false) 
+    socialAccounts.map(() => false)
   );
 
   const handleaddAccount = (index: number) => {
     setCheckStates((prevState) => {
-      const newStates = [...prevState]; 
+      const newStates = [...prevState];
       newStates[index] = !newStates[index];
       return newStates;
     });
   };
-  
+
+  const handlePrevious = () => {
+    navigate("/");
+  };
+  const handleContinue = () => {
+    toast.success("account added");
+  };
+
   return (
     <div className="w-full">
       <ul className="w-full flex flex-wrap items-center justify-center mb-4  gap-10">
@@ -35,6 +46,15 @@ const AddSocialMediaAccounts: React.FC = () => {
           </li>
         ))}
       </ul>
+      <div className="flex justify-between mt-8 sm:mt-10">
+        <Button onClick={handlePrevious} className={`bg-secondary`}>
+          Previous
+        </Button>
+
+        <Button className={`bg-secondary`} onClick={handleContinue}>
+          Continue
+        </Button>
+      </div>
     </div>
   );
 };

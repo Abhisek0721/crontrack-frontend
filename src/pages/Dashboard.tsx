@@ -1,17 +1,16 @@
-import { PlusCircledIcon } from "@radix-ui/react-icons"
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 
-import { Button } from "@/components/ui/button"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import { TabsContent,Tabs,TabsList,TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { AlbumArtwork } from "@/components/album-artwork"
-import { TopNavBar } from "./TopNavBar"
-import { PodcastEmptyPlaceholder } from "@/components/podcast-empty-placeholder"
-import { Sidebar } from "@/components/sidebar"
-import { listenNowAlbums, madeForYouAlbums } from "../DummyData/albums"
-import { playlists } from "../DummyData/playlists"
-
+import { AlbumArtwork } from "@/components/album-artwork";
+import { TopNavBar } from "./TopNavBar";
+import { PodcastEmptyPlaceholder } from "@/components/podcast-empty-placeholder";
+import { Sidebar } from "@/components/sidebar";
+import { listenNowAlbums, madeForYouAlbums } from "../DummyData/albums";
+import { playlists } from "../DummyData/playlists";
 
 export default function Dashboard() {
   return (
@@ -33,7 +32,7 @@ export default function Dashboard() {
         />
       </div>
       <div className="hidden md:block">
-        <TopNavBar/>
+        <TopNavBar />
         <div className="border-t">
           <div className="bg-background">
             <div className="grid lg:grid-cols-5">
@@ -142,5 +141,5 @@ export default function Dashboard() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -22,12 +22,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useNavigate } from "react-router-dom";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
-import { useAppDispatch, useAppSelecter } from "../Redux/Hooks/store";
-import { setUserInfo, removeUserInfo } from "../Redux/feature/authSlice";
 import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
-
+import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -48,8 +45,6 @@ const popupformSchema = z.object({
 });
 
 export function Signup() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [show, setshow] = useState<Boolean>(false);
   const [showResendVerification, setshowResendVerification] =
     useState<Boolean>(false);
@@ -57,15 +52,11 @@ export function Signup() {
   const [timer, settimer] = useState(0);
   const [isdisabled, setisdisabled] = useState(false);
   const [isverified, setisverified] = useState(false);
+  const [isemail, setemail] = useState("");
 
-  const [
-    loginfn,
-    { isLoading: isloginloading, isError: isSignupError, error: signupError },
-  ] = useUserSignUpMutation();
-  const [
-    verifyfn,
-    { isLoading: isverifyloading, isError: isVerifyError, error: verifyError },
-  ] = useUserResendVerificationMailMutation();
+  const [loginfn, { isLoading: isloginloading }] = useUserSignUpMutation();
+  const [verifyfn, { isLoading: isverifyloading }] =
+    useUserResendVerificationMailMutation();
 
   //function for timer
   useEffect(() => {
@@ -119,36 +110,35 @@ export function Signup() {
       }
 
       if (response?.data) {
-        //remove item from localStorage
-        dispatch(removeUserInfo());
-        //set new item in localstorage
-        dispatch(setUserInfo(response?.data?.data));
+        setemail(response?.data?.data?.email);
+        setIsUserVerified(false);
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
       }
-      // navigate("/multistepform"
     } catch (error: any) {
       toast.error(`${error}`, { duration: 5000 });
     }
   }
 
-  const user = useAppSelecter((state) => state.auth.user);
+  const UserVerified = isUSerVerified(); //check userVerified or not
+
   const handleVerificationMail = async () => {
-    const email = { email: `${user?.email}` };
-    console.log("userinfo ", email);
-    const response = await verifyfn(email);
-    if (response?.error)
-      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-    if (response?.data) {
-      toast.success(`${response?.data?.message}`, { duration: 5000 });
-      handleTimer();
+    if (!UserVerified) {
+      const email = { email: `${isemail}` };
+      const response = await verifyfn(email);
+      if (response?.error)
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+      if (response?.data) {
+        toast.success(`${response?.data?.message}`, { duration: 5000 });
+        handleTimer();
+      }
+      return;
     }
-    console.log("response", response);
+    return toast.error("User already Verified", { duration: 5000 });
   };
 
   //handler for PopupForm
-  const UserVerified = isUSerVerified();
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
     if (!UserVerified) {
       const email: ResendverifyUser = { email: Popvalues.email };

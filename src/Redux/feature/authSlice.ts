@@ -1,8 +1,8 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
-import { NewUSerResponse,LoginuserResponse } from "../util/InterfaceTypes";
+import {LoginuserResponse } from "../util/InterfaceTypes";
 
  interface User{
-    user: NewUSerResponse | LoginuserResponse | null;
+    user: LoginuserResponse | null;
 }
 const storedUser = localStorage.getItem('user');
 const initialState: User = { 
@@ -15,12 +15,11 @@ export const authSlice = createSlice({
     name: 'auth',
 
     reducers: {
-        setUserInfo: (state, action: PayloadAction<NewUSerResponse | LoginuserResponse>) => {
+        setUserInfo: (state, action: PayloadAction<LoginuserResponse>) => {
             state.user = action.payload;
 
             //always store data in console in the format of stringify and reterive data in the format of object
             localStorage.setItem("user", JSON.stringify(state.user));
-
         },
         removeUserInfo: (state) => {
             state.user = null;

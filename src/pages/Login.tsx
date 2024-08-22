@@ -28,7 +28,7 @@ import { setUserInfo } from "../Redux/feature/authSlice";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "invalied Email",
+    message: "Invalid Email",
   }),
   password: z.string().min(6, {
     message: "Password is required",
@@ -105,12 +105,12 @@ export function Login() {
 
         setTimeout(() => {
           response?.data?.data?.user_workspace
-            ? navigate("/dashboard")
-            : navigate("/createworkspaceflow");
+            ? navigate("/")
+            : navigate("/create-workspace-name");
         }, 1000);
       }
     } catch (error) {
-      toast.error(`${error}`,{duration: 5000});
+      toast.error(`${error}`, { duration: 5000 });
       console.log(error);
     }
 

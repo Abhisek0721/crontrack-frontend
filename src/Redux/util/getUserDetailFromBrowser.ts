@@ -1,7 +1,8 @@
 export const getToken = () => {
-  const user = localStorage.getItem("user");
-  const header = `Authorization : Bearer ${user?.access_token} `;
-  return header;
+  const Isuser = localStorage.getItem("user");
+  const userData = Isuser ? JSON.parse(Isuser) : null
+  const token = userData?.access_token;
+  return token;
 };
 
 export const isUSerVerified = () => {

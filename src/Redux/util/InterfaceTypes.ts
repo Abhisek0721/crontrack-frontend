@@ -7,8 +7,6 @@ export interface NewUser {
 }
 
 export interface NewUSerResponse {
-    access_token: String,
-    user: {
      id: String,
      email: String,
      full_name: String,
@@ -19,9 +17,6 @@ export interface NewUSerResponse {
      bio: null | String,
      created_at: Date
      updated_at: Date 
-     }
-    user_workspace: Boolean | null
-  
 }
 
 export interface ResendverifyUser {
@@ -46,7 +41,7 @@ export interface LoginUser {
 export interface LoginuserResponse {
     access_token: String,
     user: {
-       id: String,
+    id: String,
     email: String,
     full_name: String,
     verified: Boolean,
@@ -57,7 +52,6 @@ export interface LoginuserResponse {
     created_at: Date
     updated_at: Date 
     }
-    
     user_workspace: Boolean | null
   }
   
