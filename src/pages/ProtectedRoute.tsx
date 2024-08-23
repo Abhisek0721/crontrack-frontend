@@ -10,20 +10,24 @@ export const ProtectedRoute = () => {
   const isVerified = isUSerVerified();
   const isWorkSpace = userData?.user_workspace;
 
-  const handleOutlet = () => {
-    return <Outlet />;
-  };
-
   useEffect(() => {
     if (isVerified) {
       if (token) {
-        isWorkSpace ? handleOutlet() : navigate("/create-workspace-name");
-        return;
+        if (!isWorkSpace) {
+          navigate("/create-workspace-name");
+        }
+      } else {
+        navigate("/login");
       }
-      return navigate("/login");
+    } else {
+      navigate("/signup");
     }
-    return navigate("/signup");
-  }, []);
+  }, [isVerified, token, isWorkSpace, navigate]);
 
-  return <></>;
+  // Return an Outlet for the nested routes if all checks pass
+  if (isVerified && token && isWorkSpace) {
+    return <Outlet />;
+  }
+
+  return null;
 };

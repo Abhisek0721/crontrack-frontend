@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
-import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow"
+import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow";
 import Workspace from "./pages/WorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 import "./App.css";
@@ -20,21 +20,29 @@ function App() {
         <Route
           path="verify/verify-email/:tokenId"
           element={<VerifyUserByEmailLink />}
-        ></Route>
+        />
         <Route
           path="verify/forgot-password/:token"
           element={<ChangeUserPassword />}
-        ></Route>
-        <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />} >
-        <Route path="" element={<Workspace />} />
-        <Route path="add-socialmedia-accounts" element={<AddSocialMediaAccounts />} />
+        />
+        <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
+          <Route path="" element={<Workspace />} />
+          <Route
+            path="add-socialmedia-accounts"
+            element={<AddSocialMediaAccounts />}
+          />
         </Route>
-        <Route></Route>
+
+        
         <Route path="*" element={<ProtectedRoute />}>
           <Route path="" element={<Dashboard />}></Route>
         </Route>
-      </Routes>
 
+
+
+
+
+      </Routes>
       <Toaster />
     </Router>
   );
