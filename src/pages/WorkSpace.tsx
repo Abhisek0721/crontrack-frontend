@@ -14,6 +14,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import { useCreateWorkSpaceNameMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import toast from "react-hot-toast";
+import { Spinner } from "../spinner";
 
 //form schema
 const formSchema = z.object({
@@ -23,7 +24,7 @@ const formSchema = z.object({
 });
 
 interface handleWorkSpaceContex {
-  handledata: Number;
+  handledata: Function;
 }
 
 const Workspace = () => {
@@ -48,7 +49,7 @@ const Workspace = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await createWorkSpaceNamefn(values);
+      const response: any = await createWorkSpaceNamefn(values);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
       }
@@ -62,32 +63,35 @@ const Workspace = () => {
     }
   }
   return (
-    <div className=" w-[100%]">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="workspace_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Workspace Name"
-                    {...field}
-                    className="w-[100%] py-5 bg-blue-200  flex items-center justify-center"
-                  />
-                </FormControl>
+    <>
+      {isLoading && <Spinner />}
+      <div className=" w-[100%]">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="workspace_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Workspace Name"
+                      {...field}
+                      className="w-[100%] py-5 bg-blue-200  flex items-center justify-center"
+                    />
+                  </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-[100%] mt-4">
-            Create WorkSpace
-          </Button>
-        </form>
-      </Form>
-    </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-[100%] mt-4">
+              Create WorkSpace
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 };
 

@@ -91,7 +91,7 @@ export function Login() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await loginfn(values);
+      const response:any = await loginfn(values);
       console.log(response);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
@@ -118,7 +118,7 @@ export function Login() {
   }
 
   async function onPopUpSubmit(popupvalues: z.infer<typeof popupformSchema>) {
-    const response = await sendEmailfn(popupvalues);
+    const response:any = await sendEmailfn(popupvalues);
     if (response?.error) {
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }
