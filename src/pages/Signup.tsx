@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 const popupformSchema = z.object({
   email: z.string().email({
-    message: "Invalid Email",
+  message: "Invalid Email",
   }),
 });
 
@@ -102,8 +102,7 @@ export function Signup() {
   //handler for form
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await loginfn(values);
-      console.log(response);
+      const response:any = await loginfn(values);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
         setisverified(!isverified);
@@ -126,7 +125,7 @@ export function Signup() {
   const handleVerificationMail = async () => {
     if (!UserVerified) {
       const email = { email: `${isemail}` };
-      const response = await verifyfn(email);
+      const response:any = await verifyfn(email);
       if (response?.error)
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
       if (response?.data) {
@@ -142,7 +141,7 @@ export function Signup() {
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
     if (!UserVerified) {
       const email: ResendverifyUser = { email: Popvalues.email };
-      const response = await verifyfn(email);
+      const response:any = await verifyfn(email);
       if (response?.error)
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
       if (response?.data) {
@@ -330,7 +329,6 @@ export function Signup() {
               login
             </Link>
           </div>
-          {isverified ? (
             <div
               className={`mt-1 text-center text-sm ${
                 isdisabled ? `hidden` : `block`
@@ -345,9 +343,6 @@ export function Signup() {
                 click to verify
               </Link>
             </div>
-          ) : (
-            ""
-          )}
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[60%] h-[100vh] bg-primary">

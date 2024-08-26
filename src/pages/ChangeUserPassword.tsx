@@ -49,7 +49,7 @@ export const ChangeUserPassword = () => {
       new_password: `${values.new_password}`,
     };
 
-    const response = await changePasswordfn(payload);
+    const response:any = await changePasswordfn(payload);
     if (response?.error) {
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }
