@@ -23,8 +23,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
-import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
-import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -110,7 +108,6 @@ export function Signup() {
 
       if (response?.data) {
         setemail(response?.data?.data?.email);
-        setIsUserVerified(false);
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
@@ -120,10 +117,8 @@ export function Signup() {
     }
   }
 
-  const UserVerified = isUSerVerified(); //check userVerified or not
 
   const handleVerificationMail = async () => {
-    if (!UserVerified) {
       const email = { email: `${isemail}` };
       const response:any = await verifyfn(email);
       if (response?.error)
@@ -133,13 +128,10 @@ export function Signup() {
         handleTimer();
       }
       return;
-    }
-    return toast.error("User already Verified", { duration: 5000 });
   };
 
   //handler for PopupForm
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
-    if (!UserVerified) {
       const email: ResendverifyUser = { email: Popvalues.email };
       const response:any = await verifyfn(email);
       if (response?.error)
@@ -150,9 +142,6 @@ export function Signup() {
         setisOpen(!isOpen);
       }
       return;
-    }
-
-    return toast.error("User already Verified", { duration: 5000 });
   }
 
   return (

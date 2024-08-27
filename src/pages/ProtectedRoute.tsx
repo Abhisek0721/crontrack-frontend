@@ -1,14 +1,13 @@
 import { useAppSelecter } from "../Redux/Hooks/store";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
-import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
 
 export const ProtectedRoute = () => {
   const navigate = useNavigate();
   const userData = useAppSelecter((state) => state.auth.user);
-  const token = userData?.access_token;
-  const isVerified = isUSerVerified();
-  const isWorkSpace = userData?.user_workspace;
+  const token = useAppSelecter((state) => state.auth.access_token);
+  const isVerified = userData?.verified;
+  const isWorkSpace = useAppSelecter((state) => state.auth.user_workspace)
 
   useEffect(() => {
     if (isVerified) {

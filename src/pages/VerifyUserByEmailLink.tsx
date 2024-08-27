@@ -4,7 +4,6 @@ import { Spinner } from "../spinner";
 import { useEffect, useState } from "react";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png";
-import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
 import { useNavigate } from "react-router-dom";
 
 export const VerifyUserByEmailLink = () => {
@@ -24,12 +23,10 @@ export const VerifyUserByEmailLink = () => {
       const response: any = await verifyUser(token);
       if (response?.error) {
         setisverified(false);
-        setIsUserVerified(false);
         setmessage(response?.error?.data?.message);
       }
       if (response?.data) {
         setisverified(true);
-        setIsUserVerified(true);
         setmessage(response?.data?.message);
         setTimeout(() => {
           navigate("/login");
