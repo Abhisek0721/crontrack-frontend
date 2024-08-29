@@ -9,6 +9,8 @@ import { ProtectedRoute } from "./pages/ProtectedRoute";
 import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow";
 import Workspace from "./pages/WorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
+import PrivacyPolicy from "./legal/PrivacyPolicy";
+import TermsAndConditions from "./legal/TermAndCondition";
 import "./App.css";
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
           path="verify/forgot-password/:token"
           element={<ChangeUserPassword />}
         />
+
         <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
           <Route path="" element={<Workspace />} />
           <Route
@@ -33,15 +36,15 @@ function App() {
           />
         </Route>
 
-        
+        <Route path="legal/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="legal/terms-and-conditions"
+          element={<TermsAndConditions />}
+        ></Route>
+
         <Route path="*" element={<ProtectedRoute />}>
           <Route path="" element={<Dashboard />}></Route>
         </Route>
-
-
-
-
-
       </Routes>
       <Toaster />
     </Router>
