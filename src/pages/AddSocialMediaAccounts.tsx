@@ -1,16 +1,28 @@
 import socialAccounts from "../DummyData/socialAccountData";
 import Plus from "../assets/plus.svg";
 import Minus from "../assets/minus.svg";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
+
+
+interface handleWorkSpaceContex{
+  handledata: Function;
+}
 
 const AddSocialMediaAccounts: React.FC = () => {
   const navigate = useNavigate();
   const [checkStates, setCheckStates] = useState<boolean[]>(
     socialAccounts.map(() => false)
   );
+
+  useEffect(() => {
+    handledata(1);
+  }, [])
+  
+
+  const {handledata} = useOutletContext<handleWorkSpaceContex>()
 
   const handleaddAccount = (index: number) => {
     setCheckStates((prevState) => {
@@ -21,7 +33,7 @@ const AddSocialMediaAccounts: React.FC = () => {
   };
 
   const handlePrevious = () => {
-    navigate("/");
+    navigate("/create-workspace-name");
   };
   const handleContinue = () => {
     toast.success("account added");

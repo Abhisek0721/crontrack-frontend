@@ -225,6 +225,19 @@ export function Login() {
               Sign up
             </Link>
           </div>
+
+          <div className="text-sm text-muted-foreground text-center mt-3 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <Link
+                      to="/legal/terms-and-conditions"
+                      className="underline"
+                    >
+                      terms and conditions
+                    </Link>{" "}
+                    &{" "}
+                    <Link to="/legal/privacy-policy" className="underline">
+                      privacy policy
+                    </Link>
+                </div>
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[65%] h-[100vh] bg-primary">

@@ -52,7 +52,8 @@ export interface LoginuserResponse {
     created_at: Date
     updated_at: Date 
     }
-    user_workspace: Boolean | null
+    user_workspace: Array<{role: String,
+        workspace_name: String}> | null
   }
   
 

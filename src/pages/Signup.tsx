@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
 import Creato from "../assets/Creato-logo.jpg";
 import Background from "../assets/Login-Background.png";
@@ -23,8 +24,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
-import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
-import { setIsUserVerified } from "../Redux/util/getUserDetailFromBrowser";
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -40,7 +39,7 @@ const formSchema = z.object({
 
 const popupformSchema = z.object({
   email: z.string().email({
-  message: "Invalid Email",
+    message: "Invalid Email",
   }),
 });
 
@@ -53,6 +52,7 @@ export function Signup() {
   const [isdisabled, setisdisabled] = useState(false);
   const [isverified, setisverified] = useState(false);
   const [isemail, setemail] = useState("");
+  const [isCheckd, setisCheckd] = useState(true);
 
   const [loginfn, { isLoading: isloginloading }] = useUserSignUpMutation();
   const [verifyfn, { isLoading: isverifyloading }] =
@@ -102,7 +102,7 @@ export function Signup() {
   //handler for form
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response:any = await loginfn(values);
+      const response: any = await loginfn(values);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
         setisverified(!isverified);
@@ -110,7 +110,6 @@ export function Signup() {
 
       if (response?.data) {
         setemail(response?.data?.data?.email);
-        setIsUserVerified(false);
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
@@ -120,40 +119,35 @@ export function Signup() {
     }
   }
 
-  const UserVerified = isUSerVerified(); //check userVerified or not
-
   const handleVerificationMail = async () => {
-    if (!UserVerified) {
-      const email = { email: `${isemail}` };
-      const response:any = await verifyfn(email);
-      if (response?.error)
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-      if (response?.data) {
-        toast.success(`${response?.data?.message}`, { duration: 5000 });
-        handleTimer();
-      }
-      return;
+    const email = { email: `${isemail}` };
+    const response: any = await verifyfn(email);
+    if (response?.error)
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+    if (response?.data) {
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
+      handleTimer();
     }
-    return toast.error("User already Verified", { duration: 5000 });
+    return;
   };
 
   //handler for PopupForm
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
-    if (!UserVerified) {
-      const email: ResendverifyUser = { email: Popvalues.email };
-      const response:any = await verifyfn(email);
-      if (response?.error)
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-      if (response?.data) {
-        toast.success(`${response?.data?.message}`, { duration: 5000 });
-        handleTimer();
-        setisOpen(!isOpen);
-      }
-      return;
+    const email: ResendverifyUser = { email: Popvalues.email };
+    const response: any = await verifyfn(email);
+    if (response?.error)
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+    if (response?.data) {
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
+      handleTimer();
+      setisOpen(!isOpen);
     }
-
-    return toast.error("User already Verified", { duration: 5000 });
+    return;
   }
+
+  const handleCheck = () => {
+    setisCheckd(!isCheckd);
+  };
 
   return (
     <>
@@ -173,7 +167,18 @@ export function Signup() {
           </div>
 
           <Form {...form}>
-            <form className="py-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="py-4"
+              onSubmit={form.handleSubmit((values) => {
+                if (!isCheckd) {
+                  toast.error("You must accept the terms and conditions", {
+                    duration: 5000,
+                  });
+                  return;
+                }
+                onSubmit(values);
+              })}
+            >
               <div className="grid gap-5">
                 <div className="grid gap-2">
                   <FormField
@@ -274,6 +279,32 @@ export function Signup() {
                   Sign up with Google
                 </Button>
               </div>
+              <div className="mt-[0.25em] items-top flex space-x-2">
+                <Checkbox
+                  id="terms1"
+                  className="h-4 w-4 mt-1"
+                  checked={isCheckd}
+                  onCheckedChange={handleCheck}
+                />
+                <div className="text-sm text-muted-foreground">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    accept{" "}
+                    <Link
+                      to="/legal/terms-and-conditions"
+                      className="underline"
+                    >
+                      terms and conditions
+                    </Link>{" "}
+                    &{" "}
+                    <Link to="/legal/privacy-policy" className="underline">
+                      privacy policy
+                    </Link>
+                  </label>
+                </div>
+              </div>
             </form>
           </Form>
 
@@ -329,20 +360,20 @@ export function Signup() {
               login
             </Link>
           </div>
-            <div
-              className={`mt-1 text-center text-sm ${
-                isdisabled ? `hidden` : `block`
-              }`}
+          <div
+            className={`mt-1 text-center text-sm ${
+              isdisabled ? `hidden` : `block`
+            }`}
+          >
+            Didn't verified?{" "}
+            <Link
+              to="#"
+              className="underline"
+              onClick={() => setisOpen(!isOpen)}
             >
-              Didn't verified?{" "}
-              <Link
-                to="#"
-                className="underline"
-                onClick={() => setisOpen(!isOpen)}
-              >
-                click to verify
-              </Link>
-            </div>
+              click to verify
+            </Link>
+          </div>
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[60%] h-[100vh] bg-primary">
