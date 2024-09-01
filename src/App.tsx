@@ -42,9 +42,12 @@ function App() {
           element={<TermsAndConditions />}
         ></Route>
 
+
         <Route path="*" element={<ProtectedRoute />}>
           <Route path="" element={<Dashboard />}></Route>
         </Route>
+
+
       </Routes>
       <Toaster />
     </Router>

@@ -7,15 +7,16 @@ import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AlbumArtwork } from "@/components/album-artwork";
 import { TopNavBar } from "./TopNavBar";
-import { PodcastEmptyPlaceholder } from "@/components/podcast-empty-placeholder";
+import { Podcast } from "@/components/PodCast";
 import { Sidebar } from "@/components/sidebar";
 import { listenNowAlbums, madeForYouAlbums } from "../DummyData/albums";
 import { playlists } from "../DummyData/playlists";
+import { Menubar } from "@/components/ui/menubar";
 
 export default function Dashboard() {
   return (
     <>
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <img
           src="/examples/music-light.png"
           width={1280}
@@ -30,8 +31,9 @@ export default function Dashboard() {
           alt="Music"
           className="hidden dark:block"
         />
-      </div>
+      </div> */}
       <div className="hidden md:block">
+        
         <TopNavBar />
         <div className="border-t">
           <div className="bg-background">
@@ -61,7 +63,7 @@ export default function Dashboard() {
                       value="music"
                       className="border-none p-0 outline-none"
                     >
-                      <div className="flex items-center justify-between">
+                      {/* <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
                             Listen Now
@@ -71,8 +73,8 @@ export default function Dashboard() {
                           </p>
                         </div>
                       </div>
-                      <Separator className="my-4" />
-                      <div className="relative">
+                      <Separator className="my-4" /> */}
+                      {/* <div className="relative">
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
                             {listenNowAlbums.map((album) => (
@@ -88,16 +90,16 @@ export default function Dashboard() {
                           </div>
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
-                      </div>
-                      <div className="mt-6 space-y-1">
+                      </div> */}
+                      {/* <div className="mt-6 space-y-1">
                         <h2 className="text-2xl font-semibold tracking-tight">
                           Made for You
                         </h2>
                         <p className="text-sm text-muted-foreground">
                           Your personal playlists. Updated daily.
                         </p>
-                      </div>
-                      <Separator className="my-4" />
+                      </div> */}
+                      {/* <Separator className="my-4" />
                       <div className="relative">
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
@@ -114,12 +116,15 @@ export default function Dashboard() {
                           </div>
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
-                      </div>
+                      </div> */}
                     </TabsContent>
                     <TabsContent
                       value="podcasts"
                       className="h-full flex-col border-none p-0 data-[state=active]:flex"
                     >
+
+
+                      {/* podcast section ke andar dikhne wala ui  */}
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
@@ -131,8 +136,8 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <Separator className="my-4" />
-                      <PodcastEmptyPlaceholder />
-                    </TabsContent>
+                      <Podcast/> 
+                      </TabsContent>
                   </Tabs>
                 </div>
               </div>
