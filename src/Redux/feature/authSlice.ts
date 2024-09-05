@@ -2,21 +2,21 @@ import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import {LoginuserResponse } from "../util/InterfaceTypes";
 
 interface userWorkspace{
-role: String,
-workspace_name: String
+role: string,
+workspace_name: string
 }
  interface User{
-    user: {id: String,
-        email: String,
-        full_name: String,
-        verified: Boolean,
-        google_id: null | String,
-        message: String
-        profile_picture: null | String,
-        bio: null | String,
+    user: {id: string,
+        email: string,
+        full_name: string,
+        verified: boolean,
+        google_id: null | string,
+        message: string
+        profile_picture: null | string,
+        bio: null | string,
         created_at: Date
         updated_at: Date } | null
-    access_token: String | null;
+    access_token: string | null;
     user_workspace: Array<userWorkspace> | null;
 }
 
@@ -52,6 +52,8 @@ export const authSlice = createSlice({
         removeUserInfo: (state) => {
             state.user = null;
             localStorage.removeItem('user');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user_workspace');
         }
     }
 })

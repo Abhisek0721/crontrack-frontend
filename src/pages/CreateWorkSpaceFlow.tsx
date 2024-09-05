@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
 export const CreateWorkSpaceFlow = () => {
-  const [currentStep, setcurrentStep] = useState<Number>();
+  const [currentStep, setcurrentStep] = useState<number>();
 
-  const handledata = (data: Number) => {
+  const handledata = (data: number) => {
     setcurrentStep(data);
   };
 

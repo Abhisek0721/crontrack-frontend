@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 
 interface handleWorkSpaceContex {
-  handledata: Function;
+  handledata: (arg: number) => void;
 }
 
 const Workspace = () => {
@@ -36,7 +36,7 @@ const Workspace = () => {
 
   useEffect(() => {
     handledata(0);
-  }, []);
+  }, [handledata]);
 
   // 1. Define  form.
   const form = useForm<z.infer<typeof formSchema>>({

@@ -7,8 +7,8 @@ import { useNavigate,useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
-interface handleWorkSpaceContex{
-  handledata: Function;
+interface handleWorkSpaceContex {
+  handledata: (arg: number) => void;
 }
 
 const AddSocialMediaAccounts: React.FC = () => {
@@ -17,12 +17,13 @@ const AddSocialMediaAccounts: React.FC = () => {
     socialAccounts.map(() => false)
   );
 
-  useEffect(() => {
-    handledata(1);
-  }, [])
   
 
   const {handledata} = useOutletContext<handleWorkSpaceContex>()
+  
+  useEffect(() => {
+    handledata(1);
+  },[handledata])
 
   const handleaddAccount = (index: number) => {
     setCheckStates((prevState) => {

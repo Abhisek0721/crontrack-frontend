@@ -44,15 +44,15 @@ const popupformSchema = z.object({
 });
 
 export function Signup() {
-  const [show, setshow] = useState<Boolean>(false);
+  const [show, setshow] = useState<boolean>(false);
   const [showResendVerification, setshowResendVerification] =
-    useState<Boolean>(false);
-  const [isOpen, setisOpen] = useState<Boolean>(false);
-  const [timer, settimer] = useState(0);
-  const [isdisabled, setisdisabled] = useState(false);
-  const [isverified, setisverified] = useState(false);
-  const [isemail, setemail] = useState("");
-  const [isCheckd, setisCheckd] = useState(true);
+    useState<boolean>(false);
+  const [isOpen, setisOpen] = useState<boolean>(false);
+  const [timer, settimer] = useState<number>(0);
+  const [isdisabled, setisdisabled] = useState<boolean>(false);
+  const [isverified, setisverified] = useState<boolean>(false);
+  const [isemail, setemail] = useState<string>("");
+  const [isCheckd, setisCheckd] = useState<boolean>(true);
 
   const [loginfn, { isLoading: isloginloading }] = useUserSignUpMutation();
   const [verifyfn, { isLoading: isverifyloading }] =
@@ -102,9 +102,9 @@ export function Signup() {
   //handler for form
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response: any = await loginfn(values);
+      const response:any = await loginfn(values);
       if (response?.error) {
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });//yaha pr ye error islye aa rha h kyu ki ts ye guranti nhi deta ki reponse ke andar error ke andar data property exist krti h 
         setisverified(!isverified);
       }
 
@@ -186,7 +186,7 @@ export function Signup() {
                     name="full_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="shadcn"

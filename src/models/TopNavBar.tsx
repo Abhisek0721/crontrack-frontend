@@ -1,7 +1,8 @@
 import { MainNav } from "@/components/main-nav";
 import { Search } from "@/components/search";
 import TeamSwitcher from "@/components/team-switcher";
-import { SendInvitationEmail } from "./SendInvitationEmail";
+import { Avtar } from "@/components/avtar";
+import { InviteMember } from "@/components/inviteMember";
 export const TopNavBar = () => {
   return (
     <div className="flex justify-between pl-4 pr-11 py-4">
@@ -10,10 +11,10 @@ export const TopNavBar = () => {
         <MainNav />
       </div>
       <div className="flex gap-4">
-       <SendInvitationEmail />
-      <Search />  
+        <InviteMember />
+        <Search />
+        <Avtar />
       </div>
-     
     </div>
   );
 };

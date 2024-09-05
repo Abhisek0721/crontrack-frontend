@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 export const ChangeUserPassword = () => {
   const [changePasswordfn, { isLoading }] = useUserChangePasswordMutation();
-  const [isshowPassword, setisshowPassword] = useState<Boolean>(false);
+  const [isshowPassword, setisshowPassword] = useState<boolean>(false);
   const params = useParams();
   const token = params.token;
   const navigate = useNavigate();

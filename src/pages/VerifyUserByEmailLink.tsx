@@ -11,8 +11,8 @@ export const VerifyUserByEmailLink = () => {
   const navigate = useNavigate();
 
   const [verifyUser, { isLoading }] = useUserVerifyMutation();
-  const [isverified, setisverified] = useState<Boolean>();
-  const [message, setmessage] = useState<String>("");
+  const [isverified, setisverified] = useState<boolean>();
+  const [message, setmessage] = useState<string>("");
 
   const token = {
     verification_token: `${params.tokenId}`,
@@ -20,7 +20,7 @@ export const VerifyUserByEmailLink = () => {
 
   useEffect(() => {
     const verifyUserHandler = async () => {
-      const response: any = await verifyUser(token);
+      const response:any = await verifyUser(token);
       if (response?.error) {
         setisverified(false);
         setmessage(response?.error?.data?.message);
@@ -34,7 +34,7 @@ export const VerifyUserByEmailLink = () => {
       }
     };
     verifyUserHandler();
-  }, []);
+  });
 
   return (
     <>
