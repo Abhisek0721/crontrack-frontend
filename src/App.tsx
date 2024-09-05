@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
-import { ProtectedRoute } from "./pages/ProtectedRoute";
+import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
 import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow";
 import Workspace from "./pages/WorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";

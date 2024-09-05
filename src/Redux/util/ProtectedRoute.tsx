@@ -1,4 +1,4 @@
-import { useAppSelecter } from "../Redux/Hooks/store";
+import { useAppSelecter } from "../Hooks/store";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -10,18 +10,14 @@ export const ProtectedRoute = () => {
   const isWorkSpace = useAppSelecter((state) => state.auth.user_workspace)
 
   useEffect(() => {
-    if (isVerified) {
-      if (token) {
+      if (token && isVerified) {
         if (!isWorkSpace) {
           navigate("/create-workspace-name");
         }
       } else {
         navigate("/login");
       }
-    } else {
-      navigate("/signup");
-    }
-  }, [isVerified, token, isWorkSpace, navigate]);
+    }, [isVerified, token, isWorkSpace, navigate]);
 
   // Return an Outlet for the nested routes if all checks pass
   if (isVerified && token && isWorkSpace) {

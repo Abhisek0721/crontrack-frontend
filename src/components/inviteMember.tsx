@@ -2,26 +2,19 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
 import inviteMember from "../assets/noun-user-management-5660550.svg"
-import { useState } from "react"
-import {z} from "zod"
-
-const formSchema = z.object({
-  members_to_invite: z.string().email({ 
-    message: "Invalied Email",
-  })
-})
 
 
-export const SendInvitationEmail = () =>  {
+
+
+
+export const InviteMember = () =>  {
 
   return (
     <>

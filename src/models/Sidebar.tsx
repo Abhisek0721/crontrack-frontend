@@ -1,36 +1,33 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import calender from "../assets/calender.svg"
-import member from "../assets/member-svgrepo-com (1).svg"
-import dashboardSvg from "../assets/Dashboard.svg"
-import { Playlist } from "../DummyData/playlists"
+import { RxDashboard } from "react-icons/rx";
+import { CiSignpostDuo1 } from "react-icons/ci";
+import { CiCalendar } from "react-icons/ci";
+import { PiUsersThreeDuotone } from "react-icons/pi";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  playlists: Playlist[]
-}
 
-export function Sidebar({ className, playlists }: SidebarProps) {
+
+
+export function Sidebar({ className }: { className?: string }) {
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <div className="space-y-1">
             <Button variant="ghost" className="w-full justify-start flex gap-2">
-              <img src={dashboardSvg} alt="" />
+            <RxDashboard/>
               Dashboard
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start flex gap-2">
+            <CiSignpostDuo1 className="text-[1.01rem]"/>
               Post
             </Button>
             <Button variant="ghost" className="w-full flex justify-start gap-2">
-              <img src={calender} alt="" />
+            <CiCalendar className="text-[1.01rem]"/>
               Calendar
             </Button>
             <Button variant="ghost" className="w-full justify-start gap-2">
-              <div className="flex relative">
-              <img src={member} alt="" className="absolute top-1 right-2" />
-              <img src={member} alt="" />
-              </div>
+            <PiUsersThreeDuotone className="text-[1.02rem]"/>
               Members            
               </Button>
             <Button variant="ghost" className="w-full justify-start">
