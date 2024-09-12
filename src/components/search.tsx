@@ -1,11 +1,12 @@
 import { Input } from "@/components/ui/input";
-export function Search() {
+import { cn } from "@/lib/utils";
+export function Search({className} : React.HTMLAttributes<HTMLElement>) {
   return (
     <div>
       <Input
         type="search"
         placeholder="Search..."
-        className="md:w-[100px] lg:w-[300px]"
+        className={cn("w-[300px]", className)}
       />
     </div>
   );

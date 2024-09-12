@@ -7,8 +7,7 @@ import { Sidebar } from "../models/Sidebar";
 export default function Dashboard() {
   return (
     <>
-      <div className="hidden md:block">
-        
+      <div className="">
         <TopNavBar />
         <div className="border-t">
           <div className="bg-background">
