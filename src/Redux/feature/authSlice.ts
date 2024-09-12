@@ -2,8 +2,13 @@ import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import {LoginuserResponse } from "../util/InterfaceTypes";
 
 interface userWorkspace{
+id: string
 role: string,
-workspace_name: string
+workspace: {
+    created_at: string,
+    workspaceId: string,
+    workspace_name: string
+}
 }
  interface User{
     user: {id: string,

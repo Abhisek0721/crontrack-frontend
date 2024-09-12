@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
-import Creato from "../assets/Creato-logo.jpg";
+import crontrack from "../assets/croneTrack-removebg-preview.png";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -155,14 +155,14 @@ export function Signup() {
       <div className="w-full flex justify-between items-center overflow-hidden">
         <div className="fixed top-1 left-4">
           {" "}
-          <img src={Creato} className=" w-[80px] rounded-[50%]" alt="" />
+          <img src={crontrack} className=" w-[80px] rounded-[50%]" alt="" />
         </div>
 
         <div className="lg:min-w-[30%] my-auto mx-auto px-3">
           <div className="text-center py-6">
             <h1 className="text-3xl font-bold py-4">Signup</h1>
             <p className="text-balance text-muted-foreground">
-              Set up your account to start using Creato
+              Set up your account to start using Cronetrack
             </p>
           </div>
 

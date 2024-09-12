@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import Creato from "../assets/Creato-logo.jpg";
+import Crontetrack from "../assets/croneTrack-removebg-preview.png";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -91,7 +91,7 @@ export function Login() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response:any = await loginfn(values);
+      const response: any = await loginfn(values);
       console.log(response);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
@@ -118,7 +118,7 @@ export function Login() {
   }
 
   async function onPopUpSubmit(popupvalues: z.infer<typeof popupformSchema>) {
-    const response:any = await sendEmailfn(popupvalues);
+    const response: any = await sendEmailfn(popupvalues);
     if (response?.error) {
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }
@@ -134,7 +134,7 @@ export function Login() {
       <div className="w-full flex justify-between items-center overflow-hidden">
         <div className="fixed top-1 left-4">
           {" "}
-          <img src={Creato} className=" w-[80px] rounded-[50%]" alt="" />
+          <img src={Crontetrack} className=" w-[80px] rounded-[50%]" alt="" />
         </div>
 
         <div className="lg:max-w-[60vw] my-auto mx-auto px-3">
@@ -227,17 +227,14 @@ export function Login() {
           </div>
 
           <div className="text-sm text-muted-foreground text-center mt-3 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    <Link
-                      to="/legal/terms-and-conditions"
-                      className="underline"
-                    >
-                      terms and conditions
-                    </Link>{" "}
-                    &{" "}
-                    <Link to="/legal/privacy-policy" className="underline">
-                      privacy policy
-                    </Link>
-                </div>
+            <Link to="/legal/terms-and-conditions" className="underline">
+              terms and conditions
+            </Link>{" "}
+            &{" "}
+            <Link to="/legal/privacy-policy" className="underline">
+              privacy policy
+            </Link>
+          </div>
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[65%] h-[100vh] bg-primary">
@@ -252,7 +249,7 @@ export function Login() {
 
       {isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/3 relative">
             <div className="py-6">
               <div className="text-xl font-semibold mb-4 absolute top-2 text-start">
                 Send Verification Email

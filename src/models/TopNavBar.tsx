@@ -1,18 +1,18 @@
-import { MainNav } from "@/components/main-nav";
+// import { MainNav } from "@/components/main-nav";
+// import { MainNavMd } from "@/components/MainNavMd";
 import { Search } from "@/components/search";
-import TeamSwitcher from "@/components/team-switcher";
+import {WorkSpaceSwitcher} from "@/components/workSpaceSwitcher";
 import { Avtar } from "@/components/avtar";
-import { InviteMember } from "@/components/inviteMember";
 export const TopNavBar = () => {
   return (
     <div className="flex justify-between pl-4 pr-11 py-4">
       <div className="flex gap-4">
-        <TeamSwitcher />
-        <MainNav />
+        <WorkSpaceSwitcher className="" />
+        {/* <MainNav className="hidden md:block"/>
+        <MainNavMd className="block md:hidden ml-[-1.6rem]"/> */}
       </div>
       <div className="flex gap-4">
-        <InviteMember />
-        <Search />
+        <Search className="hidden sm:block" />
         <Avtar />
       </div>
     </div>
