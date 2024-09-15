@@ -2,12 +2,10 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverAnchor,
 } from "@/components/ui/popover";
 
 import {
   CaretSortIcon,
-  CheckIcon,
   PlusCircledIcon,
 } from "@radix-ui/react-icons";
 

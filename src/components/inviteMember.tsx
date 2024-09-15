@@ -10,7 +10,6 @@ import {
 import {
   FormControl,
   Form,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,7 +29,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
-import { Ghost } from "lucide-react";
 const formSchema = z.object({
   email: z.string().email({
     message: "email not valied",
