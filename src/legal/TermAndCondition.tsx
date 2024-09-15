@@ -1,15 +1,16 @@
+import { constant } from "../constants";
 
 const TermsAndConditions: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Terms and Conditions for Cronklub</h1>
+      <h1 className="text-3xl font-bold mb-6">Terms and Conditions for {constant.APP_NAME}</h1>
       <p className="text-gray-700 mb-4">Effective Date: 29-08-2024</p>
 
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
         <p className="text-gray-700 mb-2">
-          Welcome to Cronklub. These Terms and Conditions ("Terms") govern your
-          access to and use of our website (cronklub.com) and services. By
+          Welcome to {constant.APP_NAME}. These Terms and Conditions ("Terms") govern your
+          access to and use of our website (crontrack.com) and services. By
           accessing or using our services, you agree to comply with these Terms.
           If you do not agree with these Terms, please do not use our services.
         </p>
@@ -22,13 +23,13 @@ const TermsAndConditions: React.FC = () => {
           legal capacity to enter into contracts to use our services.
         </p>
         <p className="text-gray-700 mb-2">
-          <strong>Account Registration:</strong> To use certain features of Cronklub,
+          <strong>Account Registration:</strong> To use certain features of {constant.APP_NAME},
           you must register for an account. You are responsible for maintaining
           the confidentiality of your account information and for all activities
           that occur under your account.
         </p>
         <p className="text-gray-700 mb-2">
-          <strong>User Conduct:</strong> You agree not to use Cronklub for any unlawful
+          <strong>User Conduct:</strong> You agree not to use {constant.APP_NAME} for any unlawful
           or prohibited purposes, including but not limited to:
         </p>
         <ul className="list-disc list-inside text-gray-700 mb-2">
@@ -43,12 +44,12 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">3. Content</h2>
         <p className="text-gray-700 mb-2">
           <strong>Your Content:</strong> You retain ownership of any content you post or
-          share through Cronklub. By posting content, you grant us a non-exclusive,
+          share through {constant.APP_NAME}. By posting content, you grant us a non-exclusive,
           worldwide, royalty-free license to use, display, and distribute your content
           in connection with our services.
         </p>
         <p className="text-gray-700 mb-2">
-          <strong>Third-Party Content:</strong> Cronklub may include content provided by
+          <strong>Third-Party Content:</strong> {constant.APP_NAME} may include content provided by
           third parties. We do not control or endorse such content and are not
           responsible for its accuracy or legality.
         </p>
@@ -57,7 +58,7 @@ const TermsAndConditions: React.FC = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">4. Subscription and Payment</h2>
         <p className="text-gray-700 mb-2">
-          <strong>Subscription Plans:</strong> Cronklub offers various subscription plans
+          <strong>Subscription Plans:</strong> {constant.APP_NAME} offers various subscription plans
           with different features. By subscribing, you agree to pay the fees associated
           with your chosen plan.
         </p>
@@ -76,12 +77,12 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">5. Intellectual Property</h2>
         <p className="text-gray-700 mb-2">
           <strong>Ownership:</strong> All content, software, and materials provided on
-          Cronklub are owned by us or our licensors and are protected by intellectual
+          {constant.APP_NAME} are owned by us or our licensors and are protected by intellectual
           property laws. You may not reproduce, distribute, or create derivative works
           from our content without our prior written consent.
         </p>
         <p className="text-gray-700 mb-2">
-          <strong>Trademarks:</strong> The Cronklub name, logo, and any related trademarks
+          <strong>Trademarks:</strong> The {constant.APP_NAME} name, logo, and any related trademarks
           are our property. You may not use them without our express permission.
         </p>
       </section>
@@ -108,14 +109,14 @@ const TermsAndConditions: React.FC = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">7. Disclaimers and Limitation of Liability</h2>
         <p className="text-gray-700 mb-2">
-          <strong>Disclaimer of Warranties:</strong> Cronklub is provided "as is" and "as
+          <strong>Disclaimer of Warranties:</strong> {constant.APP_NAME} is provided "as is" and "as
           available" without any warranties of any kind, either express or implied. We do
           not guarantee that our services will be uninterrupted, error-free, or secure.
         </p>
         <p className="text-gray-700 mb-2">
           <strong>Limitation of Liability:</strong> To the fullest extent permitted by law,
           we will not be liable for any indirect, incidental, special, or consequential
-          damages arising out of or in connection with your use of Cronklub. Our total
+          damages arising out of or in connection with your use of {constant.APP_NAME}. Our total
           liability to you for any claims arising from these Terms or your use of the
           services will not exceed the amount you paid us in the past [six/twelve] months.
         </p>
@@ -125,7 +126,7 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">8. Indemnification</h2>
         <p className="text-gray-700 mb-2">
           You agree to indemnify and hold us harmless from any claims, damages,
-          liabilities, and expenses arising out of your use of Cronklub or your violation
+          liabilities, and expenses arising out of your use of {constant.APP_NAME} or your violation
           of these Terms.
         </p>
       </section>
@@ -142,7 +143,7 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">10. Changes to These Terms</h2>
         <p className="text-gray-700 mb-2">
           We may update these Terms from time to time. We will notify you of any changes
-          by posting the updated Terms on this page. Your continued use of Cronklub after
+          by posting the updated Terms on this page. Your continued use of {constant.APP_NAME} after
           the changes are posted constitutes your acceptance of the new Terms.
         </p>
       </section>

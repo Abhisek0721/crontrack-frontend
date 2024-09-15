@@ -1,16 +1,17 @@
+import { constant } from "../constants";
 
 const PrivacyPolicy: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy for Cronklub</h1>
+      <h1 className="text-3xl font-bold mb-6">Privacy Policy for {constant.APP_NAME}</h1>
       <p className="text-gray-700 mb-4">Effective Date: 29-08-2024</p>
 
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
         <p className="text-gray-700 mb-2">
-          Welcome to Cronklub. This Privacy Policy explains how we collect, use,
+          Welcome to {constant.APP_NAME}. This Privacy Policy explains how we collect, use,
           disclose, and safeguard your information when you visit our website
-          (cronklub.com) and use our services. Please read this privacy policy
+          (crontrack.com) and use our services. Please read this privacy policy
           carefully. If you do not agree with the terms of this privacy policy,
           please do not access the site.
         </p>
@@ -29,7 +30,7 @@ const PrivacyPolicy: React.FC = () => {
           </li>
           <li>
             <strong>Social Media Data:</strong> When you link your social media
-            accounts to Cronklub, we may collect your profile information,
+            accounts to {constant.APP_NAME}, we may collect your profile information,
             posts, messages, followers, and other related data.
           </li>
           <li>

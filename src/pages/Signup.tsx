@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
-import crontrack from "../assets/croneTrack-removebg-preview.png";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -24,6 +23,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
+import LogoIcon from "@/components/logo";
+import { constant } from "@/constants/index";
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -153,16 +154,13 @@ export function Signup() {
     <>
       {(isloginloading || isverifyloading) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
-        <div className="fixed top-1 left-4">
-          {" "}
-          <img src={crontrack} className=" w-[80px] rounded-[50%]" alt="" />
-        </div>
+        <LogoIcon />
 
-        <div className="lg:min-w-[30%] my-auto mx-auto px-3">
+        <div className="lg:min-w-[30%] mt-16 md:mt-0 mx-auto px-3">
           <div className="text-center py-6">
             <h1 className="text-3xl font-bold py-4">Signup</h1>
             <p className="text-balance text-muted-foreground">
-              Set up your account to start using Cronetrack
+              Set up your account to start using {constant.APP_NAME}
             </p>
           </div>
 
@@ -355,7 +353,7 @@ export function Signup() {
           )}
 
           <div className="mt-4 text-center text-sm">
-            have an account?{" "}
+            Have an account?{" "}
             <Link to="/login" className="underline">
               login
             </Link>
@@ -365,13 +363,13 @@ export function Signup() {
               isdisabled ? `hidden` : `block`
             }`}
           >
-            Didn't verified?{" "}
+            Didn't verify?{" "}
             <Link
               to="#"
               className="underline"
               onClick={() => setisOpen(!isOpen)}
             >
-              click to verify
+              Click to verify
             </Link>
           </div>
         </div>

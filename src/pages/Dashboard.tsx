@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { TopNavBar } from "../models/TopNavBar";
-import { Sidebar } from "../models/Sidebar";
+import { TopNavBar } from "../modals/TopNavBar";
+import { Sidebar } from "../modals/Sidebar";
 
 export default function Dashboard() {
   return (

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import Crontetrack from "../assets/croneTrack-removebg-preview.png";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -25,6 +24,7 @@ import cross from "../assets/cross.svg";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserInfo } from "../Redux/feature/authSlice";
+import LogoIcon from "@/components/logo";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -132,12 +132,9 @@ export function Login() {
     <>
       {(loginLoading || sendEmailLoading) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
-        <div className="fixed top-1 left-4">
-          {" "}
-          <img src={Crontetrack} className=" w-[80px] rounded-[50%]" alt="" />
-        </div>
+        <LogoIcon />
 
-        <div className="lg:max-w-[60vw] my-auto mx-auto px-3">
+        <div className="lg:max-w-[60vw] mt-16 md:mt-0 mx-auto px-3">
           <div className="text-center py-6">
             <h1 className="text-3xl font-bold py-4">Login</h1>
             <p className="text-balance text-muted-foreground">
@@ -189,7 +186,7 @@ export function Login() {
 
                   {isdisabled ? (
                     <div className="mt-[-0.5rem] inline-block text-sm text-muted-foreground">
-                      Didn't get Email {timer}
+                      Didn't receive email? {timer}
                     </div>
                   ) : (
                     <Link
@@ -228,11 +225,11 @@ export function Login() {
 
           <div className="text-sm text-muted-foreground text-center mt-3 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <Link to="/legal/terms-and-conditions" className="underline">
-              terms and conditions
+              Terms and Conditions
             </Link>{" "}
             &{" "}
             <Link to="/legal/privacy-policy" className="underline">
-              privacy policy
+              Privacy Policy
             </Link>
           </div>
         </div>
