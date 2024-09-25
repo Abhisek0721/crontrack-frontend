@@ -3,6 +3,7 @@ import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { TopNavBar } from "../modals/TopNavBar";
 import { Sidebar } from "../modals/Sidebar";
+import { BottomSidebar } from "../modals/BottomSidebar";
 
 export default function Dashboard() {
   return (
@@ -58,6 +59,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+        <BottomSidebar className="block lg:hidden"/>
       </div>
     </>
   );

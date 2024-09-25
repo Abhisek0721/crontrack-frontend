@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { useCreateWorkSpaceNameMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import toast from "react-hot-toast";
 import { Spinner } from "../spinner";
+import { useAppDispatch } from "../Redux/Hooks/store";
+import { setUserWorkspace } from "../Redux/feature/authSlice";
 
 //form schema
 const formSchema = z.object({
@@ -33,6 +35,8 @@ const Workspace = () => {
   const navigate = useNavigate();
   //handle the data
   const { handledata } = useOutletContext<handleWorkSpaceContex>();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     handledata(0);
@@ -55,6 +59,8 @@ const Workspace = () => {
       }
       if (response?.data) {
         toast.success(`${response?.data?.message}`, { duration: 5000 });
+        console.log(response?.data?.data);
+        dispatch(setUserWorkspace(response?.data?.data));
         handledata(1);
         navigate("add-socialmedia-accounts");
       }
