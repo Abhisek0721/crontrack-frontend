@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
@@ -29,6 +30,9 @@
       ],
       "@/components/*": [
         "src/components/*"
+      ],
+      "@/constants/*" : [
+        "src/constants/*"
       ]
     }
   },

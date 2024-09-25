@@ -1,12 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
-import CreateWorkSpaceFlow from "./pages/CreateWorkSpaceFlow";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
-import { ProtectedRoute } from "./pages/ProtectedRoute";
+import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
+import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow";
+import Workspace from "./pages/WorkSpace";
+import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
+import PrivacyPolicy from "./legal/PrivacyPolicy";
+import TermsAndConditions from "./legal/TermAndCondition";
 import "./App.css";
 
 function App() {
@@ -18,17 +22,33 @@ function App() {
         <Route
           path="verify/verify-email/:tokenId"
           element={<VerifyUserByEmailLink />}
-        ></Route>
+        />
         <Route
           path="verify/forgot-password/:token"
           element={<ChangeUserPassword />}
+        />
+
+        <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
+          <Route path="" element={<Workspace />} />
+          <Route
+            path="add-socialmedia-accounts"
+            element={<AddSocialMediaAccounts />}
+          />
+        </Route>
+
+        <Route path="legal/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="legal/terms-and-conditions"
+          element={<TermsAndConditions />}
         ></Route>
-        <Route path="createworkspaceflow" element={<CreateWorkSpaceFlow />} />
+
+
         <Route path="*" element={<ProtectedRoute />}>
           <Route path="" element={<Dashboard />}></Route>
         </Route>
-      </Routes>
 
+
+      </Routes>
       <Toaster />
     </Router>
   );

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import Creato from "../assets/Creato-logo.jpg";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -25,10 +24,11 @@ import cross from "../assets/cross.svg";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserInfo } from "../Redux/feature/authSlice";
+import LogoIcon from "@/components/logo";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "invalied Email",
+    message: "Invalid Email",
   }),
   password: z.string().min(6, {
     message: "Password is required",
@@ -91,7 +91,7 @@ export function Login() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await loginfn(values);
+      const response: any = await loginfn(values);
       console.log(response);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
@@ -105,12 +105,12 @@ export function Login() {
 
         setTimeout(() => {
           response?.data?.data?.user_workspace
-            ? navigate("/dashboard")
-            : navigate("/createworkspaceflow");
+            ? navigate("/")
+            : navigate("/create-workspace-name");
         }, 1000);
       }
     } catch (error) {
-      toast.error(`${error}`,{duration: 5000});
+      toast.error(`${error}`, { duration: 5000 });
       console.log(error);
     }
 
@@ -118,7 +118,7 @@ export function Login() {
   }
 
   async function onPopUpSubmit(popupvalues: z.infer<typeof popupformSchema>) {
-    const response = await sendEmailfn(popupvalues);
+    const response: any = await sendEmailfn(popupvalues);
     if (response?.error) {
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }
@@ -132,12 +132,9 @@ export function Login() {
     <>
       {(loginLoading || sendEmailLoading) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
-        <div className="fixed top-1 left-4">
-          {" "}
-          <img src={Creato} className=" w-[80px] rounded-[50%]" alt="" />
-        </div>
+        <LogoIcon />
 
-        <div className="lg:max-w-[60vw] my-auto mx-auto px-3">
+        <div className="lg:max-w-[60vw] mt-16 md:mt-0 mx-auto px-3">
           <div className="text-center py-6">
             <h1 className="text-3xl font-bold py-4">Login</h1>
             <p className="text-balance text-muted-foreground">
@@ -189,7 +186,7 @@ export function Login() {
 
                   {isdisabled ? (
                     <div className="mt-[-0.5rem] inline-block text-sm text-muted-foreground">
-                      Didn't get Email {timer}
+                      Didn't receive email? {timer}
                     </div>
                   ) : (
                     <Link
@@ -225,6 +222,16 @@ export function Login() {
               Sign up
             </Link>
           </div>
+
+          <div className="text-sm text-muted-foreground text-center mt-3 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Link to="/legal/terms-and-conditions" className="underline">
+              Terms and Conditions
+            </Link>{" "}
+            &{" "}
+            <Link to="/legal/privacy-policy" className="underline">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[65%] h-[100vh] bg-primary">
@@ -239,7 +246,7 @@ export function Login() {
 
       {isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/3 relative">
             <div className="py-6">
               <div className="text-xl font-semibold mb-4 absolute top-2 text-start">
                 Send Verification Email

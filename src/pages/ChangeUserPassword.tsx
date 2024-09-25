@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 export const ChangeUserPassword = () => {
   const [changePasswordfn, { isLoading }] = useUserChangePasswordMutation();
-  const [isshowPassword, setisshowPassword] = useState<Boolean>(false);
+  const [isshowPassword, setisshowPassword] = useState<boolean>(false);
   const params = useParams();
   const token = params.token;
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export const ChangeUserPassword = () => {
       new_password: `${values.new_password}`,
     };
 
-    const response = await changePasswordfn(payload);
+    const response:any = await changePasswordfn(payload);
     if (response?.error) {
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     }

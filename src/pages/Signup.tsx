@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
-import Creato from "../assets/Creato-logo.jpg";
 import Background from "../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -22,12 +22,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useNavigate } from "react-router-dom";
 import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
-import { useAppDispatch, useAppSelecter } from "../Redux/Hooks/store";
-import { setUserInfo, removeUserInfo } from "../Redux/feature/authSlice";
-import { isUSerVerified } from "../Redux/util/getUserDetailFromBrowser";
-
+import LogoIcon from "@/components/logo";
+import { constant } from "@/constants/index";
 
 const formSchema = z.object({
   full_name: z.string().min(5, {
@@ -48,24 +45,19 @@ const popupformSchema = z.object({
 });
 
 export function Signup() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const [show, setshow] = useState<Boolean>(false);
+  const [show, setshow] = useState<boolean>(false);
   const [showResendVerification, setshowResendVerification] =
-    useState<Boolean>(false);
-  const [isOpen, setisOpen] = useState<Boolean>(false);
-  const [timer, settimer] = useState(0);
-  const [isdisabled, setisdisabled] = useState(false);
-  const [isverified, setisverified] = useState(false);
+    useState<boolean>(false);
+  const [isOpen, setisOpen] = useState<boolean>(false);
+  const [timer, settimer] = useState<number>(0);
+  const [isdisabled, setisdisabled] = useState<boolean>(false);
+  const [isverified, setisverified] = useState<boolean>(false);
+  const [isemail, setemail] = useState<string>("");
+  const [isCheckd, setisCheckd] = useState<boolean>(true);
 
-  const [
-    loginfn,
-    { isLoading: isloginloading, isError: isSignupError, error: signupError },
-  ] = useUserSignUpMutation();
-  const [
-    verifyfn,
-    { isLoading: isverifyloading, isError: isVerifyError, error: verifyError },
-  ] = useUserResendVerificationMailMutation();
+  const [loginfn, { isLoading: isloginloading }] = useUserSignUpMutation();
+  const [verifyfn, { isLoading: isverifyloading }] =
+    useUserResendVerificationMailMutation();
 
   //function for timer
   useEffect(() => {
@@ -111,80 +103,80 @@ export function Signup() {
   //handler for form
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await loginfn(values);
-      console.log(response);
+      const response:any = await loginfn(values);
       if (response?.error) {
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });//yaha pr ye error islye aa rha h kyu ki ts ye guranti nhi deta ki reponse ke andar error ke andar data property exist krti h 
         setisverified(!isverified);
       }
 
       if (response?.data) {
-        //remove item from localStorage
-        dispatch(removeUserInfo());
-        //set new item in localstorage
-        dispatch(setUserInfo(response?.data?.data));
+        setemail(response?.data?.data?.email);
         toast.success(`${response?.data?.message}`, { duration: 5000 });
         setshowResendVerification(true);
         handleTimer();
       }
-      // navigate("/multistepform"
     } catch (error: any) {
       toast.error(`${error}`, { duration: 5000 });
     }
   }
 
-  const user = useAppSelecter((state) => state.auth.user);
   const handleVerificationMail = async () => {
-    const email = { email: `${user?.email}` };
-    console.log("userinfo ", email);
-    const response = await verifyfn(email);
+    const email = { email: `${isemail}` };
+    const response: any = await verifyfn(email);
     if (response?.error)
       toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
     if (response?.data) {
       toast.success(`${response?.data?.message}`, { duration: 5000 });
       handleTimer();
     }
-    console.log("response", response);
+    return;
   };
 
   //handler for PopupForm
-  const UserVerified = isUSerVerified();
   async function onPopUpSubmit(Popvalues: z.infer<typeof popupformSchema>) {
-    if (!UserVerified) {
-      const email: ResendverifyUser = { email: Popvalues.email };
-      const response = await verifyfn(email);
-      if (response?.error)
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
-      if (response?.data) {
-        toast.success(`${response?.data?.message}`, { duration: 5000 });
-        handleTimer();
-        setisOpen(!isOpen);
-      }
-      return;
+    const email: ResendverifyUser = { email: Popvalues.email };
+    const response: any = await verifyfn(email);
+    if (response?.error)
+      toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+    if (response?.data) {
+      toast.success(`${response?.data?.message}`, { duration: 5000 });
+      handleTimer();
+      setisOpen(!isOpen);
     }
-
-    return toast.error("User already Verified", { duration: 5000 });
+    return;
   }
+
+  const handleCheck = () => {
+    setisCheckd(!isCheckd);
+  };
 
   return (
     <>
       {(isloginloading || isverifyloading) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
-        <div className="fixed top-1 left-4">
-          {" "}
-          <img src={Creato} className=" w-[80px] rounded-[50%]" alt="" />
-        </div>
+        <LogoIcon />
 
-        <div className="lg:min-w-[30%] my-auto mx-auto px-3">
+        <div className="lg:min-w-[30%] mt-16 md:mt-0 mx-auto px-3">
           <div className="text-center py-6">
             <h1 className="text-3xl font-bold py-4">Signup</h1>
             <p className="text-balance text-muted-foreground">
-              Set up your account to start using Creato
+              Set up your account to start using {constant.APP_NAME}
             </p>
           </div>
 
           <Form {...form}>
-            <form className="py-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="py-4"
+              onSubmit={form.handleSubmit((values) => {
+                if (!isCheckd) {
+                  toast.error("You must accept the terms and conditions", {
+                    duration: 5000,
+                  });
+                  return;
+                }
+                onSubmit(values);
+              })}
+            >
               <div className="grid gap-5">
                 <div className="grid gap-2">
                   <FormField
@@ -192,7 +184,7 @@ export function Signup() {
                     name="full_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="shadcn"
@@ -285,6 +277,32 @@ export function Signup() {
                   Sign up with Google
                 </Button>
               </div>
+              <div className="mt-[0.25em] items-top flex space-x-2">
+                <Checkbox
+                  id="terms1"
+                  className="h-4 w-4 mt-1"
+                  checked={isCheckd}
+                  onCheckedChange={handleCheck}
+                />
+                <div className="text-sm text-muted-foreground">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    accept{" "}
+                    <Link
+                      to="/legal/terms-and-conditions"
+                      className="underline"
+                    >
+                      terms and conditions
+                    </Link>{" "}
+                    &{" "}
+                    <Link to="/legal/privacy-policy" className="underline">
+                      privacy policy
+                    </Link>
+                  </label>
+                </div>
+              </div>
             </form>
           </Form>
 
@@ -335,29 +353,25 @@ export function Signup() {
           )}
 
           <div className="mt-4 text-center text-sm">
-            have an account?{" "}
+            Have an account?{" "}
             <Link to="/login" className="underline">
               login
             </Link>
           </div>
-          {isverified ? (
-            <div
-              className={`mt-1 text-center text-sm ${
-                isdisabled ? `hidden` : `block`
-              }`}
+          <div
+            className={`mt-1 text-center text-sm ${
+              isdisabled ? `hidden` : `block`
+            }`}
+          >
+            Didn't verify?{" "}
+            <Link
+              to="#"
+              className="underline"
+              onClick={() => setisOpen(!isOpen)}
             >
-              Didn't verified?{" "}
-              <Link
-                to="#"
-                className="underline"
-                onClick={() => setisOpen(!isOpen)}
-              >
-                click to verify
-              </Link>
-            </div>
-          ) : (
-            ""
-          )}
+              Click to verify
+            </Link>
+          </div>
         </div>
 
         <div className="hidden lg:block overflow-hidden w-[60%] h-[100vh] bg-primary">

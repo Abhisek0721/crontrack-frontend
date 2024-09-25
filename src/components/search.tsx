@@ -1,21 +1,13 @@
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-export function Search() {
+import { cn } from "@/lib/utils";
+export function Search({className} : React.HTMLAttributes<HTMLElement>) {
   return (
-    <div className="flex gap-4">
+    <div>
       <Input
         type="search"
         placeholder="Search..."
-        className="md:w-[100px] lg:w-[300px]"
+        className={cn("w-[300px]", className)}
       />
-      <div>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </div>
     </div>
-   
   );
 }

@@ -1,82 +1,77 @@
 
 
 export interface NewUser {
-    full_name: string,
-    email: String,
-    password: String,
+    full_name: string;
+    email: string;
+    password: string;
 }
 
 export interface NewUSerResponse {
-    access_token: String,
-    user: {
-     id: String,
-     email: String,
-     full_name: String,
-     verified: Boolean,
-     google_id: null | String,
-     message: String
-     profile_picture: null | String,
-     bio: null | String,
-     created_at: Date
-     updated_at: Date 
-     }
-    user_workspace: Boolean | null
-  
+    id: string;
+    email: string;
+    full_name: string;
+    verified: boolean;
+    google_id: null | string;
+    message: string;
+    profile_picture: null | string;
+    bio: null | string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ResendverifyUser {
-    email: String
+    email: string
 }
 
 export interface verificationToken {
-    "verification_token": String;
+    "verification_token": string;
 }
 
 export interface verifyUserResponse {
     data: {
-        verified: Boolean
-    }
-    message: String
+        verified: boolean;
+    };
+    message: string;
 }
 
 export interface LoginUser {
-    email: String,
-    password: String
+    email: string,
+    password: string
   }
 export interface LoginuserResponse {
-    access_token: String,
+    access_token: string,
     user: {
-       id: String,
-    email: String,
-    full_name: String,
-    verified: Boolean,
-    google_id: null | String,
-    message: String
-    profile_picture: null | String,
-    bio: null | String,
+    id: string,
+    email: string,
+    full_name: string,
+    verified: boolean,
+    google_id: null | string,
+    message: string
+    profile_picture: null | string,
+    bio: null | string,
     created_at: Date
     updated_at: Date 
     }
-    
-    user_workspace: Boolean | null
+    user_workspace: Array<{role: string,
+        workspace_name: string}> | null
   }
   
 
 export interface sendForgotPassword{
-    email: String
+    email: string
 }
 
 export interface sendForgotPasswordResponse{
     data: null,
-    message: String,
+    message: string,
 }
 
 export interface changeForgotPassword {
-    verification_token: String,
-    new_password: String
+    verification_token: string,
+    new_password: string
 }
 
 export interface changeForgotPasswordResponse{
     data: null,
-    message: String
+    message: string
 }
