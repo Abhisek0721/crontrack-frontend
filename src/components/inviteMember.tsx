@@ -49,7 +49,9 @@ const formSchema = z.object({
 export const InviteMember = () => {
   const [members, setMembers] = useState<{ email: string; role: string }[]>([]);
   const [loginfn, { isLoading }] = useInviteMemberToWorkSpaceMutation();
-  const [editingIndex, setEditingIndex] = useState<number | null>(null); // State for editing index
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [isOpen, setisOpen] = useState<boolean>(false);
+  const [isMemberAdded, setisMemberAdded] = useState<boolean>(false)
 
   const workspace = useAppSelecter((state) => state?.auth?.selected_workspace);
 
@@ -81,13 +83,16 @@ export const InviteMember = () => {
     try {
       const response: any = await loginfn(payload);
       if (response?.error) {
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
+        toast.error(`${response?.error?.data?.message}`, { duration: 4000 });
       }
       if (response?.data) {
-        toast.success(`${response?.data?.message}`, { duration: 5000 });
+        toast.success(`${response?.data?.message}`, { duration: 4000 });
+        setTimeout(() => {
+          setisOpen(!isOpen);
+        }, 4000);
       }
     } catch (error) {
-      toast.error(`${error}`)
+      toast.error(`${error}`);
     }
   };
 
@@ -98,7 +103,7 @@ export const InviteMember = () => {
           <Spinner />
         </div>
       )}
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={() => setisOpen(!isOpen)}>
         <DialogTrigger asChild>
           <Button variant="ghost" className="flex gap-2 w-full justify-start">
             <FiUserPlus />
@@ -218,10 +223,15 @@ export const InviteMember = () => {
             <Button
               type="button"
               className="w-full md:w-auto"
-              onClick={onSubmit}
+              onClick={() => {
+                members.length > 0 && onSubmit()
+                members.length === 0 && setisMemberAdded(true)
+              }
+              }
             >
               Invite Members
             </Button>
+            {(members.length === 0 && isMemberAdded) && <p className="text-[0.8rem] font-medium text-destructive">Add members</p>}
           </DialogFooter>
         </DialogContent>
       </Dialog>
