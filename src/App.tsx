@@ -11,6 +11,7 @@ import Workspace from "./pages/WorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
+import { AcceptInvitation } from "./pages/AcceptInvitation";
 import "./App.css";
 
 function App() {
@@ -26,6 +27,11 @@ function App() {
         <Route
           path="verify/forgot-password/:token"
           element={<ChangeUserPassword />}
+        />
+
+        <Route
+          path="verify/workspace-invite/:invitationToken"
+          element={<AcceptInvitation />}
         />
 
         <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
