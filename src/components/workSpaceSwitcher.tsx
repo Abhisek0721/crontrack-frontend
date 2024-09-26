@@ -39,6 +39,7 @@ export const WorkSpaceSwitcher = ({
 
   const workspace:string = userWorkSpaces? userWorkSpaces[0]?.workspace?.workspace_name: "workspace";
   const [firstWorkspace, setfirstWorkspace] = useState<string>(`${workspace}`);
+  const [isOpen, setisOpen] = useState<boolean>(false)
 
   const select_Workspace = userWorkSpaces?.find((workspace) => {
     return workspace?.workspace?.workspace_name === `${firstWorkspace}`;
@@ -49,7 +50,7 @@ export const WorkSpaceSwitcher = ({
   return (
     <>
       <div className={cn("text-gray-400", className)}>
-        <Popover>
+        <Popover open={isOpen} onOpenChange={() => setisOpen(!isOpen)}>
           <PopoverTrigger asChild>
             <Button variant="outline" className="flex gap-4">
               {firstWorkspace}
@@ -65,13 +66,17 @@ export const WorkSpaceSwitcher = ({
                   {userWorkSpaces?.map((workspace) => (
                     <CommandItem
                       key={workspace?.id}
-                      className="flex justify-between cursor-pointer"
+                      className={`flex justify-between cursor-pointer hover:bg-gray-100 ${workspace?.workspace?.workspace_name === firstWorkspace
+                        && "bg-accent" // Selected option styles
+                        }`}
                     >
                       <div
                         onClick={() =>
-                          setfirstWorkspace(
+                          {setfirstWorkspace(
                             workspace?.workspace?.workspace_name
                           )
+                          setisOpen(!isOpen)
+                        }
                         }
                         className="w-full flex justify-between"
                       >

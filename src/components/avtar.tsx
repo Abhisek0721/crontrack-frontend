@@ -30,7 +30,9 @@ export const Avtar = () => {
 
           <PopoverContent className="w-fit">
             <div className="flex flex-col gap-2 justify-start items-start">
-            <InviteMember />
+
+            <InviteMember/>
+
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
