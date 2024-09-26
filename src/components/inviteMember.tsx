@@ -185,7 +185,7 @@ export const InviteMember = () => {
                       {members.map((member, index) => (
                         <li
                           key={index}
-                          className="flex justify-between p-2 border-b border-gray-200"
+                          className="flex justify-between flex-wrap p-2 border-b border-gray-200"
                         >
                           <span>{member.email}</span>
                           <div className="flex gap-2">

@@ -46,14 +46,11 @@ export const WorkSpaceSwitcher = ({
 
   select_Workspace && dispatch(selectedWorkspace(select_Workspace));
 
-  console.log(selectedWorkspace)
-
-
   return (
     <>
       <div className={cn("text-gray-400", className)}>
         <Popover>
-          <PopoverTrigger>
+          <PopoverTrigger asChild>
             <Button variant="outline" className="flex gap-4">
               {firstWorkspace}
               <CaretSortIcon />
