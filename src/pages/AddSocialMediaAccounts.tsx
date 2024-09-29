@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate,useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
 
 
 interface handleWorkSpaceContex {
@@ -17,6 +18,10 @@ const AddSocialMediaAccounts: React.FC = () => {
     socialAccounts.map(() => false)
   );
 
+    // taking workspace name from route
+    const [searchParams] = useSearchParams();
+    const isworkspace = searchParams.get("workspace");
+    console.log(isworkspace);
   
 
   const {handledata} = useOutletContext<handleWorkSpaceContex>()
@@ -34,10 +39,11 @@ const AddSocialMediaAccounts: React.FC = () => {
   };
 
   const handlePrevious = () => {
-    navigate("/create-workspace-name");
+    navigate(`/create-workspace-name?update-workspace=${isworkspace}`);
   };
   const handleContinue = () => {
     toast.success("account added");
+    navigate("/");
   };
 
   return (

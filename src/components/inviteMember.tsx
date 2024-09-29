@@ -36,7 +36,7 @@ import toast from "react-hot-toast";
 import { Spinner } from "../spinner";
 import { constant } from "../constants";
 import { CiEdit } from "react-icons/ci";
-
+import { AiOutlineUserDelete } from "react-icons/ai";
 const formSchema = z.object({
   email: z.string().email({
     message: "Email not valid",
@@ -51,7 +51,6 @@ export const InviteMember = () => {
   const [loginfn, { isLoading }] = useInviteMemberToWorkSpaceMutation();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [isOpen, setisOpen] = useState<boolean>(false);
-  const [isMemberAdded, setisMemberAdded] = useState<boolean>(false)
 
   const workspace = useAppSelecter((state) => state?.auth?.selected_workspace);
 
@@ -192,9 +191,13 @@ export const InviteMember = () => {
                           key={index}
                           className="flex justify-between flex-wrap p-2 border-b border-gray-200"
                         >
-                          <span>{member.email}</span>
+                          <span className="mr-4">{member.email}</span>
+
                           <div className="flex gap-2">
+
                             <span>{member.role}</span>
+
+                            <div className="flex">
                             <span
                               className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
                               onClick={() => {
@@ -206,6 +209,23 @@ export const InviteMember = () => {
                             >
                               <CiEdit />
                             </span>
+                            <span
+                              className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
+                              onClick={() => {
+                              const new_members = members.filter((user) => {
+                                  return !(user?.email === member?.email && user?.role === member?.role);
+                                })
+
+                                setMembers(new_members);
+                              }
+                            }
+                              
+                            >
+                              < AiOutlineUserDelete/>
+                            </span>
+
+                            </div>
+              
                           </div>
                         </li>
                       ))}
@@ -220,18 +240,16 @@ export const InviteMember = () => {
           </div>
 
           <DialogFooter>
-            <Button
+          {members.length !== 0 &&  <Button
               type="button"
-              className="w-full md:w-auto"
+              className={`w-full md:w-auto`}
               onClick={() => {
                 members.length > 0 && onSubmit()
-                members.length === 0 && setisMemberAdded(true)
               }
               }
             >
               Invite Members
-            </Button>
-            {(members.length === 0 && isMemberAdded) && <p className="text-[0.8rem] font-medium text-destructive">Add members</p>}
+            </Button>}
           </DialogFooter>
         </DialogContent>
       </Dialog>
