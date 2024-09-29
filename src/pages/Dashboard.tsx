@@ -4,8 +4,29 @@ import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TopNavBar } from "../modals/TopNavBar";
 import { Sidebar } from "../modals/Sidebar";
 import { BottomSidebar } from "../modals/BottomSidebar";
+import { useGetallworkspaceQuery } from "../Redux/feature/creatinigWorkSpaceFlowApi";
+import { useAppDispatch } from "../Redux/Hooks/store";
+import { setUserWorkspace } from "../Redux/feature/authSlice";
+import { useEffect } from "react";
 
 export default function Dashboard() {
+
+    const {data, isLoading} = useGetallworkspaceQuery(undefined)
+    const dispatch = useAppDispatch();
+   
+  useEffect(() => {
+    if (!isLoading && data?.data) {
+      console.log('Dispatching data to Redux:', data.data); 
+      dispatch(setUserWorkspace({user_workspace: data.data}));
+      localStorage.setItem('user_workspace', JSON.stringify(data.data)); 
+      console.log('Saved to localStorage:', localStorage.getItem('user_workspace'));
+    }
+  }, [isLoading, data, dispatch]);
+
+  
+  
+
+
   return (
     <>
       <div className="">

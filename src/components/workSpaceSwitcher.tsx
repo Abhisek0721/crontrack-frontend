@@ -28,6 +28,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
+
 export const WorkSpaceSwitcher = ({
   className,
 }: React.HTMLAttributes<HTMLElement>) => {
@@ -81,7 +82,7 @@ export const WorkSpaceSwitcher = ({
                         className="w-full flex justify-between"
                       >
                         <div>{workspace?.workspace.workspace_name}</div>
-                        <div>{workspace?.role}</div>{" "}
+                        <div>{workspace?.role}</div>
                       </div>
                     </CommandItem>
                   ))}
