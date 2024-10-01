@@ -8,6 +8,7 @@ import { useGetallworkspaceQuery } from "../Redux/feature/creatinigWorkSpaceFlow
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserWorkspace } from "../Redux/feature/authSlice";
 import { useEffect } from "react";
+import { ProgressMessage } from "@/components/progressMessage";
 
 export default function Dashboard() {
 
@@ -31,6 +32,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="">
+      <ProgressMessage message = "This page is under construction. Please check back soon" className=""/>
         <TopNavBar />
         <div className="border-t">
           <div className="bg-background">

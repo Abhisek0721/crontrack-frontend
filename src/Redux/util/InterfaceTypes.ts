@@ -95,3 +95,7 @@ export interface user_Workspace {
     };
   }> | null;
 }
+
+export interface verifyGoogleToken {
+  code: string
+}

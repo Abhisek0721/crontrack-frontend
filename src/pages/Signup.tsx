@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useUserSignUpMutation } from "../Redux/feature/authApi";
+import { useLazyLoginsignupwithGoogleQuery } from "../Redux/feature/authApi";
 import { useUserResendVerificationMailMutation } from "../Redux/feature/authApi";
 import { Spinner } from "../spinner";
 import openEye from "../assets/open-eye.svg";
@@ -59,6 +60,8 @@ export function Signup() {
   const [verifyfn, { isLoading: isverifyloading }] =
     useUserResendVerificationMailMutation();
 
+  const [trigger, {isLoading: isSignLoginWithgoogle }] = useLazyLoginsignupwithGoogleQuery();
+
   //function for timer
   useEffect(() => {
     let interval = null;
@@ -103,9 +106,9 @@ export function Signup() {
   //handler for form
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response:any = await loginfn(values);
+      const response: any = await loginfn(values);
       if (response?.error) {
-        toast.error(`${response?.error?.data?.message}`, { duration: 5000 });//yaha pr ye error islye aa rha h kyu ki ts ye guranti nhi deta ki reponse ke andar error ke andar data property exist krti h 
+        toast.error(`${response?.error?.data?.message}`, { duration: 5000 }); //yaha pr ye error islye aa rha h kyu ki ts ye guranti nhi deta ki reponse ke andar error ke andar data property exist krti h
         setisverified(!isverified);
       }
 
@@ -146,13 +149,27 @@ export function Signup() {
     return;
   }
 
+  const handleSignupWithGoogle = async() => {
+    try {
+      const response:any = await trigger(undefined)
+      if(response?.data){
+        window.open(`${response?.data?.data?.google_login_url}`, '_blank');
+      }
+      if(response?.error) {
+        toast.error(`${response?.error?.data?.message}`, {duration: 3000})
+      }
+    } catch (error) {
+      toast.error(`${error}`, {duration: 3000})
+    }
+  };
+
   const handleCheck = () => {
     setisCheckd(!isCheckd);
   };
 
   return (
     <>
-      {(isloginloading || isverifyloading) && <Spinner />}
+      {(isloginloading || isverifyloading || isSignLoginWithgoogle) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
         <LogoIcon />
 
@@ -187,7 +204,7 @@ export function Signup() {
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="shadcn"
+                            placeholder="David Brown"
                             {...field}
                             autoComplete="true"
                           />
@@ -206,7 +223,7 @@ export function Signup() {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="shadcn@gmail.com"
+                            placeholder="david.brown@example.com"
                             {...field}
                             autoComplete="true"
                           />
@@ -267,44 +284,42 @@ export function Signup() {
                 >
                   Signup
                 </Button>
-                <Button
-                  variant="outline"
-                  className={`w-full  ${
-                    showResendVerification ? "hidden" : ""
-                  }`}
-                  disabled={isverified}
-                >
-                  Sign up with Google
-                </Button>
-              </div>
-              <div className="mt-[0.25em] items-top flex space-x-2">
-                <Checkbox
-                  id="terms1"
-                  className="h-4 w-4 mt-1"
-                  checked={isCheckd}
-                  onCheckedChange={handleCheck}
-                />
-                <div className="text-sm text-muted-foreground">
-                  <label
-                    htmlFor="terms1"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    accept{" "}
-                    <Link
-                      to="/legal/terms-and-conditions"
-                      className="underline"
-                    >
-                      terms and conditions
-                    </Link>{" "}
-                    &{" "}
-                    <Link to="/legal/privacy-policy" className="underline">
-                      privacy policy
-                    </Link>
-                  </label>
-                </div>
               </div>
             </form>
           </Form>
+
+          <Button
+            variant="outline"
+            className={`w-full  ${showResendVerification ? "hidden" : ""}`}
+            disabled={isverified}
+            onClick={() => handleSignupWithGoogle()}
+          >
+            Sign up with Google
+          </Button>
+
+          <div className="mt-[0.25em] items-top flex space-x-2">
+            <Checkbox
+              id="terms1"
+              className="h-4 w-4 mt-1"
+              checked={isCheckd}
+              onCheckedChange={handleCheck}
+            />
+            <div className="text-sm text-muted-foreground">
+              <label
+                htmlFor="terms1"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                accept{" "}
+                <Link to="/legal/terms-and-conditions" className="underline">
+                  terms and conditions
+                </Link>{" "}
+                &{" "}
+                <Link to="/legal/privacy-policy" className="underline">
+                  privacy policy
+                </Link>
+              </label>
+            </div>
+          </div>
 
           {isOpen && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
