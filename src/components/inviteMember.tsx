@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription
 } from "@/components/ui/dialog";
 import {
   FormControl,
@@ -115,6 +116,7 @@ export const InviteMember = () => {
             <DialogTitle className="text-lg sm:text-xl md:text-2xl">
               Invite people to this workspace
             </DialogTitle>
+            <DialogDescription />
           </DialogHeader>
 
           <div>
@@ -147,8 +149,8 @@ export const InviteMember = () => {
                         <FormItem className="w-full">
                           <FormLabel>Role</FormLabel>
                           <Select
-                            onValueChange={(value) => field.onChange(value)} // Properly update the field
-                            value={field.value} // Make the Select controlled
+                            onValueChange={(value) => field.onChange(value)} 
+                            value={field.value}
                             defaultValue={field.value}
                           >
                             <FormControl>
@@ -157,23 +159,11 @@ export const InviteMember = () => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value={constant?.role?.manager}>
-                                {constant?.role?.manager}
+                              {constant?.ROLE_CHOICES?.map((ROLE_CHOICE, index) => {
+                                return   <SelectItem value={ROLE_CHOICE?.value} key={index}>
+                                {ROLE_CHOICE?.label}
                               </SelectItem>
-                              <SelectItem value={constant?.role?.admin}>
-                                {constant?.role?.admin}
-                              </SelectItem>
-                              <SelectItem value={constant?.role?.analyst}>
-                                {constant?.role?.analyst}
-                              </SelectItem>
-                              <SelectItem
-                                value={constant?.role?.contentCreator}
-                              >
-                                {constant?.role?.contentCreator}
-                              </SelectItem>
-                              <SelectItem value={constant?.role?.viewer}>
-                                {constant?.role?.viewer}
-                              </SelectItem>
+                              })}
                             </SelectContent>
                           </Select>
                           <FormMessage />

@@ -92,7 +92,6 @@ export function Login() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response: any = await loginfn(values);
-      console.log(response);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
       }
@@ -111,7 +110,6 @@ export function Login() {
       }
     } catch (error) {
       toast.error(`${error}`, { duration: 5000 });
-      console.log(error);
     }
 
     console.log(values);
