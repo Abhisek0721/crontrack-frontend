@@ -27,6 +27,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 export const WorkSpaceSwitcher = ({
@@ -46,7 +47,11 @@ export const WorkSpaceSwitcher = ({
     return workspace?.workspace?.workspace_name === `${firstWorkspace}`;
   })
 
-  select_Workspace && dispatch(selectedWorkspace(select_Workspace));
+  useEffect(() => {
+    if (select_Workspace) {
+      dispatch(selectedWorkspace(select_Workspace));
+    }
+  }, [select_Workspace, dispatch]);
 
   return (
     <>

@@ -11,18 +11,19 @@ import { useEffect } from "react";
 
 export default function Dashboard() {
 
-    const {data, isLoading} = useGetallworkspaceQuery(undefined)
+    const {data, isLoading, refetch} = useGetallworkspaceQuery(undefined)
     const dispatch = useAppDispatch();
    
   useEffect(() => {
     if (!isLoading && data?.data) {
-      console.log('Dispatching data to Redux:', data.data); 
       dispatch(setUserWorkspace({user_workspace: data.data}));
-      localStorage.setItem('user_workspace', JSON.stringify(data.data)); 
-      console.log('Saved to localStorage:', localStorage.getItem('user_workspace'));
+      localStorage.setItem('user_workspace', JSON.stringify(data.data));      
     }
   }, [isLoading, data, dispatch]);
 
+  useEffect(() => {
+   refetch();
+}, [refetch]);
   
   
 
