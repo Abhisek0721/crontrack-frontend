@@ -11,9 +11,13 @@ import { PersonIcon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { removeUserInfo } from "../Redux/feature/authSlice";
 import { InviteMember } from "./inviteMember";
+import { useState } from "react";
+import { FiUserPlus } from "react-icons/fi";
+
 
 export const Avtar = () => {
   const dispatch = useAppDispatch();
+  const [isdialogshow, setisdialogshow] = useState(false);
   return (
     <>
       <div>
@@ -31,7 +35,14 @@ export const Avtar = () => {
           <PopoverContent className="w-fit">
             <div className="flex flex-col gap-2 justify-start items-start">
 
-            <InviteMember/>
+            <Button
+                variant="ghost"
+                className="flex gap-2 w-full justify-start"
+                onClick={() => setisdialogshow(!isdialogshow)}
+              >
+                <FiUserPlus />
+                Invite Members
+              </Button>
 
               <Button
                 variant="ghost"
@@ -60,6 +71,8 @@ export const Avtar = () => {
             </div>
           </PopoverContent>
         </Popover>
+
+        {isdialogshow && <InviteMember isOpen={isdialogshow} setisOpen={setisdialogshow} />}
       </div>
     </>
   );
