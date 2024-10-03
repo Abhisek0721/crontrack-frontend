@@ -4,7 +4,7 @@ export const constant = {
     ROLE_CHOICES: [
         { value: 'admin', label: 'Admin' },
         { value: 'manager', label: 'Manager' },
-        { value: 'content_creator', label: 'Content Creator' },
+        { value: 'content-creator', label: 'Content Creator' },
         { value: 'analyst', label: 'Analyst' },
         { value: 'viewer', label: 'Viewer' }
       ]

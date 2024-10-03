@@ -61,7 +61,7 @@ export const AcceptInvitation = () => {
         )}
 
         <div
-          className={`mt-10 text-2xl ${
+          className={`mt-10 text-2xl sm:text-sm lg:text-lg xl:text-xl 2xl:text-2xl${
             isverified === true ? "text-green-800" : "text-red-800"
           }`}
         >

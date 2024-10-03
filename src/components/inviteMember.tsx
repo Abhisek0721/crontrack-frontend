@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogDescription
 } from "@/components/ui/dialog";
 import {
@@ -26,7 +25,6 @@ import {
   SelectValue,
 } from "./ui/select";
 
-import { FiUserPlus } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +36,13 @@ import { Spinner } from "../spinner";
 import { constant } from "../constants";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineUserDelete } from "react-icons/ai";
+
+interface InviteMemberProps {
+  isOpen: boolean;
+  setisOpen: (arg: boolean) => void;
+}
+
+
 const formSchema = z.object({
   email: z.string().email({
     message: "Email not valid",
@@ -47,11 +52,10 @@ const formSchema = z.object({
   }),
 });
 
-export const InviteMember = () => {
+export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen }) => {
   const [members, setMembers] = useState<{ email: string; role: string }[]>([]);
   const [loginfn, { isLoading }] = useInviteMemberToWorkSpaceMutation();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [isOpen, setisOpen] = useState<boolean>(false);
 
   const workspace = useAppSelecter((state) => state?.auth?.selected_workspace);
 
@@ -88,9 +92,12 @@ export const InviteMember = () => {
       if (response?.data) {
         toast.success(`${response?.data?.message}`, { duration: 4000 });
         setTimeout(() => {
-          setisOpen(!isOpen);
-        }, 4000);
+          setisOpen(false);
+        }, 1000);
       }
+      setTimeout(() => {
+        setisOpen(false);
+      }, 1000);
     } catch (error) {
       toast.error(`${error}`);
     }
@@ -98,20 +105,13 @@ export const InviteMember = () => {
 
   return (
     <>
-      {isLoading && (
-        <div className="flex items-center justify-center h-screen w-screen">
-          <Spinner />
-        </div>
-      )}
-      <Dialog open={isOpen} onOpenChange={() => setisOpen(!isOpen)}>
-        <DialogTrigger asChild>
-          <Button variant="ghost" className="flex gap-2 w-full justify-start">
-            <FiUserPlus />
-            Invite Members
-          </Button>
-        </DialogTrigger>
-
-        <DialogContent className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
+     {isLoading && (
+    <div className="fixed inset-0 flex items-center justify-center z-10">
+      <Spinner />
+    </div>
+)}
+      <Dialog open={isOpen} onOpenChange={setisOpen}>
+     <DialogContent className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl md:text-2xl">
               Invite people to this workspace
