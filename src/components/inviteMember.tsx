@@ -6,7 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   FormControl,
@@ -36,12 +36,11 @@ import { Spinner } from "../spinner";
 import { constant } from "../constants";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineUserDelete } from "react-icons/ai";
-
+import { Alertdialog } from "./alertdialog";
 interface InviteMemberProps {
   isOpen: boolean;
   setisOpen: (arg: boolean) => void;
 }
-
 
 const formSchema = z.object({
   email: z.string().email({
@@ -52,10 +51,16 @@ const formSchema = z.object({
   }),
 });
 
-export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen }) => {
+export const InviteMember: React.FC<InviteMemberProps> = ({
+  isOpen,
+  setisOpen,
+}) => {
+  const alertTitle = "Wait, Don't Forget!"
+  const alertmessage = "It looks like you haven't sent the invite yet. Are you sure you want to close without inviting your new member?"
   const [members, setMembers] = useState<{ email: string; role: string }[]>([]);
   const [loginfn, { isLoading }] = useInviteMemberToWorkSpaceMutation();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [isAlertDialogOpen, setisAlertDialogOpen] = useState<boolean>(false);
 
   const workspace = useAppSelecter((state) => state?.auth?.selected_workspace);
 
@@ -103,15 +108,33 @@ export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen })
     }
   };
 
+  const handleIsCloseAlertDialog = () => {
+    setisAlertDialogOpen(true);
+  };
+
   return (
     <>
-     {isLoading && (
-    <div className="fixed inset-0 flex items-center justify-center z-10">
-      <Spinner />
-    </div>
-)}
-      <Dialog open={isOpen} onOpenChange={setisOpen}>
-     <DialogContent className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center z-10">
+          <Spinner />
+        </div>
+      )}
+      <Alertdialog
+        isAlertDialogOpen={isAlertDialogOpen}
+        setisAlertDialogOpen={setisAlertDialogOpen}
+        setAnotherDialogOpen={setisOpen}
+        alertDialogTitle= {`${alertTitle}`}
+        alertDialogDescription= {`${alertmessage}`}
+      />
+      <Dialog
+        open={isOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            handleIsCloseAlertDialog();
+          }
+        }}
+      >
+        <DialogContent className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl md:text-2xl">
               Invite people to this workspace
@@ -149,7 +172,7 @@ export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen })
                         <FormItem className="w-full">
                           <FormLabel>Role</FormLabel>
                           <Select
-                            onValueChange={(value) => field.onChange(value)} 
+                            onValueChange={(value) => field.onChange(value)}
                             value={field.value}
                             defaultValue={field.value}
                           >
@@ -159,11 +182,18 @@ export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen })
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {constant?.ROLE_CHOICES?.map((ROLE_CHOICE, index) => {
-                                return   <SelectItem value={ROLE_CHOICE?.value} key={index}>
-                                {ROLE_CHOICE?.label}
-                              </SelectItem>
-                              })}
+                              {constant?.ROLE_CHOICES?.map(
+                                (ROLE_CHOICE, index) => {
+                                  return (
+                                    <SelectItem
+                                      value={ROLE_CHOICE?.value}
+                                      key={index}
+                                    >
+                                      {ROLE_CHOICE?.label}
+                                    </SelectItem>
+                                  );
+                                }
+                              )}
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -184,38 +214,36 @@ export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen })
                           <span className="mr-4">{member.email}</span>
 
                           <div className="flex gap-2">
-
                             <span>{member.role}</span>
 
                             <div className="flex">
-                            <span
-                              className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
-                              onClick={() => {
-                                setEditingIndex(index);
-                                const member = members[index];
-                                form.setValue("email", member.email);
-                                form.setValue("role", member.role);
-                              }}
-                            >
-                              <CiEdit />
-                            </span>
-                            <span
-                              className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
-                              onClick={() => {
-                              const new_members = members.filter((user) => {
-                                  return !(user?.email === member?.email && user?.role === member?.role);
-                                })
+                              <span
+                                className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
+                                onClick={() => {
+                                  setEditingIndex(index);
+                                  const member = members[index];
+                                  form.setValue("email", member.email);
+                                  form.setValue("role", member.role);
+                                }}
+                              >
+                                <CiEdit />
+                              </span>
+                              <span
+                                className="flex justify-center items-center cursor-pointer hover:opacity-90 hover:bg-slate-200 px-2 rounded-md"
+                                onClick={() => {
+                                  const new_members = members.filter((user) => {
+                                    return !(
+                                      user?.email === member?.email &&
+                                      user?.role === member?.role
+                                    );
+                                  });
 
-                                setMembers(new_members);
-                              }
-                            }
-                              
-                            >
-                              < AiOutlineUserDelete/>
-                            </span>
-
+                                  setMembers(new_members);
+                                }}
+                              >
+                                <AiOutlineUserDelete />
+                              </span>
                             </div>
-              
                           </div>
                         </li>
                       ))}
@@ -230,16 +258,17 @@ export const InviteMember: React.FC<InviteMemberProps> = ({ isOpen, setisOpen })
           </div>
 
           <DialogFooter>
-          {members.length !== 0 &&  <Button
-              type="button"
-              className={`w-full md:w-auto`}
-              onClick={() => {
-                members.length > 0 && onSubmit()
-              }
-              }
-            >
-              Invite Members
-            </Button>}
+            {members.length !== 0 && (
+              <Button
+                type="button"
+                className={`w-full md:w-auto`}
+                onClick={() => {
+                  members.length > 0 && onSubmit();
+                }}
+              >
+                Invite Members
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

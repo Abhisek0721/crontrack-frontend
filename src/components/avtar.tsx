@@ -10,14 +10,18 @@ import { Pencil2Icon } from "@radix-ui/react-icons";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { removeUserInfo } from "../Redux/feature/authSlice";
-import { InviteMember } from "./inviteMember";
 import { useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
+
+// All Dialog 
+import { InviteMember } from "./inviteMember";
+import { ChangePasswordDialog } from "./changePassword";
 
 
 export const Avtar = () => {
   const dispatch = useAppDispatch();
-  const [isdialogshow, setisdialogshow] = useState(false);
+  const [isdialogshow, setisdialogshow] = useState<boolean>(false);
+  const [isChangePasswordDialogShow, setisChangePasswordDialogShow] = useState<boolean>(false)
   return (
     <>
       <div>
@@ -51,9 +55,11 @@ export const Avtar = () => {
                 <PersonIcon />
                 profile
               </Button>
+
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
+                onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
               >
                 <Pencil2Icon />
                 change password
@@ -73,6 +79,7 @@ export const Avtar = () => {
         </Popover>
 
         {isdialogshow && <InviteMember isOpen={isdialogshow} setisOpen={setisdialogshow} />}
+        {isChangePasswordDialogShow && <ChangePasswordDialog isOpen={isChangePasswordDialogShow} setIsOpen={setisChangePasswordDialogShow}/>}
       </div>
     </>
   );

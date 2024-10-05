@@ -67,6 +67,14 @@ export const creatingWorkSpaceFlowApi = apiSlice.injectEndpoints({
 
         getallworkspace: build.query({
             query: () => '/api/v1/workspace/get-all-workspaces/',
+        }),
+
+        changePassword: build.mutation<void, {current_password: string, new_password: string}>({
+            query: (body) => ({
+                url: "/api/v1/user/change-password/",
+                method: "PATCH",
+                body
+            })
         })
 
 
@@ -82,5 +90,6 @@ export const {
     useInviteMemberToWorkSpaceMutation,
     useAcceptInvitationInWorkspaceMutation,
     useUpdateWorkSpaceMutation,
-    useGetallworkspaceQuery
+    useGetallworkspaceQuery,
+    useChangePasswordMutation
 } = creatingWorkSpaceFlowApi
