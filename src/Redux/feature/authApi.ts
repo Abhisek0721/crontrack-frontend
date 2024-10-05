@@ -79,12 +79,7 @@ export const authAPi = apiSlice.injectEndpoints({
         method: "POST",
         body
       })
-    })
-
-
-
-
-
+    }),
   }),
 });
 

@@ -31,16 +31,16 @@ import { useSearchParams } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Invalid Email",
+    message: "Invalid email",
   }),
   password: z.string().min(6, {
-    message: "Password is required",
+    message: "Password must be at least 6 characters",
   }),
 });
 
 const popupformSchema = z.object({
   email: z.string().email({
-    message: "invalied Email",
+    message: "Invalied Email",
   }),
 });
 
@@ -211,6 +211,7 @@ export function Login() {
                           <Input
                             placeholder="david.brown@example.com"
                             {...field}
+                            autoComplete="true"
                           />
                         </FormControl>
                         <FormMessage />
@@ -230,6 +231,7 @@ export function Login() {
                             placeholder="......"
                             {...field}
                             type={isShow ? "input" : "password"}
+                            autoComplete="true"
                           />
                         </FormControl>
                         <img
