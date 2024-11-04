@@ -19,7 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Alertdialog } from "@/components/alertdialog";
 import { useState } from "react";
 import { useChangePasswordMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import openEye from "../assets/open-eye.svg";
@@ -45,11 +44,7 @@ export const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
   setIsOpen,
 }) => {
 
-  //alert message
-  const alertTitle = "Unsaved Changes Detected"
-  const alertmessage = "You haven't saved your new password. Are you sure you want to close without updating it?"
-
-  const [isAlertDialogOpen, setisAlertDialogOpen] = useState<boolean>(false);
+ 
   const [isCuurentPasswordShow, setisCuurentPasswordShow] =
     useState<boolean>(false);
   const [isNewPasswordShow, setisNewPasswordShow] = useState<boolean>(false);
@@ -81,23 +76,13 @@ export const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
   return (
     <>
     {isLoading && <Spinner />}
-      <Alertdialog
-        alertDialogTitle= {`${alertTitle}`}
-        alertDialogDescription= {`${alertmessage}`}
-        isAlertDialogOpen={isAlertDialogOpen}
-        setisAlertDialogOpen={setisAlertDialogOpen}
-        setAnotherDialogOpen={setIsOpen}
-      />
-
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            setisAlertDialogOpen(true);
-          }
-        }}
+        onOpenChange={setIsOpen}
       >
-        <DialogContent>
+        <DialogContent
+        onInteractOutside={(event) => event.preventDefault()}
+        >
           <DialogHeader>
             <DialogTitle>Change Password</DialogTitle>
             <DialogDescription />
