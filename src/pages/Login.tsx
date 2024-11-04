@@ -19,25 +19,28 @@ import openEye from "../assets/open-eye.svg";
 import closeEye from "../assets/closed-eye.svg";
 import { useUserSignInMutation } from "../Redux/feature/authApi";
 import { useUserSendforgotPasswordMutation } from "../Redux/feature/authApi";
+import { useVerifyGoogleTokenMutation } from "../Redux/feature/authApi";
+import { useLazyLoginsignupwithGoogleQuery } from "../Redux/feature/authApi";
 import { Spinner } from "../spinner";
 import cross from "../assets/cross.svg";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserInfo } from "../Redux/feature/authSlice";
 import LogoIcon from "@/components/logo";
+import { useSearchParams } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Invalid Email",
+    message: "Invalid email",
   }),
   password: z.string().min(6, {
-    message: "Password is required",
+    message: "Password must be at least 6 characters",
   }),
 });
 
 const popupformSchema = z.object({
   email: z.string().email({
-    message: "invalied Email",
+    message: "Invalied Email",
   }),
 });
 
@@ -46,11 +49,46 @@ export function Login() {
   const [loginfn, { isLoading: loginLoading }] = useUserSignInMutation();
   const [sendEmailfn, { isLoading: sendEmailLoading }] =
     useUserSendforgotPasswordMutation();
+  const [verifytokenfn, { isLoading: verifytokenLoading }] =
+    useVerifyGoogleTokenMutation();
+  const [trigger, {isLoading: isSignLoginWithgoogle }] =
+    useLazyLoginsignupwithGoogleQuery();
+
   const [isOpen, setisOpen] = useState(false);
   const [isdisabled, setisdisabled] = useState(false);
   const [timer, settimer] = useState(0);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+
+  const token = searchParams.get("googleOAuthCode");
+
+  //when user login or sign with google then this excute
+  useEffect(() => {
+    const verifyToken = async (payload: { code: string }) => {
+      try {
+        const response: any = await verifytokenfn(payload);
+        if (response?.error) {
+          toast.error(`${response?.error?.data?.message}`, {
+            duration: 2000,
+          });
+        }
+        if (response?.data) {
+          toast.success(`${response?.data?.message}`, { duration: 5000 });
+          dispatch(setUserInfo(response?.data?.data));
+          setTimeout(() => {
+            response?.data?.data?.user_workspace
+              ? navigate("/")
+              : navigate("/create-workspace-name");
+          }, 1000);
+        }
+      } catch (error) {
+        toast.error(`${error}`, { duration: 5000 });
+      }
+    };
+
+    token && verifyToken({ code: token });
+  }, [token, dispatch, navigate, verifytokenfn]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -92,7 +130,6 @@ export function Login() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response: any = await loginfn(values);
-      console.log(response);
       if (response?.error) {
         toast.error(`${response?.error?.data?.message}`, { duration: 5000 });
       }
@@ -111,7 +148,6 @@ export function Login() {
       }
     } catch (error) {
       toast.error(`${error}`, { duration: 5000 });
-      console.log(error);
     }
 
     console.log(values);
@@ -128,9 +164,28 @@ export function Login() {
       handleTimer();
     }
   }
+
+  async function handleloginwithgoogle() {
+    try {
+      const response:any = await trigger(undefined);
+
+      if (response?.data) {
+        window.open(`${response?.data?.data?.google_login_url}`, "_blank");
+      }
+      if (response?.error) {
+        toast.error(`${response?.error?.data?.message}`, {duration: 3000});
+      }
+    } catch (error) {
+      toast.error(`${error}`, {duration: 3000})
+    }
+  }
+
   return (
     <>
-      {(loginLoading || sendEmailLoading) && <Spinner />}
+      {(loginLoading ||
+        sendEmailLoading ||
+        verifytokenLoading ||
+        isSignLoginWithgoogle) && <Spinner />}
       <div className="w-full flex justify-between items-center overflow-hidden">
         <LogoIcon />
 
@@ -153,7 +208,11 @@ export function Login() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input
+                            placeholder="david.brown@example.com"
+                            {...field}
+                            autoComplete="true"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -172,6 +231,7 @@ export function Login() {
                             placeholder="......"
                             {...field}
                             type={isShow ? "input" : "password"}
+                            autoComplete="true"
                           />
                         </FormControl>
                         <img
@@ -205,16 +265,17 @@ export function Login() {
                 >
                   Login
                 </Button>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  disabled={isdisabled ? true : false}
-                >
-                  Login with Google
-                </Button>
               </div>
             </form>
           </Form>
+          <Button
+            variant="outline"
+            className="w-full"
+            disabled={isdisabled ? true : false}
+            onClick={() => handleloginwithgoogle()}
+          >
+            Login with Google
+          </Button>
 
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
@@ -222,7 +283,6 @@ export function Login() {
               Sign up
             </Link>
           </div>
-
           <div className="text-sm text-muted-foreground text-center mt-3 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <Link to="/legal/terms-and-conditions" className="underline">
               Terms and Conditions

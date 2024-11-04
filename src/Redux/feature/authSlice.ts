@@ -1,12 +1,14 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
-import {LoginuserResponse } from "../util/InterfaceTypes";
+import {LoginuserResponse, user_Workspace} from "../util/InterfaceTypes";
 
 interface userWorkspace{
-id: string
+id: string,
 role: string,
 workspace: {
     created_at: string,
+    created_by:string,
     workspaceId: string,
+    id:string,
     workspace_name: string
 }
 }
@@ -23,6 +25,7 @@ workspace: {
         updated_at: Date } | null
     access_token: string | null;
     user_workspace: Array<userWorkspace> | null;
+    selected_workspace: userWorkspace | null;
 }
 
 const storedUser = localStorage.getItem('user');
@@ -32,7 +35,8 @@ const isuser_workspace = localStorage.getItem('user_workspace');
 const initialState: User = { 
 user: storedUser ? JSON.parse(storedUser) : null,
 access_token: isaccess_token ? JSON.parse(isaccess_token) : null,
-user_workspace: isuser_workspace ? JSON.parse(isuser_workspace) : null
+user_workspace: isuser_workspace ? JSON.parse(isuser_workspace) : null,
+selected_workspace: null
 };
 
 
@@ -54,6 +58,18 @@ export const authSlice = createSlice({
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("user_workspace", JSON.stringify(user_workspace));
         },
+
+        setUserWorkspace: (state, action: PayloadAction<user_Workspace>) => {
+            const {user_workspace} = action.payload;
+            state.user_workspace = user_workspace;
+
+            localStorage.setItem("user_workspace", JSON.stringify(user_workspace));
+        },
+
+        selectedWorkspace: (state, action: PayloadAction<userWorkspace>) => {
+            state.selected_workspace = action.payload;
+        },
+
         removeUserInfo: (state) => {
             state.user = null;
             localStorage.removeItem('user');
@@ -63,5 +79,5 @@ export const authSlice = createSlice({
     }
 })
 
-export const {setUserInfo,removeUserInfo } = authSlice.actions
+export const {setUserInfo,removeUserInfo,setUserWorkspace,selectedWorkspace } = authSlice.actions
 export default authSlice.reducer;

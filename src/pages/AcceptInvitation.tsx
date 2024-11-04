@@ -1,45 +1,52 @@
-import { useUserVerifyMutation } from "../Redux/feature/authApi";
 import { useParams } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { useAcceptInvitationInWorkspaceMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { Spinner } from "../spinner";
-import { useEffect, useState, useMemo } from "react";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png";
-import { useNavigate } from "react-router-dom";
 
-export const VerifyUserByEmailLink = () => {
-  const params = useParams();
-  const navigate = useNavigate();
-
-  const [verifyUser, { isLoading }] = useUserVerifyMutation();
+export const AcceptInvitation = () => {
   const [isverified, setisverified] = useState<boolean | null>(null);
   const [message, setmessage] = useState<string>("");
+  const params = useParams();
+  const [acceptfn, { isLoading }] = useAcceptInvitationInWorkspaceMutation();
+  
+  const navigate = useNavigate();
 
-  const token = useMemo(() => ({
-    verification_token: `${params.tokenId}`,
-  }), [params.tokenId]);
+  const token = useMemo(
+    () => ({
+      verification_token: `${params.invitationToken}`,
+    }),
+    [params.invitationToken]
+  );
 
   useEffect(() => {
-    const verifyUserHandler = async () => {
+    const acceptInvitationHandler = async () => {
       try {
-        const response: any = await verifyUser(token);
+        const response: any = await acceptfn(token);
         if (response?.error) {
           setisverified(false);
           setmessage(response?.error?.data?.message);
-        } else if (response?.data) {
+          toast.error(`${response?.error?.data?.message}`, { duration: 4000 });
+        }
+        if (response?.data) {
           setisverified(true);
           setmessage(response?.data?.message);
-          setTimeout(() => {
-            navigate("/login");
-          }, 4000);
+          toast.success(`${response?.data?.message}`, { duration: 4000 });
         }
-      } catch (err) {
+        setTimeout(() => {
+          navigate("/");
+        }, 4000);
+      } catch (error) {
         setisverified(false);
         setmessage("Something went wrong");
+        toast.error(`${error}`);
       }
     };
-
-    verifyUserHandler();
-  }, [token, verifyUser, navigate]);
+    acceptInvitationHandler();
+  }, [token, navigate, acceptfn]);
 
   return (
     <>
@@ -54,7 +61,7 @@ export const VerifyUserByEmailLink = () => {
         )}
 
         <div
-          className={`mt-10 text-2xl ${
+          className={`mt-10 text-2xl sm:text-sm lg:text-lg xl:text-xl 2xl:text-2xl${
             isverified === true ? "text-green-800" : "text-red-800"
           }`}
         >

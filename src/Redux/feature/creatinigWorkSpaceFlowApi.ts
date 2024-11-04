@@ -39,6 +39,42 @@ export const creatingWorkSpaceFlowApi = apiSlice.injectEndpoints({
                 method: "PATCH",
                 body
             })
+        }),
+
+        inviteMemberToWorkSpace: build.mutation({
+            query: (body) => ({
+                url: "/api/v1/workspace/invite-members",
+                method: "POST",
+                body
+            })
+        }),
+
+        acceptInvitationInWorkspace: build.mutation({
+            query: (body) => ({
+                url: "/api/v1/workspace/add-member-to-workspace",
+                method: "PATCH",
+                body
+            })
+        }),
+
+        updateWorkSpace: build.mutation({
+            query: (body) => ({
+                url: "/api/v1/workspace/",
+                method: "PATCH",
+                body
+            })
+        }),
+
+        getallworkspace: build.query({
+            query: () => '/api/v1/workspace/get-all-workspaces/',
+        }),
+
+        changePassword: build.mutation<void, {current_password: string, new_password: string}>({
+            query: (body) => ({
+                url: "/api/v1/user/change-password/",
+                method: "PATCH",
+                body
+            })
         })
 
 
@@ -50,5 +86,10 @@ export const {
     useUpdateWorkSpaceNameMutation,
     useGetWorkSpaceQuery,
     useSendInviteMemberEmailMutation,
-    useAddMemberToWorkSpaceMutation
+    useAddMemberToWorkSpaceMutation,
+    useInviteMemberToWorkSpaceMutation,
+    useAcceptInvitationInWorkspaceMutation,
+    useUpdateWorkSpaceMutation,
+    useGetallworkspaceQuery,
+    useChangePasswordMutation
 } = creatingWorkSpaceFlowApi

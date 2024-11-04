@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { RxDashboard } from "react-icons/rx";
-import { CiSignpostDuo1 } from "react-icons/ci";
-import { CiCalendar } from "react-icons/ci";
 import { PiUsersThreeDuotone } from "react-icons/pi";
-
+import { BiLike } from "react-icons/bi";
+import { BsSignpost2 } from "react-icons/bs";
+import { MdOutlineCalendarToday } from "react-icons/md";
 
 
 
@@ -19,18 +19,19 @@ export function Sidebar({ className }: { className?: string }) {
               Dashboard
             </Button>
             <Button variant="ghost" className="w-full justify-start flex gap-2">
-            <CiSignpostDuo1 className="text-[1.01rem]"/>
+            <BsSignpost2 className="text-[1rem]"/>
               Post
             </Button>
             <Button variant="ghost" className="w-full flex justify-start gap-2">
-            <CiCalendar className="text-[1.01rem]"/>
+            <MdOutlineCalendarToday className="text-[1rem]"/>
               Calendar
             </Button>
             <Button variant="ghost" className="w-full justify-start gap-2">
             <PiUsersThreeDuotone className="text-[1.02rem]"/>
               Members            
               </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start flex gap-2">
+            <BiLike className="text-[1.05rem]"/>
               Engagements
             </Button>
           </div>

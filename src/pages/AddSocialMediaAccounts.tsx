@@ -5,6 +5,8 @@ import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate,useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
+import { ProgressMessage } from "@/components/progressMessage";
 
 
 interface handleWorkSpaceContex {
@@ -17,6 +19,10 @@ const AddSocialMediaAccounts: React.FC = () => {
     socialAccounts.map(() => false)
   );
 
+    // taking workspace name from route
+    const [searchParams] = useSearchParams();
+    const isworkspace = searchParams.get("workspace");
+    console.log(isworkspace);
   
 
   const {handledata} = useOutletContext<handleWorkSpaceContex>()
@@ -34,14 +40,16 @@ const AddSocialMediaAccounts: React.FC = () => {
   };
 
   const handlePrevious = () => {
-    navigate("/create-workspace-name");
+    navigate(`/create-workspace-name?update-workspace=${isworkspace}`);
   };
   const handleContinue = () => {
     toast.success("account added");
+    navigate("/");
   };
 
   return (
     <div className="w-full">
+      <ProgressMessage message = "This page is under construction. Please check back soon" className="absolute top-0 left-0"/>
       <ul className="w-full flex flex-wrap items-center justify-center mb-4  gap-10">
         {socialAccounts.map((account, index) => (
           <li
