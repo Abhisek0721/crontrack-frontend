@@ -18,32 +18,27 @@ interface alertdialogProps {
 }
 
 export const Alertdialog: React.FC<alertdialogProps> = ({
-  isAlertDialogOpen,
-  setisAlertDialogOpen,
-  setAnotherDialogOpen,
-  alertDialogDescription,
-  alertDialogTitle,
+...props
 }) => {
   return (
-    <AlertDialog open={isAlertDialogOpen} onOpenChange={setisAlertDialogOpen}>
+    <AlertDialog open={props?.isAlertDialogOpen} onOpenChange={props?.setisAlertDialogOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{alertDialogTitle}</AlertDialogTitle>
+          <AlertDialogTitle>{props?.alertDialogTitle}</AlertDialogTitle>
           <AlertDialogDescription>
-           {alertDialogDescription}
+           {props?.alertDialogDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setisAlertDialogOpen(false)}>
+          <AlertDialogCancel onClick={() => props?.setisAlertDialogOpen(false)}>
             Cancel
           </AlertDialogCancel>
 
           {/* Close both AlertDialog and InviteMember Dialog on Continue */}
           <AlertDialogAction
-          className="bg-destructive text-destructive-foreground shadow-sm"
             onClick={() => {
-              setisAlertDialogOpen(false); //close alert dialog.
-              setAnotherDialogOpen(false); //close invitemember dialog.
+             props?.setisAlertDialogOpen(false); //close alert dialog.
+              props?.setAnotherDialogOpen(false); //close invitemember dialog.
             }}
           >
             Discard

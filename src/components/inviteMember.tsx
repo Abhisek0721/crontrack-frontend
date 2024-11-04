@@ -55,12 +55,9 @@ export const InviteMember: React.FC<InviteMemberProps> = ({
   isOpen,
   setisOpen,
 }) => {
-  const alertTitle = "Wait, Don't Forget!"
-  const alertmessage = "It looks like you haven't sent the invite yet. Are you sure you want to close without inviting your new member?"
   const [members, setMembers] = useState<{ email: string; role: string }[]>([]);
   const [loginfn, { isLoading }] = useInviteMemberToWorkSpaceMutation();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [isAlertDialogOpen, setisAlertDialogOpen] = useState<boolean>(false);
 
   const workspace = useAppSelecter((state) => state?.auth?.selected_workspace);
 
@@ -108,10 +105,6 @@ export const InviteMember: React.FC<InviteMemberProps> = ({
     }
   };
 
-  const handleIsCloseAlertDialog = () => {
-    setisAlertDialogOpen(true);
-  };
-
   return (
     <>
       {isLoading && (
@@ -119,22 +112,13 @@ export const InviteMember: React.FC<InviteMemberProps> = ({
           <Spinner />
         </div>
       )}
-      <Alertdialog
-        isAlertDialogOpen={isAlertDialogOpen}
-        setisAlertDialogOpen={setisAlertDialogOpen}
-        setAnotherDialogOpen={setisOpen}
-        alertDialogTitle= {`${alertTitle}`}
-        alertDialogDescription= {`${alertmessage}`}
-      />
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            handleIsCloseAlertDialog();
-          }
-        }}
+        onOpenChange={() => setisOpen(!isOpen)}
       >
-        <DialogContent className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
+        <DialogContent 
+        onInteractOutside={(event) => event.preventDefault()}
+        className="w-full max-w-lg mx-auto p-4 sm:p-6 md:p-8">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl md:text-2xl">
               Invite people to this workspace
