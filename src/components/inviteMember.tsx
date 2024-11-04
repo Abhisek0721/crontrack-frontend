@@ -36,7 +36,6 @@ import { Spinner } from "../spinner";
 import { constant } from "../constants";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineUserDelete } from "react-icons/ai";
-import { Alertdialog } from "./alertdialog";
 interface InviteMemberProps {
   isOpen: boolean;
   setisOpen: (arg: boolean) => void;
