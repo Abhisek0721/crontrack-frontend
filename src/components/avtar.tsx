@@ -12,14 +12,17 @@ import { useAppDispatch } from "../Redux/Hooks/store";
 import { removeUserInfo } from "../Redux/feature/authSlice";
 import { useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
+import {GearIcon} from "@radix-ui/react-icons";
+import { useNavigate } from "react-router-dom";
 
 // All Dialog 
-import { InviteMember } from "./inviteMember";
-import { ChangePasswordDialog } from "./changePassword";
+import { InviteMember } from "../modals/inviteMember";
+import { ChangePasswordDialog } from "../modals/changePassword";
 
 
 export const Avtar = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isdialogshow, setisdialogshow] = useState<boolean>(false);
   const [isChangePasswordDialogShow, setisChangePasswordDialogShow] = useState<boolean>(false)
   return (
@@ -51,9 +54,10 @@ export const Avtar = () => {
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
+                onClick={() => navigate("/account/profile")}
               >
-                <PersonIcon />
-                profile
+                <GearIcon />
+                Account Settings
               </Button>
 
               <Button
@@ -62,7 +66,7 @@ export const Avtar = () => {
                 onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
               >
                 <Pencil2Icon />
-                change password
+                Change Password
               </Button>
               <Button
                 variant="ghost"
@@ -72,7 +76,7 @@ export const Avtar = () => {
                 }}
               >
                 <img src={logOut} alt="" />
-                logout
+                Logout
               </Button>
             </div>
           </PopoverContent>

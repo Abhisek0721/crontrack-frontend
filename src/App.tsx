@@ -5,13 +5,26 @@ import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
+import { AcceptInvitation } from "./pages/AcceptInvitation";
+
 import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
+
+//Create Workspace and AddSocialMedia accounts
 import { WorkSpaceFlow } from "./pages/WorkSpaceFlow";
 import Workspace from "./pages/CreateWorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
+
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
-import { AcceptInvitation } from "./pages/AcceptInvitation";
+
+//Account Settings file
+import { AccountSettings } from "./pages/AccountSettings";
+import { Profile } from "./pages/Profile";
+import { SocialAccounts } from "./pages/SocialAccounts";
+import { ReferralPrograms } from "./pages/ReferralPrograms";
+import { Notifications } from "./pages/Notifications";
+import { Billing } from "./pages/Billing";
+import { RolePermissions } from "./pages/Role&Permissions";
 import "./App.css";
 
 function App() {
@@ -34,15 +47,6 @@ function App() {
           element={<AcceptInvitation />}
         />
 
-        {/* here createworkspace and addsocialmediaaccont page protect nhi tha islye hatan pada ye baad me kahi error throw kr skta h because check nhi hua h code  */}
-        {/* <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
-          <Route path="" element={<Workspace />} />
-          <Route
-            path="add-socialmedia-accounts"
-            element={<AddSocialMediaAccounts />}
-          />
-        </Route> */}
-
         <Route path="legal/privacy-policy" element={<PrivacyPolicy />} />
         <Route
           path="legal/terms-and-conditions"
@@ -51,6 +55,8 @@ function App() {
 
 
         <Route path="*" element={<ProtectedRoute />}>
+
+        {/* create workspace and add social media account */}
         <Route path="create-workspace-name" element={<WorkSpaceFlow />}>
           <Route path="" element={<Workspace />} />
           <Route
@@ -58,7 +64,20 @@ function App() {
             element={<AddSocialMediaAccounts />}
           />
         </Route>
-          <Route path="" element={<Dashboard />}></Route>
+
+        {/* Dashboard */}
+        <Route path="" element={<Dashboard />} />
+
+          {/* Account Setting Route */}
+          <Route path="account" element={<AccountSettings />}>
+          <Route path= "profile" element={<Profile />}></Route>
+          <Route path= "social-accounts" element={<SocialAccounts />}></Route>
+          <Route path= "billing" element={<Billing/>}></Route>
+          <Route path="roles-&-permissions" element={<RolePermissions />}></Route>
+          <Route path="referral-program" element={<ReferralPrograms />}></Route>
+          <Route path="notification-permission" element={<Notifications />}></Route>
+          </Route>
+
         </Route>
 
 

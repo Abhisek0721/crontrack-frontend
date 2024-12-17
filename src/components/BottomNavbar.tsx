@@ -36,7 +36,7 @@ export const BottomNavbar = ({className}: {className: string}) => {
             </Button>
           </div>
         </div>
-      </div>
+        </div>
         </div>
         </>
     )
