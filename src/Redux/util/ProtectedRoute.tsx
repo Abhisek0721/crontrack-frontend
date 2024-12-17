@@ -9,20 +9,28 @@ export const ProtectedRoute = () => {
   const isVerified = userData?.verified;
   const isWorkSpace = useAppSelecter((state) => state.auth.user_workspace)
 
+ 
+
+
   useEffect(() => {
-      if (token && isVerified) {
-        if (!isWorkSpace) {
-          navigate("/create-workspace-name");
-        }
-      } else {
-        navigate("/login");
-      }
-    }, [isVerified, token, isWorkSpace, navigate]);
+    // guard for missing token or verification status
+    if(!token || !isVerified){
+      navigate("/login")
+      return
+    }
+
+    //redirect to create workspace if not created
+    if(!isWorkSpace){
+      navigate("/create-workspace-name");
+    } 
+
+  }, [token, isVerified, isWorkSpace, navigate])
+  
 
   // Return an Outlet for the nested routes if all checks pass
   if (isVerified && token && isWorkSpace) {
     return <Outlet />;
   }
-
+  
   return null;
 };
