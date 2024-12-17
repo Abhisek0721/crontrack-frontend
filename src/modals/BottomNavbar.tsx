@@ -7,7 +7,7 @@ import { BsSignpost2 } from "react-icons/bs";
 import { MdOutlineCalendarToday } from "react-icons/md";
 
 
-export const BottomSidebar = ({className}: {className: string}) => {
+export const BottomNavbar = ({className}: {className: string}) => {
     return (
         <>
         <div className={cn("",className)}>

@@ -3,7 +3,7 @@ import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { TopNavBar } from "../modals/TopNavBar";
 import { Sidebar } from "../modals/Sidebar";
-import { BottomSidebar } from "../modals/BottomSidebar";
+import { BottomNavbar } from "../modals/BottomNavbar";
 import { useGetallworkspaceQuery } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserWorkspace } from "../Redux/feature/authSlice";
@@ -104,7 +104,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <BottomSidebar className="block lg:hidden" />
+        <BottomNavbar className="block lg:hidden" />
       </div>
     </>
   );

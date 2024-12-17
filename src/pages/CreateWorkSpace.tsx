@@ -31,7 +31,7 @@ interface handleWorkSpaceContex {
   handledata: (arg: number) => void;
 }
 
-const Workspace = () => {
+const CreateWorkspace = () => {
   // 1. Define  form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -159,4 +159,4 @@ const Workspace = () => {
   );
 };
 
-export default Workspace;
+export default CreateWorkspace;

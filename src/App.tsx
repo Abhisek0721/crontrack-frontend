@@ -6,8 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
 import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
-import { CreateWorkSpaceFlow } from "./pages/CreateWorkSpaceFlow";
-import Workspace from "./pages/WorkSpace";
+import { WorkSpaceFlow } from "./pages/WorkSpaceFlow";
+import Workspace from "./pages/CreateWorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
@@ -34,13 +34,14 @@ function App() {
           element={<AcceptInvitation />}
         />
 
-        <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
+        {/* here createworkspace and addsocialmediaaccont page protect nhi tha islye hatan pada ye baad me kahi error throw kr skta h because check nhi hua h code  */}
+        {/* <Route path="create-workspace-name" element={<CreateWorkSpaceFlow />}>
           <Route path="" element={<Workspace />} />
           <Route
             path="add-socialmedia-accounts"
             element={<AddSocialMediaAccounts />}
           />
-        </Route>
+        </Route> */}
 
         <Route path="legal/privacy-policy" element={<PrivacyPolicy />} />
         <Route
@@ -50,6 +51,13 @@ function App() {
 
 
         <Route path="*" element={<ProtectedRoute />}>
+        <Route path="create-workspace-name" element={<WorkSpaceFlow />}>
+          <Route path="" element={<Workspace />} />
+          <Route
+            path="add-socialmedia-accounts"
+            element={<AddSocialMediaAccounts />}
+          />
+        </Route>
           <Route path="" element={<Dashboard />}></Route>
         </Route>
 

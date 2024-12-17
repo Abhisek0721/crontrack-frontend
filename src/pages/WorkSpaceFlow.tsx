@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
-export const CreateWorkSpaceFlow = () => {
+export const WorkSpaceFlow = () => {
   const [currentStep, setcurrentStep] = useState<number>();
 
   const handledata = (data: number) => {

@@ -149,8 +149,6 @@ export function Login() {
     } catch (error) {
       toast.error(`${error}`, { duration: 5000 });
     }
-
-    console.log(values);
   }
 
   async function onPopUpSubmit(popupvalues: z.infer<typeof popupformSchema>) {
