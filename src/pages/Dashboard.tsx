@@ -1,6 +1,5 @@
 import { Separator } from "@/components/ui/separator";
 import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import { TopNavBar } from "../components/TopNavBar";
 import { Sidebar } from "../components/Sidebar";
 import { BottomNavbar } from "../components/BottomNavbar";
@@ -9,6 +8,7 @@ import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserWorkspace } from "../Redux/feature/authSlice";
 import { useEffect } from "react";
 import { ProgressMessage } from "@/components/progressMessage";
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
   const { data, isLoading, refetch } = useGetallworkspaceQuery(undefined);
@@ -106,6 +106,7 @@ export default function Dashboard() {
           </div>
         </div>
         <BottomNavbar className="block lg:hidden" />
+        <Outlet />
       </div>
     </>
   );

@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/popover";
 import logOut from "../assets/logout.svg";
 import { Pencil2Icon } from "@radix-ui/react-icons";
-import { PersonIcon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { removeUserInfo } from "../Redux/feature/authSlice";
 import { useState } from "react";
@@ -54,20 +53,21 @@ export const Avtar = () => {
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
+                onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
+              >
+                <Pencil2Icon />
+                Change Password
+              </Button>
+
+              <Button
+                variant="ghost"
+                className="flex gap-2 w-full justify-start"
                 onClick={() => navigate("/account/profile")}
               >
                 <GearIcon />
                 Account Settings
               </Button>
 
-              <Button
-                variant="ghost"
-                className="flex gap-2 w-full justify-start"
-                onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
-              >
-                <Pencil2Icon />
-                Change Password
-              </Button>
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"

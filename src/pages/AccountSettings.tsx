@@ -9,6 +9,7 @@ import { TopNavBar } from "@/components/TopNavBar";
 export const AccountSettings = () => {
   const navigate = useNavigate();
   const [activeState, setactiveState] = useState("profile");
+  
   const Tabs = [
     {
       key: "Profile",
@@ -43,18 +44,19 @@ export const AccountSettings = () => {
       />
       <TopNavBar />
       <div className="border flex justify-center">
-        {/* <Button
-                    variant="ghost"
-                    className="ml-4 mt-1"
-                    onClick={() => navigate("/")}>
-                    <ArrowLeft />
-                    </Button> */}
+        <Button
+          variant="ghost"
+          className="mt-1 p-1 sm:p-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center"
+          onClick={() => navigate("/")}
+        >
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+        </Button>
 
-        <div className="relative w-auto flex gap-6">
+        <div className="relative w-auto flex gap-6 overflow-x-auto mx-6 lg:mx-0">
           {Tabs?.map((tab) => (
             <div key={tab?.value} className="relative">
               <button
-                className={`transition-all px-6 py-3 rounded-sm ${
+                className={`transition-all px-4 py-3 rounded-sm ${
                   activeState === tab?.value
                     ? "text-[#001F3F] font-semibold"
                     : "text-gray-500"
@@ -64,7 +66,9 @@ export const AccountSettings = () => {
                   navigate(`${tab?.value}`);
                 }}
               >
-                <span className="hidden sm:block">{tab?.key}</span>
+                <span className="block whitespace-nowrap text-sm lg:text-base">
+                  {tab?.key}
+                </span>
               </button>
 
               {/* Bottom Div for Active State */}

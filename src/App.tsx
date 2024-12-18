@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./pages/Dashboard";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
 import { AcceptInvitation } from "./pages/AcceptInvitation";
@@ -14,8 +13,17 @@ import { WorkSpaceFlow } from "./pages/WorkSpaceFlow";
 import Workspace from "./pages/CreateWorkSpace";
 import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 
+// Policy and Term&Conditions
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
+
+//Dashboard
+import Dashboard from "./pages/Dashboard";
+import { DashboardContent } from "./pages/DashboardContent";
+import { Engagements } from "./pages/Engagements";
+import { Calendar } from "./pages/Calendar";
+import { Members } from "./pages/Members";
+import { Post } from "./pages/Post";
 
 //Account Settings file
 import { AccountSettings } from "./pages/AccountSettings";
@@ -66,7 +74,13 @@ function App() {
         </Route>
 
         {/* Dashboard */}
-        <Route path="" element={<Dashboard />} />
+        <Route path="" element={<Dashboard />} >
+        <Route path="" element={<DashboardContent />}></Route>
+        <Route path="calendar" element={<Calendar />} />
+        <Route path="post" element={<Post />} />
+        <Route path="members" element={<Members />} />
+        <Route path="engagements" element={<Engagements />}/>
+        </Route>
 
           {/* Account Setting Route */}
           <Route path="account" element={<AccountSettings />}>
