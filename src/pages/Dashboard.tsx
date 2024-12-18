@@ -1,38 +1,37 @@
 import { Separator } from "@/components/ui/separator";
 import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { TopNavBar } from "../modals/TopNavBar";
-import { Sidebar } from "../modals/Sidebar";
-import { BottomNavbar } from "../modals/BottomNavbar";
+import { TopNavBar } from "../components/TopNavBar";
+import { Sidebar } from "../components/Sidebar";
+import { BottomNavbar } from "../components/BottomNavbar";
 import { useGetallworkspaceQuery } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { setUserWorkspace } from "../Redux/feature/authSlice";
 import { useEffect } from "react";
 import { ProgressMessage } from "@/components/progressMessage";
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
+  const { data, isLoading, refetch } = useGetallworkspaceQuery(undefined);
+  const dispatch = useAppDispatch();
 
-    const {data, isLoading, refetch} = useGetallworkspaceQuery(undefined)
-    const dispatch = useAppDispatch();
-   
   useEffect(() => {
     if (!isLoading && data?.data) {
-      dispatch(setUserWorkspace({user_workspace: data.data}));
-      localStorage.setItem('user_workspace', JSON.stringify(data.data));      
+      dispatch(setUserWorkspace({ user_workspace: data.data }));
+      localStorage.setItem("user_workspace", JSON.stringify(data.data));
     }
   }, [isLoading, data, dispatch]);
 
   useEffect(() => {
-   refetch();
-}, [refetch]);
-  
-  
-
+    refetch();
+  }, [refetch]);
 
   return (
     <>
       <div className="">
-      <ProgressMessage message = "This page is under construction. Please check back soon" className=""/>
+        <ProgressMessage
+          message="This page is under construction. Please check back soon"
+          className=""
+        />
         <TopNavBar />
         <div className="border-t">
           <div className="bg-background">
@@ -40,7 +39,10 @@ export default function Dashboard() {
               <Sidebar className="hidden lg:block" />
               <div className="col-span-3 lg:col-span-4 lg:border-l">
                 <div className="h-full px-4 py-6 lg:px-8">
-                  <Tabs defaultValue="upcoming post" className="h-full space-y-6">
+                  <Tabs
+                    defaultValue="upcoming post"
+                    className="h-full space-y-6"
+                  >
                     <div className="space-between flex items-center">
                       <TabsList>
                         <TabsTrigger value="upcoming post" className="relative">
@@ -52,7 +54,6 @@ export default function Dashboard() {
                         <TabsTrigger value="live">Live</TabsTrigger>
                       </TabsList>
                     </div>
-
 
                     {/* Upcoming Post ke andar dikhne wala ui  */}
                     <TabsContent
@@ -84,7 +85,7 @@ export default function Dashboard() {
                       <Separator className="my-4" />
                     </TabsContent>
 
-                     {/* Live ke andar dikhne wala ui  */}
+                    {/* Live ke andar dikhne wala ui  */}
                     <TabsContent
                       value="live"
                       className="h-full flex-col border-none p-0 data-[state=active]:flex"
@@ -105,6 +106,7 @@ export default function Dashboard() {
           </div>
         </div>
         <BottomNavbar className="block lg:hidden" />
+        <Outlet />
       </div>
     </>
   );

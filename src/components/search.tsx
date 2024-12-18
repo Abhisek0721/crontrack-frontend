@@ -5,7 +5,7 @@ export function Search({className} : React.HTMLAttributes<HTMLElement>) {
     <div>
       <Input
         type="search"
-        placeholder="Search..."
+        placeholder="Search Post..."
         className={cn("w-[300px]", className)}
       />
     </div>

@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "../components/ui/form";
 
 import {
   Select,
@@ -23,12 +23,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../components/ui/select";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "./ui/input";
+import { Input } from "../components/ui/input";
 import { useInviteMemberToWorkSpaceMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
 import { useAppSelecter } from "../Redux/Hooks/store";
 import toast from "react-hot-toast";

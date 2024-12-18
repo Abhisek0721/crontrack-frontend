@@ -7,19 +7,21 @@ import {
 } from "@/components/ui/popover";
 import logOut from "../assets/logout.svg";
 import { Pencil2Icon } from "@radix-ui/react-icons";
-import { PersonIcon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { removeUserInfo } from "../Redux/feature/authSlice";
 import { useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
+import {GearIcon} from "@radix-ui/react-icons";
+import { useNavigate } from "react-router-dom";
 
 // All Dialog 
-import { InviteMember } from "./inviteMember";
-import { ChangePasswordDialog } from "./changePassword";
+import { InviteMember } from "../modals/inviteMember";
+import { ChangePasswordDialog } from "../modals/changePassword";
 
 
 export const Avtar = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isdialogshow, setisdialogshow] = useState<boolean>(false);
   const [isChangePasswordDialogShow, setisChangePasswordDialogShow] = useState<boolean>(false)
   return (
@@ -51,19 +53,21 @@ export const Avtar = () => {
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
+                onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
               >
-                <PersonIcon />
-                profile
+                <Pencil2Icon />
+                Change Password
               </Button>
 
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
-                onClick={() => setisChangePasswordDialogShow(!isChangePasswordDialogShow)}
+                onClick={() => navigate("/account/profile")}
               >
-                <Pencil2Icon />
-                change password
+                <GearIcon />
+                Account Settings
               </Button>
+
               <Button
                 variant="ghost"
                 className="flex gap-2 w-full justify-start"
@@ -72,7 +76,7 @@ export const Avtar = () => {
                 }}
               >
                 <img src={logOut} alt="" />
-                logout
+                Logout
               </Button>
             </div>
           </PopoverContent>
