@@ -19,7 +19,6 @@ export const creatingWorkSpaceFlowApi = apiSlice.injectEndpoints({
             })
         }),
 
-
         //NOTE: for POST,PUT,PATCH,DELETE jaise request ke liye mutation ka use hota  h GET req ke liye query ka use hota h 
         getWorkSpace: build.query({
             query: (workspaceId) => `api/v1/workspace/:${workspaceId}`,
@@ -76,7 +75,6 @@ export const creatingWorkSpaceFlowApi = apiSlice.injectEndpoints({
                 body
             })
         })
-
 
     })
 })

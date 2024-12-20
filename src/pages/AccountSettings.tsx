@@ -80,7 +80,9 @@ export const AccountSettings = () => {
         </div>
       </div>
 
-      <Outlet />
+      <div className="py-7 px-6">
+        <Outlet />
+      </div>
     </>
   );
 };

@@ -14,7 +14,6 @@ interface alertdialogProps {
   alertDialogTitle: string;
   alertDialogDescription: string;
   setisAlertDialogOpen: (arg: boolean) => void;
-  setAnotherDialogOpen: (arg: boolean) => void;
 }
 
 export const Alertdialog: React.FC<alertdialogProps> = ({
@@ -36,12 +35,12 @@ export const Alertdialog: React.FC<alertdialogProps> = ({
 
           {/* Close both AlertDialog and InviteMember Dialog on Continue */}
           <AlertDialogAction
+          className="bg-red-600"
             onClick={() => {
              props?.setisAlertDialogOpen(false); //close alert dialog.
-              props?.setAnotherDialogOpen(false); //close invitemember dialog.
             }}
           >
-            Discard
+            Delete
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
