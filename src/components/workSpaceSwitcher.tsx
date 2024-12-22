@@ -89,6 +89,28 @@ export const WorkSpaceSwitcher = ({
                         <div>{workspace?.workspace.workspace_name}</div>
                         <div>{workspace?.role}</div>
                       </div>
+                        {/* <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="ghost">
+                            <DotsVerticalIcon />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-fit">
+                          <Button
+                            variant="ghost"
+                            className="flex gap-2 w-full justify-start"
+                          >
+                            Update Workspace name
+                          </Button>
+
+                          <Button
+                            variant="ghost"
+                            className="flex gap-2 w-full justify-start"
+                          >
+                            Add Social Media Account
+                          </Button>
+                        </PopoverContent>
+                      </Popover> */}
                     </CommandItem>
                   ))}
                 </CommandGroup>
