@@ -5,10 +5,13 @@ import { useEffect, useState, useMemo } from "react";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png";
 import { useNavigate } from "react-router-dom";
+import Confetti from 'react-confetti'
+
 
 export const VerifyUserByEmailLink = () => {
   const params = useParams();
   const navigate = useNavigate();
+
 
   const [verifyUser, { isLoading }] = useUserVerifyMutation();
   const [isverified, setisverified] = useState<boolean | null>(null);
@@ -30,7 +33,7 @@ export const VerifyUserByEmailLink = () => {
           setmessage(response?.data?.message);
           setTimeout(() => {
             navigate("/login");
-          }, 4000);
+          }, 5000);
         }
       } catch (err) {
         setisverified(false);
@@ -60,6 +63,16 @@ export const VerifyUserByEmailLink = () => {
         >
           {message}
         </div>
+
+        {isverified && (
+            <Confetti 
+            width={window.innerWidth}
+            height={window.innerHeight} 
+            recycle={true}
+            />)}
+
+        
+
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import {
     AlertDialog,
@@ -21,7 +22,7 @@ const DeleteAccountCard = ({className}: React.HTMLAttributes<HTMLElement>) => {
             setisDialogOpen(false);
             console.log("delete account")
         } catch (error) {
-            
+            toast.error(`${error}`, {duration: 5000})
         }
     }
   return (

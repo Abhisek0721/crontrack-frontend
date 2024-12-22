@@ -3,15 +3,16 @@ import { apiSlice } from "../api/apiSlice";
 
 export const contentManagementServiceApi = apiSlice.injectEndpoints({
     endpoints: (build) => ({
-        facebook: build.query({
-            query: (workspaceId) => {
-                const url = `/api/v1/social-auth/facebook?workspaceId=${workspaceId}`;
-                console.log("Generated URL:", url); // Debugging
-                return url;}
+        AddFacebookPage: build.mutation({
+            query: (body) => ({
+                url: "/api/v1/social-media-account/add-facebook-page",
+                method: "POST",
+                body
+            })
         })
     })
 })
 
 export const {
-    useFacebookQuery
+    useAddFacebookPageMutation
 } = contentManagementServiceApi

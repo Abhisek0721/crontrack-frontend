@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { ProgressMessage } from "@/components/progressMessage";
 import { useAppSelecter } from "../Redux/Hooks/store";
-import { Spinner } from "../spinner";
-import axios from "axios";
 import { constant } from "../constants";
 
 interface handleWorkSpaceContex {
@@ -17,13 +15,14 @@ interface handleWorkSpaceContex {
 }
 
 const AddSocialMediaAccounts: React.FC = () => {
-  const base_url = constant?.API_URL
+  //base url
+  const base_url = constant.CONTENT_SERVICE_API_URL;
+  console.log("bses url", base_url);
   const navigate = useNavigate();
   const workspaces = useAppSelecter((state) => state?.auth?.user_workspace);
   const [checkStates, setCheckStates] = useState<boolean[]>(
     socialAccounts.map(() => false)
   );
-  const [isloading, setisloading] = useState<boolean>(false);
 
   // taking workspace name from route
   const [searchParams] = useSearchParams();
@@ -45,8 +44,7 @@ const AddSocialMediaAccounts: React.FC = () => {
       if (isConnect) {
         console.log("req to connect facebook account");
         const url = `${base_url}/api/v1/social-auth/facebook?workspaceId=${workspace?.workspace?.id}`
-        const response = await axios.get(url);
-        console.log(response?.data?.data?.redirectAuthUrl);
+        window.location.href = url;
         return;
       }
       //disconnect facebook account
@@ -129,6 +127,7 @@ const AddSocialMediaAccounts: React.FC = () => {
 
   return (
     <>
+
       <div className="w-full">
         <ProgressMessage
           message="This page is under construction. Please check back soon"
@@ -145,13 +144,13 @@ const AddSocialMediaAccounts: React.FC = () => {
                 alt=""
                 className="w-[50px] rounded-full"
               />
-              <img
+             <img
                 src={checkStates[index] ? Minus : Plus}
                 className={`absolute bottom-0 right-0 cursor-pointer hover:scale-105 transition-all duration-300 rounded-full text-white p-1 font-semibold ${
                   checkStates[index] ? "bg-red-500" : "bg-green-500"
                 }`}
                 onClick={() => handleaddAccount(index)}
-              />
+              />             
             </li>
           ))}
         </ul>

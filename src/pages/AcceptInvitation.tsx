@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../spinner";
 import correct from "../assets/correct.png";
 import failed from "../assets/delete.png";
-
+import Confetti from 'react-confetti'
 export const AcceptInvitation = () => {
   const [isverified, setisverified] = useState<boolean | null>(null);
   const [message, setmessage] = useState<string>("");
@@ -38,7 +38,7 @@ export const AcceptInvitation = () => {
         }
         setTimeout(() => {
           navigate("/");
-        }, 4000);
+        }, 5000);
       } catch (error) {
         setisverified(false);
         setmessage("Something went wrong");
@@ -67,6 +67,15 @@ export const AcceptInvitation = () => {
         >
           {message}
         </div>
+
+          {isverified && (
+                    <Confetti 
+                    width={window.innerWidth}
+                    height={window.innerHeight} 
+                    recycle={true}
+                    />)}
+
+
       </div>
     </>
   );

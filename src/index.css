@@ -38,7 +38,7 @@
     /* Color Variable Start here */
     --primary: #001F3F;
     --secondary: #0e263e;
-    --primary-transparent: rgba(0, 31, 63, 0.5); /* 50% transparency */
+    --primary-transparent: rgba(0, 31, 63, 0.8); /* 50% transparency */
   }
   ::selection{
     @apply bg-gray-100
