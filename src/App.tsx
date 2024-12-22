@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
 import { ChangeUserPassword } from "./pages/ChangeUserPassword";
 import { AcceptInvitation } from "./pages/AcceptInvitation";
+import { SocialAuth } from "./pages/Social-auth";
 
 import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
 
@@ -91,6 +92,9 @@ function App() {
           <Route path="referral-program" element={<ReferralPrograms />}></Route>
           <Route path="notification-permission" element={<Notifications />}></Route>
           </Route>
+
+          {/* Route to connect social media account */}
+          <Route path="social-auth" element={<SocialAuth />}></Route>
 
         </Route>
 
