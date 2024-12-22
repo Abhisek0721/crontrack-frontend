@@ -29,7 +29,7 @@ import { Post } from "./pages/Post";
 //Account Settings file
 import { AccountSettings } from "./pages/AccountSettings";
 import { Profile } from "./pages/Profile";
-import { SocialAccounts } from "./pages/SocialAccounts";
+import SocialAccounts from "./pages/SocialAccounts";
 import { ReferralPrograms } from "./pages/ReferralPrograms";
 import { Notifications } from "./pages/Notifications";
 import { Billing } from "./pages/Billing";
