@@ -8,6 +8,8 @@ import { setUserWorkspace } from "../Redux/feature/authSlice";
 import { useEffect } from "react";
 import { ProgressMessage } from "@/components/progressMessage";
 import { Outlet } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import FallbackUI from "@/components/FallbackUI";
 
 export default function Dashboard() {
   const { data, isLoading, refetch } = useGetallworkspaceQuery(undefined);
@@ -26,6 +28,7 @@ export default function Dashboard() {
 
   return (
     <>
+    <ErrorBoundary FallbackComponent={FallbackUI}>
      <div className="h-screen flex flex-col">
         <ProgressMessage
           message="This page is under construction. Please check back soon"
@@ -45,6 +48,7 @@ export default function Dashboard() {
 
         <BottomNavbar className="block lg:hidden" />
       </div>
+    </ErrorBoundary>
     </>
   );
 }

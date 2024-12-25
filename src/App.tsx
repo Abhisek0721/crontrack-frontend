@@ -24,7 +24,7 @@ import { DashboardContent } from "./pages/DashboardContent";
 import { Engagements } from "./pages/Engagements";
 import { Calendar } from "./pages/Calendar";
 import { Members } from "./pages/Members";
-import { Post } from "./pages/Post";
+import  Post  from "./pages/Post";
 
 //Account Settings file
 import { AccountSettings } from "./pages/AccountSettings";
