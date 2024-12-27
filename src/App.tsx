@@ -17,6 +17,7 @@ import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 // Policy and Term&Conditions
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
+import DisconnectSocialMedia from "./legal/DisconnectSocialMedia";
 
 //Dashboard
 import Dashboard from "./pages/Dashboard";
@@ -61,6 +62,10 @@ function App() {
           path="legal/terms-and-conditions"
           element={<TermsAndConditions />}
         ></Route>
+         <Route
+          path="disconnect-social-media-account"
+          element={<DisconnectSocialMedia />}
+        />
 
 
         <Route path="*" element={<ProtectedRoute />}>
