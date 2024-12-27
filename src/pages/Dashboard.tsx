@@ -29,7 +29,7 @@ export default function Dashboard() {
   return (
     <>
     <ErrorBoundary FallbackComponent={FallbackUI}>
-     <div className="h-screen flex flex-col">
+     <div className="flex flex-col">
         <ProgressMessage
           message="This page is under construction. Please check back soon"
           className=""
@@ -38,9 +38,9 @@ export default function Dashboard() {
 
         <Separator orientation="horizontal" className="w-full" />
 
-        <div className="flex flex-1 bg-background">
+        <div className="flex flex-1 bg-background mb-12">
           <Sidebar className="hidden lg:block h-full w-96" />
-          <Separator orientation="vertical" className="hidden lg:block h-full" />
+          <Separator orientation="vertical" className="hidden lg:block h-[100vh]" />
           <div className="flex-grow p-4 w-full">
             <Outlet />
           </div>
