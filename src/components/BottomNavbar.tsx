@@ -24,7 +24,7 @@ export const BottomNavbar = ({ className }: { className: string }) => {
   return (
     <>
       <div className={cn("", className)}>
-        <div className="space-x-4 px-4 fixed bottom-0 w-full border-t">
+        <div className="space-x-4 px-4 fixed bottom-0 w-full border-t bg-white">
           <div className="py-3">
             <div className="flex space-y-1">
               {menuOptions.map((item) => (

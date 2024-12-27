@@ -5,7 +5,7 @@ import {WorkSpaceSwitcher} from "@/components/workSpaceSwitcher";
 import { Avtar } from "@/components/avtar";
 export const TopNavBar = () => {
   return (
-    <div className="flex justify-between pl-4 pr-11 py-4">
+    <div className="flex justify-between pl-4 pr-11 py-4 sticky top-0 bg-white z-50 shadow-sm">
       <div className="flex gap-4">
         <WorkSpaceSwitcher className="" />
         {/* <MainNav className="hidden md:block"/>

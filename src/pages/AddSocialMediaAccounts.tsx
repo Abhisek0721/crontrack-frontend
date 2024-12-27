@@ -1,4 +1,3 @@
-import socialAccounts from "../DummyData/socialAccountData";
 import Plus from "../assets/plus.svg";
 import Minus from "../assets/minus.svg";
 import { useState, useEffect } from "react";
@@ -14,6 +13,8 @@ interface handleWorkSpaceContex {
   handledata: (arg: number) => void;
 }
 
+const socialAccounts = constant?.SOCIAL_MEDIA_PLATEFORM
+
 const AddSocialMediaAccounts: React.FC = () => {
   //base url
   const base_url = constant.CONTENT_SERVICE_API_URL;
@@ -21,7 +22,7 @@ const AddSocialMediaAccounts: React.FC = () => {
   const navigate = useNavigate();
   const workspaces = useAppSelecter((state) => state?.auth?.user_workspace);
   const [checkStates, setCheckStates] = useState<boolean[]>(
-    socialAccounts.map(() => false)
+    socialAccounts?.map(() => false)
   );
 
   // taking workspace name from route
@@ -42,7 +43,6 @@ const AddSocialMediaAccounts: React.FC = () => {
     try {
       //connect facebook account
       if (isConnect) {
-        console.log("req to connect facebook account");
         const url = `${base_url}/api/v1/social-auth/facebook?workspaceId=${workspace?.workspace?.id}`
         window.location.href = url;
         return;

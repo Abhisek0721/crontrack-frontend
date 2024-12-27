@@ -17,6 +17,7 @@ import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
 // Policy and Term&Conditions
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import TermsAndConditions from "./legal/TermAndCondition";
+import DisconnectSocialMedia from "./legal/DisconnectSocialMedia";
 
 //Dashboard
 import Dashboard from "./pages/Dashboard";
@@ -24,7 +25,7 @@ import { DashboardContent } from "./pages/DashboardContent";
 import { Engagements } from "./pages/Engagements";
 import { Calendar } from "./pages/Calendar";
 import { Members } from "./pages/Members";
-import { Post } from "./pages/Post";
+import  Post  from "./pages/Post";
 
 //Account Settings file
 import { AccountSettings } from "./pages/AccountSettings";
@@ -61,6 +62,10 @@ function App() {
           path="legal/terms-and-conditions"
           element={<TermsAndConditions />}
         ></Route>
+         <Route
+          path="disconnect-social-media-account"
+          element={<DisconnectSocialMedia />}
+        />
 
 
         <Route path="*" element={<ProtectedRoute />}>
