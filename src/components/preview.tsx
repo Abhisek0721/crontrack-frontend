@@ -4,9 +4,17 @@ import  Facebook  from "../socialMediaPreview/facebook";
 import { Instagram } from "../socialMediaPreview/instagram";
 import { LinkedIn } from "../socialMediaPreview/linkedin";
 import { Twitter } from "../socialMediaPreview/twitter";
+import { useAppSelecter } from "../Redux/Hooks/store";
+import { useState } from "react";
+
+import { FacebookPreviews } from '@automattic/social-previews';
 
 export const Preview = () => {
     const social_media_plateform = constant?.SOCIAL_MEDIA_PLATEFORM
+    // const [text, settext] = useState<string>('')
+   const Text = useAppSelecter((state) => state?.text?.text)
+   const Images = useAppSelecter((state) => state?.text?.images)
+   console.log("Image: ", Images)
     
   return (
     <>
@@ -20,7 +28,7 @@ export const Preview = () => {
           {social_media_plateform?.map((account, index) => {
           return (
             <TabsContent key={index} value={account?.value}>
-              {account?.value === "facebook" && <Facebook content="" profileName="" image=""/>}
+              {account?.value === "facebook" && <FacebookPreviews description={Text} title="Lorem Ipsum Text" image={Images ? Images[0] : undefined} url="https://www.lipsum.com/"/>}
               {account?.value === "instagram" && <Instagram />}
               {account?.value === "twitter" && <Twitter />}
               {account?.value === "Linkedin" && <LinkedIn />}
