@@ -7,6 +7,8 @@ import { Dashboard } from "@uppy/react";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
+import { useAppDispatch } from "../Redux/Hooks/store";
+import { setImage, setText, clearImage } from "../Redux/feature/textSlice";
 
 // Icons
 import { MdOutlineEmojiEmotions } from "react-icons/md";
@@ -29,6 +31,14 @@ const RichTextEditor = () => {
   >([]); // Store selected files with previews
   const [showUploader, setShowUploader] = useState(false);
   const editorRef = useRef<ReactQuill | null>(null);
+  const processedFiles = useRef(new Set<string>()); // Track processed files
+
+  const dispatch = useAppDispatch();
+
+  const handleChange = (content: string) => {
+    setValue(content)
+    dispatch(setText(content));
+  }
 
   // Configure Uppy
   const uppy = new Uppy({
@@ -39,32 +49,34 @@ const RichTextEditor = () => {
     },
     autoProceed: false, // Wait for user action to start uploading
   });
-
-  // Add thumbnail generator
+  
   uppy.use(ThumbnailGenerator, {
-    thumbnailWidth: 200, // Width of generated thumbnails
+    thumbnailWidth: 200,
   });
 
   // Handle thumbnail generation
   uppy.on("thumbnail:generated", (file, preview) => {
-    console.log("Thumbnail generated:", preview);
-    setSelectedFiles((prev) => [
-      ...prev.filter((f) => f.file.name !== file.name), // Prevent duplicates
-      { file: file.data as File, preview }, // Add file and preview
-    ]);
+    if (!processedFiles.current.has(file.id)) {
+      processedFiles.current.add(file.id);
+      if (!selectedFiles.some((f) => f.file.name === file.name)) {
+        dispatch(setImage(preview));
+        setSelectedFiles((prev) => [
+          ...prev,
+          { file: file.data as File, preview },
+        ]);
+      }
+    }
   });
 
-  // Handle file removal
-  uppy.on("file-removed", (file) => {
-    console.log("File removed:", file);
-  });
-
-  const handleRemoveFile = (fileName: string) => {
+  const handleRemoveFile = (fileName: string, preview: string) => {
     // Remove file from Uppy
     const fileToRemove = uppy.getFile(fileName);
     if (fileToRemove) {
       uppy.removeFile(fileName);
     }
+
+    //remove file from redux
+    dispatch(clearImage(preview));
 
     // Remove file from state
     setSelectedFiles((prev) =>
@@ -109,7 +121,7 @@ const RichTextEditor = () => {
         <ReactQuill
           theme="snow"
           value={value}
-          onChange={setValue}
+          onChange={handleChange}
           placeholder="Write your post..."
           className="text-black h-96 border-none outline-none"
           ref={editorRef}
@@ -183,7 +195,7 @@ const RichTextEditor = () => {
               )}
               <button
                 className="absolute top-[-5px] right-[-5px] bg-red-500 rounded-full p-1"
-                onClick={() => handleRemoveFile(file.name)}
+                onClick={() => handleRemoveFile(file.name, preview)}
               >
                 <Cross2Icon className="text-white"/>
               </button>
