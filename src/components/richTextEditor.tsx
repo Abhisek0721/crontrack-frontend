@@ -31,6 +31,7 @@ const RichTextEditor = () => {
   >([]); // Store selected files with previews
   const [showUploader, setShowUploader] = useState(false);
   const editorRef = useRef<ReactQuill | null>(null);
+  const processedFiles = useRef(new Set<string>()); // Track processed files
 
   const dispatch = useAppDispatch();
 
@@ -48,20 +49,23 @@ const RichTextEditor = () => {
     },
     autoProceed: false, // Wait for user action to start uploading
   });
-
-  // Add thumbnail generator
+  
   uppy.use(ThumbnailGenerator, {
-    thumbnailWidth: 200, // Width of generated thumbnails
+    thumbnailWidth: 200,
   });
 
   // Handle thumbnail generation
   uppy.on("thumbnail:generated", (file, preview) => {
-    console.log("preview: ",file?.name);
-    dispatch(setImage(preview));
-    setSelectedFiles((prev) => [
-      ...prev.filter((f) => f.file.name !== file.name), // Prevent duplicates
-      { file: file.data as File, preview }, // Add file and preview
-    ]);
+    if (!processedFiles.current.has(file.id)) {
+      processedFiles.current.add(file.id);
+      if (!selectedFiles.some((f) => f.file.name === file.name)) {
+        dispatch(setImage(preview));
+        setSelectedFiles((prev) => [
+          ...prev,
+          { file: file.data as File, preview },
+        ]);
+      }
+    }
   });
 
   const handleRemoveFile = (fileName: string, preview: string) => {

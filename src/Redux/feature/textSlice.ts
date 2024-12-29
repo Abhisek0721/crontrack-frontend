@@ -17,14 +17,12 @@ export const textSlice = createSlice({
         },
         setImage: (state, action) => {
             state.images?.push(action.payload);
-            console.log("from set image",state?.images)
         },
         clearImage: (state, action) => {
             
            state.images = state?.images?.filter((preview) => {
                 return preview !== action?.payload
             })
-            console.log(state?.images);
         }
     }
 })
