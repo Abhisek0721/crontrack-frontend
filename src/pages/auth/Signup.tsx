@@ -3,18 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
-import Background from "../assets/Login-Background.png";
+import Background from "../../assets/Login-Background.png";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useUserSignUpMutation } from "../Redux/feature/authApi";
-import { useLazyLoginsignupwithGoogleQuery } from "../Redux/feature/authApi";
-import { useUserResendVerificationMailMutation } from "../Redux/feature/authApi";
-import { Spinner } from "../spinner";
-import openEye from "../assets/open-eye.svg";
-import closeEye from "../assets/closed-eye.svg";
-import cross from "../assets/cross.svg";
+import { useUserSignUpMutation } from "../../Redux/feature/authApi";
+import { useLazyLoginsignupwithGoogleQuery } from "../../Redux/feature/authApi";
+import { useUserResendVerificationMailMutation } from "../../Redux/feature/authApi";
+import { Spinner } from "../../spinner";
+import openEye from "../../assets/open-eye.svg";
+import closeEye from "../../assets/closed-eye.svg";
+import cross from "../../assets/cross.svg";
 import {
   Form,
   FormControl,
@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { ResendverifyUser } from "../Redux/util/InterfaceTypes";
+import type { ResendverifyUser } from "../../Redux/util/InterfaceTypes";
 import LogoIcon from "@/components/logo";
 import { constant } from "@/constants/index";
 

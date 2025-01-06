@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useAddFacebookPageMutation } from "../Redux/feature/contentManagementServiceApi";
+import { useAddFacebookPageMutation } from "../../Redux/feature/contentManagementServiceApi";
 import toast from "react-hot-toast";
 export const SocialAuth = () => {
   const [searchParams] = useSearchParams();

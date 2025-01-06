@@ -7,8 +7,8 @@ import { Dashboard } from "@uppy/react";
 import ThumbnailGenerator from "@uppy/thumbnail-generator";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
-import { useAppDispatch } from "../Redux/Hooks/store";
-import { setImage, setText, clearImage } from "../Redux/feature/textSlice";
+import { useAppDispatch } from "../../../Redux/Hooks/store";
+import { setImage, setText, clearImage } from "../../../Redux/feature/textSlice";
 
 // Icons
 import { MdOutlineEmojiEmotions } from "react-icons/md";

@@ -1,15 +1,15 @@
 import { Separator } from "@/components/ui/separator";
-import { TopNavBar } from "../components/TopNavBar";
-import { Sidebar } from "../components/Sidebar";
-import { BottomNavbar } from "../components/BottomNavbar";
-import { useGetallworkspaceQuery } from "../Redux/feature/creatinigWorkSpaceFlowApi";
-import { useAppDispatch } from "../Redux/Hooks/store";
-import { setUserWorkspace } from "../Redux/feature/authSlice";
+import { TopNavBar } from "../../components/TopNavBar";
+import { Sidebar } from "../../components/Sidebar";
+import { BottomNavbar } from "../../components/BottomNavbar";
+import { useGetallworkspaceQuery } from "../../Redux/feature/creatinigWorkSpaceFlowApi";
+import { useAppDispatch } from "../../Redux/Hooks/store";
+import { setUserWorkspace } from "../../Redux/feature/authSlice";
 import { useEffect } from "react";
 import { ProgressMessage } from "@/components/progressMessage";
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import FallbackUI from "@/components/FallbackUI";
+import FallbackUI from "../../fallbackUI/FallbackUI";
 
 export default function Dashboard() {
   const { data, isLoading, refetch } = useGetallworkspaceQuery(undefined);

@@ -1,6 +1,6 @@
-import RichTextEditor from "@/components/richTextEditor";
+import RichTextEditor from "../post/richTextEditor";
 import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
+import { Preview } from "../post/preview";
 
 const Post = () => {
   return (

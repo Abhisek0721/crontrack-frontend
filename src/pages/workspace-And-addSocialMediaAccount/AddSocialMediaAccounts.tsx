@@ -1,13 +1,13 @@
-import Plus from "../assets/plus.svg";
-import Minus from "../assets/minus.svg";
+import Plus from "../../assets/plus.svg"
+import Minus from "../../assets/minus.svg";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { ProgressMessage } from "@/components/progressMessage";
-import { useAppSelecter } from "../Redux/Hooks/store";
-import { constant } from "../constants";
+import { useAppSelecter } from "../../Redux/Hooks/store";
+import { constant } from "../../constants";
 
 interface handleWorkSpaceContex {
   handledata: (arg: number) => void;
