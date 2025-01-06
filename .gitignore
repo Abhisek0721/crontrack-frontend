@@ -27,3 +27,4 @@ dist-ssr
 
 yarn.lock
 package-lock.json
+.codegpt
