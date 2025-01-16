@@ -31,12 +31,13 @@ workspace: {
 const storedUser = localStorage.getItem('user');
 const isaccess_token = localStorage.getItem('access_token');
 const isuser_workspace = localStorage.getItem('user_workspace');
+const isSelected_workspace = sessionStorage.getItem('workspace')
 
 const initialState: User = { 
 user: storedUser ? JSON.parse(storedUser) : null,
 access_token: isaccess_token ? JSON.parse(isaccess_token) : null,
 user_workspace: isuser_workspace ? JSON.parse(isuser_workspace) : null,
-selected_workspace: null
+selected_workspace: isSelected_workspace ? JSON.parse(isSelected_workspace): null
 };
 
 
@@ -68,6 +69,7 @@ export const authSlice = createSlice({
 
         selectedWorkspace: (state, action: PayloadAction<userWorkspace>) => {
             state.selected_workspace = action.payload;
+            sessionStorage.setItem("workspace", JSON.stringify(action.payload))
         },
 
         removeUserInfo: (state) => {
