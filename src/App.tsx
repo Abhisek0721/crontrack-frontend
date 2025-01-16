@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
+import { Login } from "./pages/auth/Login";
+import { Signup } from "./pages/auth/Signup";
 import { Toaster } from "react-hot-toast";
-import { VerifyUserByEmailLink } from "./pages/VerifyUserByEmailLink";
-import { ChangeUserPassword } from "./pages/ChangeUserPassword";
+import { VerifyUserByEmailLink } from "./pages/auth/VerifyUserByEmailLink";
+import { ChangeUserPassword } from "./pages/auth/ChangeUserPassword";
 import { AcceptInvitation } from "./pages/AcceptInvitation";
-import { SocialAuth } from "./pages/Social-auth";
+import { SocialAuth } from "./pages/workspace-And-addSocialMediaAccount/Social-auth";
 
 import { ProtectedRoute } from "./Redux/util/ProtectedRoute";
 
 //Create Workspace and AddSocialMedia accounts
-import { WorkSpaceFlow } from "./pages/WorkSpaceFlow";
-import Workspace from "./pages/CreateWorkSpace";
-import AddSocialMediaAccounts from "./pages/AddSocialMediaAccounts";
+import { WorkSpaceFlow } from "./pages/workspace-And-addSocialMediaAccount/WorkSpaceFlow";
+import Workspace from "./pages/workspace-And-addSocialMediaAccount/CreateWorkSpace";
+import AddSocialMediaAccounts from "./pages/workspace-And-addSocialMediaAccount/AddSocialMediaAccounts";
 
 // Policy and Term&Conditions
 import PrivacyPolicy from "./legal/PrivacyPolicy";
@@ -20,21 +20,21 @@ import TermsAndConditions from "./legal/TermAndCondition";
 import DisconnectSocialMedia from "./legal/DisconnectSocialMedia";
 
 //Dashboard
-import Dashboard from "./pages/Dashboard";
-import { DashboardContent } from "./pages/DashboardContent";
-import { Engagements } from "./pages/Engagements";
-import { Calendar } from "./pages/Calendar";
-import { Members } from "./pages/Members";
-import  Post  from "./pages/Post";
+import Dashboard from "./pages/dashboard/Dashboard";
+import { DashboardContent } from "./pages/dashboard/dashboard/DashboardContent";
+import { Engagements } from "./pages/dashboard/engagement/Engagements";
+import { Calendar } from "./pages/dashboard/calendar/Calendar";
+import { Members } from "./pages/dashboard/members/Members";
+import  Post  from "./pages/dashboard/post/Post";
 
 //Account Settings file
-import { AccountSettings } from "./pages/AccountSettings";
-import { Profile } from "./pages/Profile";
-import SocialAccounts from "./pages/SocialAccounts";
-import { ReferralPrograms } from "./pages/ReferralPrograms";
-import { Notifications } from "./pages/Notifications";
-import { Billing } from "./pages/Billing";
-import { RolePermissions } from "./pages/Role&Permissions";
+import { AccountSettings } from "./pages/dashboard/accountSettings/AccountSettings";
+import { Profile } from "./pages/dashboard/accountSettings/profile/Profile";
+import SocialAccounts from "./pages/dashboard/accountSettings/social-accounts/SocialAccounts";
+import { ReferralPrograms } from "./pages/dashboard/accountSettings/referral-programs/ReferralPrograms";
+import { Notifications } from "./pages/dashboard/accountSettings/notifications/Notifications";
+import { Billing } from "./pages/dashboard/accountSettings/billing/Billing";
+import { RolePermissions } from "./pages/dashboard/accountSettings/role-&-permissions/Role&Permissions";
 import "./App.css";
 
 function App() {

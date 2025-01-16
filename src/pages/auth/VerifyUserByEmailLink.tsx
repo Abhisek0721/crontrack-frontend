@@ -1,9 +1,9 @@
-import { useUserVerifyMutation } from "../Redux/feature/authApi";
+import { useUserVerifyMutation } from "../../Redux/feature/authApi";
 import { useParams } from "react-router-dom";
-import { Spinner } from "../spinner";
+import { Spinner } from "../../spinner";
 import { useEffect, useState, useMemo } from "react";
-import correct from "../assets/correct.png";
-import failed from "../assets/delete.png";
+import correct from "../../assets/correct.png";
+import failed from "../../assets/delete.png";
 import { useNavigate } from "react-router-dom";
 import Confetti from 'react-confetti'
 

@@ -12,12 +12,12 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useCreateWorkSpaceNameMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
+import { useCreateWorkSpaceNameMutation } from "../../Redux/feature/creatinigWorkSpaceFlowApi";
 import toast from "react-hot-toast";
-import { Spinner } from "../spinner";
-import { useAppDispatch, useAppSelecter } from "../Redux/Hooks/store";
-import { setUserWorkspace } from "../Redux/feature/authSlice";
-import { useUpdateWorkSpaceMutation } from "../Redux/feature/creatinigWorkSpaceFlowApi";
+import { Spinner } from "../../spinner";
+import { useAppDispatch, useAppSelecter } from "../../Redux/Hooks/store";
+import { setUserWorkspace } from "../../Redux/feature/authSlice";
+import { useUpdateWorkSpaceMutation } from "../../Redux/feature/creatinigWorkSpaceFlowApi";
 import { useSearchParams } from "react-router-dom";
 
 //form schema

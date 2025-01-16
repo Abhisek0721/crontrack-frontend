@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { constant } from "../constants";
-import { useAppSelecter } from "../Redux/Hooks/store";
+import { constant } from "../../../constants";
+import { useAppSelecter } from "../../../Redux/Hooks/store";
 
 import { FacebookPreviews,InstagramPreviews, TwitterPostPreview, LinkedInPostPreview } from '@automattic/social-previews';
 

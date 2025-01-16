@@ -5,12 +5,25 @@ import { PiUsersThreeDuotone } from "react-icons/pi";
 import { BiLike } from "react-icons/bi";
 import { BsSignpost2 } from "react-icons/bs";
 import { MdOutlineCalendarToday } from "react-icons/md";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const BottomNavbar = ({ className }: { className: string }) => {
   const [activeState, setActiveState] = useState<string>("");
   const navigate = useNavigate();
+
+   // Initialize `activeState` from sessionStorage
+   useEffect(() => {
+    const storedState = sessionStorage.getItem("activeState");
+    if (storedState) {
+      setActiveState(JSON.parse(storedState));
+    }
+  }, []);
+
+  // Update `sessionStorage` whenever `activeState` changes
+  useEffect(() => {
+    sessionStorage.setItem("activeState", JSON.stringify(activeState));
+  }, [activeState])
 
   // Array of menu options
   const menuOptions = [

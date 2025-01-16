@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useUserChangePasswordMutation } from "../Redux/feature/authApi";
+import { useUserChangePasswordMutation } from "../../Redux/feature/authApi";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "../spinner";
-import closeEye from "../assets/closed-eye.svg";
-import openEye from "../assets/open-eye.svg";
+import { Spinner } from "../../spinner";
+import closeEye from "../../assets/closed-eye.svg";
+import openEye from "../../assets/open-eye.svg";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({

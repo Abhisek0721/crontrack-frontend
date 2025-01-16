@@ -22,7 +22,7 @@ import {
 import { useAppSelecter } from "../Redux/Hooks/store";
 import { useAppDispatch } from "../Redux/Hooks/store";
 import { selectedWorkspace } from "../Redux/feature/authSlice";
-import { useState } from "react";
+import { useState,useMemo } from "react";
 
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -39,13 +39,17 @@ export const WorkSpaceSwitcher = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const workspace:string = userWorkSpaces? userWorkSpaces[0]?.workspace?.workspace_name: "workspace";
+  const isSelectedWorkspace = useAppSelecter((state) => state?.auth?.selected_workspace)
+
+  const workspace:string = isSelectedWorkspace? isSelectedWorkspace?.workspace?.workspace_name: "workspace";
   const [firstWorkspace, setfirstWorkspace] = useState<string>(`${workspace}`);
   const [isOpen, setisOpen] = useState<boolean>(false)
 
-  const select_Workspace = userWorkSpaces?.find((workspace) => {
-    return workspace?.workspace?.workspace_name === `${firstWorkspace}`;
-  })
+  const select_Workspace = useMemo(() => {
+    return userWorkSpaces?.find(
+      (workspace) => workspace?.workspace?.workspace_name === firstWorkspace
+    );
+  }, [firstWorkspace, userWorkSpaces]);
 
   useEffect(() => {
     if (select_Workspace) {
